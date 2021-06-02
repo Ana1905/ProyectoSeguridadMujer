@@ -3,29 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_profile">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.proyectoseguridadmujer.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_profile"
+        android:name="com.example.proyectoseguridadmujer.ui.profile.ProfileFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.proyectoseguridadmujer.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.proyectoseguridadmujer.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_self_defense"
+        android:name="com.example.proyectoseguridadmujer.ui.selfdefense.SelfDefenseFragment"
+        android:label="Defensa personal"
+        tools:layout="@layout/fragment_self_defense" />
 
     <fragment
         android:id="@+id/nav_informative"
-        android:name="com.example.proyectoseguridadmujer.ui.slideshow.SlideshowFragment"
+        android:name="com.example.proyectoseguridadmujer.ui.informative.InformativeMenuFragment"
         android:label="@string/menu_informative"
         tools:layout="@layout/fragment_informative_menu" />
+
+    <fragment
+        android:id="@+id/nav_route"
+        android:name="com.example.proyectoseguridadmujer.ui.route.RouteFragment"
+        android:label="@string/menu_route"
+        tools:layout="@layout/fragment_route" />
+
+    <fragment
+        android:id="@+id/nav_alert"
+        android:name="com.example.proyectoseguridadmujer.ui.alert.AlertFragment"
+        android:label="@string/menu_alert"
+        tools:layout="@layout/fragment_alert" />
+
+    <fragment
+        android:id="@+id/nav_comunity"
+        android:name="com.example.proyectoseguridadmujer.ui.comunity.ComunityFragment"
+        android:label="Comunidad"
+        tools:layout="@layout/fragment_comunity" />
+
+
+
+
+
 </navigation>

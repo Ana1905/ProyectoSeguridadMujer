@@ -17,4 +17,25 @@
     <string name="menu_self_defense">Aprende a defenderte</string>
     <string name="menu_comunity">Comunidad</string>
     <string name="menu_profile">Mi perfil</string>
+
+    <string name="sign_in_username">Correo electrónico</string>
+    <string name="sign_in_password">Contraseña</string>
+    <string name="sign_in_start">Iniciar sesión</string>
+    <string name="create_account">Crear cuenta</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="sign_up_name">Nombre</string>
+    <string name="sign_up_paternal_surname">Apellido paterno</string>
+    <string name="sign_up_maternal_surname">Apellido materno</string>
+    <string name="sign_up_birthdate">Fecha de nacimiento</string>
+    <string name="sign_up_email">Correo electrónico</string>
+    <string name="sign_up_password">Contraseña</string>
+    <string name="sign_up_confirm_password">Confirme su contraseña</string>
+    <string name="sign_up_create_account">Crear cuenta</string>
+    <string name="sign_up_verify_robot">No soy un robot</string>
+    <string name="sign_up_terms">He leido y acepto los términos y condiciones</string>
+    <string name="forgot_password_text">Forgot password?</string>
+    <string name="email_forgot_password">Please tell us ur email</string>
+    <string name="recover_password">Recover</string>
+    <string name="restore_password_label">Reestablecer contraseña</string>
+    <string name="welcome_label">Bienvenida</string>
 </resources>

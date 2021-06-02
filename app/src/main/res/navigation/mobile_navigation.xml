@@ -22,4 +22,10 @@
         android:name="com.example.proyectoseguridadmujer.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_informative"
+        android:name="com.example.proyectoseguridadmujer.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_informative"
+        tools:layout="@layout/fragment_informative_menu" />
 </navigation>

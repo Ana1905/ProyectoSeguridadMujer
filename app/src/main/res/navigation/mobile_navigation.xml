@@ -41,6 +41,13 @@
         android:label="Comunidad"
         tools:layout="@layout/fragment_comunity" />
 
+    <fragment
+        android:id="@+id/nav_helping_network"
+        android:name="com.example.proyectoseguridadmujer.ui.help.HelpingNetworkFragment"
+        android:label="Red de apoyo"
+        tools:layout="@layout/fragment_helping_network" />
+
+
 
 
 

@@ -31,6 +31,12 @@
             android:icon="@drawable/comunity_icon"
             android:title="@string/menu_comunity" />
 
+        <item
+            android:id="@+id/nav_helping_network"
+            android:icon="@drawable/helping_network_icon"
+            android:title="@string/menu_helping_network" />
+
+
 
 
 

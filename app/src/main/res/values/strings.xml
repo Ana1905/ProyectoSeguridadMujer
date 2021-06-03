@@ -18,6 +18,7 @@
     <string name="menu_comunity">Comunidad</string>
     <string name="menu_profile">Mi perfil</string>
 
+    <string name="sign_in_label">Bienvenida</string>
     <string name="sign_in_username">Correo electrónico</string>
     <string name="sign_in_password">Contraseña</string>
     <string name="sign_in_start">Iniciar sesión</string>
@@ -38,4 +39,5 @@
     <string name="recover_password">Recover</string>
     <string name="restore_password_label">Reestablecer contraseña</string>
     <string name="welcome_label">Bienvenida</string>
+    <string name="menu_helping_network">Red de apoyo</string>
 </resources>

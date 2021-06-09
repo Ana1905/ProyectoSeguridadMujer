@@ -97,7 +97,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                 }
-          }
+            }
         });
 
 

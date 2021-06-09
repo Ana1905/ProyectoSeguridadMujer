@@ -15,6 +15,8 @@ import httpurlconnection.PutData;
 public class LoginActivity extends AppCompatActivity {
     EditText mEditTextSignInEmail, mEditTextSignInPassword;
     Button mButtonSignIn;
+    Button mButtonCreateAccount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,18 @@ public class LoginActivity extends AppCompatActivity {
         mEditTextSignInEmail = findViewById(R.id.sign_in_email_input);
         mEditTextSignInPassword = findViewById(R.id.sign_in_password_input);
         mButtonSignIn = findViewById(R.id.sign_in_enter_button);
+        mButtonCreateAccount = findViewById(R.id.sign_in_create_account_button);
+        //OnClicks
+        mButtonCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CreateAccountActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         mButtonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 contraseña = String.valueOf(mEditTextSignInPassword.getText());
 
 
-                if (email.equals("") && contraseña.equals("")) {
+                if (!email.equals("") && !contraseña.equals("")) {
                     //Start ProgressBar first (Set visibility VISIBLE)
                     Handler handler = new Handler();
                     handler.post(new Runnable() {
@@ -49,24 +63,25 @@ public class LoginActivity extends AppCompatActivity {
                             field[1] = "contraseña";
 
 
-
                             //Creating array for data
                             String[] data = new String[2];
                             data[0] = email;
                             data[1] = contraseña;
 
-                            PutData putData = new PutData("http:// 192.168.1.109/LoginRegister/signup.php", "POST", field, data);
+                            PutData putData = new PutData("http://192.168.1.109:80/LoginRegister/login.php", "POST", field, data);
+
+
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();
-                                    if(result.equals("Sign Up Success")){
-                                        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+
+                                    if (result.equals("Login Success")) {
+                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                         finish();
-                                    }
-                                    else{
-                                        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
@@ -75,16 +90,12 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
 
-                }
-
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
 
-
-
     }
-}
+    }

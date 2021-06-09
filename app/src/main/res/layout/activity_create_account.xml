@@ -12,6 +12,8 @@
         android:id="@+id/imageView"
         android:layout_width="130dp"
         android:layout_height="130dp"
+        android:background="@drawable/logo_shape"
+        android:src="@drawable/logo_app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
@@ -24,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="40sp"
 
+        android:background="@drawable/edit_text_shape"
         android:hint="@string/sign_up_name"
         android:importantForAutofill="no"
         android:inputType="text"
@@ -42,6 +45,7 @@
         android:id="@+id/create_account_paternal_surname"
         android:layout_width="match_parent"
         android:layout_height="40sp"
+        android:background="@drawable/edit_text_shape"
         android:hint="@string/sign_up_maternal_surname"
         android:importantForAutofill="no"
         android:inputType="text"
@@ -61,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="40sp"
 
+        android:background="@drawable/edit_text_shape"
         android:hint="@string/sign_up_paternal_surname"
         android:importantForAutofill="no"
         android:inputType="text"
@@ -80,6 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="40sp"
 
+        android:background="@drawable/edit_text_shape"
         android:hint="@string/date_of_birth_label"
         android:importantForAutofill="no"
         android:inputType="date"
@@ -100,6 +106,7 @@
         android:id="@+id/create_account_email"
         android:layout_width="match_parent"
         android:layout_height="40sp"
+        android:background="@drawable/edit_text_shape"
         android:hint="@string/sign_up_email"
         android:importantForAutofill="no"
         android:inputType="text"
@@ -120,6 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="40sp"
 
+        android:background="@drawable/edit_text_shape"
         android:hint="@string/sign_up_password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
@@ -141,6 +149,7 @@
         android:layout_width="match_parent"
         android:layout_height="40sp"
 
+        android:background="@drawable/edit_text_shape"
         android:hint="@string/sign_up_confirm_password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
@@ -189,6 +198,7 @@
         android:id="@+id/create_account_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/sign_in_button_shape"
         android:paddingHorizontal="10dp"
         android:text="@string/sign_up_create_account"
         android:textColor="@android:color/white"

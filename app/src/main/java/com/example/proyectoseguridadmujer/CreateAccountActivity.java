@@ -47,7 +47,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 contraseña = String.valueOf(mEditTextCreateAccountPassword.getText());
                 confirmPassword = String.valueOf(mEditTextCreateAccountConfirmPassword.getText());
 
-                if (email.equals("") && nombres.equals("") && apellido_paterno.equals("") && apellido_materno.equals("") && fecha_nacimiento.equals("") && contraseña.equals("")) {
+                if (!email.equals("") && !nombres.equals("") && !apellido_paterno.equals("") && !apellido_materno.equals("") && !fecha_nacimiento.equals("") && !contraseña.equals("")) {
                     //Start ProgressBar first (Set visibility VISIBLE)
                     Handler handler = new Handler();
                     handler.post(new Runnable() {
@@ -72,11 +72,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                             data[3] = apellido_materno;
                             data[4] = fecha_nacimiento;
                             data[5] = contraseña;
-                            PutData putData = new PutData("http:// 192.168.1.109/LoginRegister/login.php", "POST", field, data);
+                            PutData putData = new PutData("http://192.168.100.13:82/LoginRegister/signup.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();
-                                    if(result.equals("Login Success")){
+                                    if(result.equals("Sign Up Success")){
                                         Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);

@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -23,22 +24,17 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.safetynet.SafetyNet;
 import com.google.android.gms.safetynet.SafetyNetApi;
-
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Calendar;
-
 import httpurlconnection.PutData;
-
 import static android.graphics.Color.GREEN;
-
 public class CreateAccountActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks {
     private DatePickerDialog datePickerDialog;
 
     EditText mEditTextCreateAccountEmail, mEditTextCreateAccountName, mEditTextCreateAccountPaternalSurname, mEditTextCreateAccountMaternalSurname,  mEditTextCreateAccountPassword, mEditTextCreateAccountConfirmPassword;
     Button mButtonCreateAccount,  mButtonDateOfBirth, mButtonTermsAndConditions;
     CheckBox mCheckBoxCaptcha, mCheckBoxTermsAndConditions;
+    TextView mTextViewGotoLogin;
     GoogleApiClient googleApiClient;
 
     //Put sitekey as a string
@@ -61,6 +57,20 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         mCheckBoxCaptcha = findViewById(R.id.create_account_captcha);
         mCheckBoxTermsAndConditions = findViewById(R.id.create_account_terms);
         mButtonTermsAndConditions = findViewById(R.id.button_create_account_terms);
+        mTextViewGotoLogin = findViewById(R.id.TextViewGotoLogin);
+
+
+        //---GOTOLOGIN TEXTVIEW ONCLICK
+        mTextViewGotoLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
 
         //---CAPTCHA
         //CreateGoogle Api client
@@ -83,7 +93,6 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                 mCheckBoxCaptcha.setTextColor(GREEN);
 
                             }
-
                         }
                     });
                 }
@@ -190,10 +199,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                 }
                             }
 
-
 */
-
-
                                     PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/signup.php", "POST", field, data);
 
 

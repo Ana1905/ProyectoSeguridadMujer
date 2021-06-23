@@ -42,8 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         mButtonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 //Variables to catch data
                 String email, contraseña;
                 email = String.valueOf(mEditTextSignInEmail.getText());
@@ -69,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
                             data[1] = contraseña;
                             //Change ip and port of your computer and xampp
                             PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/login.php", "POST", field, data);
-
 
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {

@@ -122,7 +122,7 @@
         android:background="@drawable/edit_text_shape"
         android:hint="@string/sign_up_email"
         android:importantForAutofill="no"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:padding="10sp"
         android:textColor="@color/Gray_highlight"
         android:textColorHighlight="@color/black"

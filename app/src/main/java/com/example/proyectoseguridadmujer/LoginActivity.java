@@ -8,15 +8,15 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import httpurlconnection.PutData;
 
 public class LoginActivity extends AppCompatActivity {
     EditText mEditTextSignInEmail, mEditTextSignInPassword;
-    Button mButtonSignIn;
-    Button mButtonCreateAccount;
-
+    Button mButtonSignIn,mButtonCreateAccount;
+    TextView mTextViewForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
         mEditTextSignInPassword = findViewById(R.id.sign_in_password_input);
         mButtonSignIn = findViewById(R.id.sign_in_enter_button);
         mButtonCreateAccount = findViewById(R.id.sign_in_create_account_button);
+        mTextViewForgotPassword = findViewById(R.id.sign_in_forgot_password_label);
+
         //OnClicks
         mButtonCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +40,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        mTextViewForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         mButtonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

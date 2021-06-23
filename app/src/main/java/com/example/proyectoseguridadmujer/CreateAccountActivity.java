@@ -20,7 +20,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-/*
+
         //Wiring up
         mEditTextCreateAccountEmail= findViewById(R.id.create_account_email);
         mEditTextCreateAccountName = findViewById(R.id.create_account_name);
@@ -32,9 +32,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         mButtonCreateAccount = findViewById(R.id.create_account_create);
 
 
- */
 
-        /*
         //On Click
         mButtonCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,13 +74,14 @@ public class CreateAccountActivity extends AppCompatActivity {
                             data[3] = apellido_materno;
                             data[4] = fecha_nacimiento;
                             data[5] = contraseña;
-                            PutData putData = new PutData("http://192.168.100.13:82/LoginRegister/signup.php", "POST", field, data);
+                            //Change ip and port of your computer and xampp
+                            PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/signup.php", "POST", field, data);
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();
                                     if(result.equals("Sign Up Success")){
                                         Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                         finish();
                                     }
@@ -103,7 +102,6 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             }
         });
-*/
 
 
 

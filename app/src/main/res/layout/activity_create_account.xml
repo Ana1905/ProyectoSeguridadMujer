@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.026" />
 
     <EditText
         android:id="@+id/create_account_name"
@@ -80,27 +80,40 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.306" />
 
-    <EditText
+    <Button
         android:id="@+id/create_account_dateOfBirth"
-        android:layout_width="match_parent"
-        android:layout_height="40sp"
-
-        android:background="@drawable/edit_text_shape"
+        android:layout_width="200sp"
+        android:layout_height="50sp"
+        android:background="@drawable/button_shape"
+        android:backgroundTint="@color/white"
         android:hint="@string/date_of_birth_label"
         android:importantForAutofill="no"
         android:inputType="date"
+        android:onClick="openDatePicker"
         android:padding="10sp"
-        android:textColor="@color/Gray_highlight"
-        android:textColorHighlight="@color/black"
-        android:textColorHint="@color/Gray"
-
+        android:textColor="@color/Purple_Dark"
+        android:textColorHighlight="@color/Purple_Dark"
+        android:textColorHint="@color/Purple_Dark"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.857"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.701" />
+        app:layout_constraintVertical_bias="0.697" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha de nacimiento:"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.148"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.689" />
 
     <EditText
         android:id="@+id/create_account_email"

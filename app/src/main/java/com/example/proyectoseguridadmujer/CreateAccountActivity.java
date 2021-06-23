@@ -23,6 +23,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.safetynet.SafetyNet;
 import com.google.android.gms.safetynet.SafetyNetApi;
 
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
@@ -34,7 +35,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
     EditText mEditTextCreateAccountEmail, mEditTextCreateAccountName, mEditTextCreateAccountPaternalSurname, mEditTextCreateAccountMaternalSurname,  mEditTextCreateAccountPassword, mEditTextCreateAccountConfirmPassword;
     Button mButtonCreateAccount,  mButtonDateOfBirth;
-    CheckBox mCheckBoxCaptcha;
+    CheckBox mCheckBoxCaptcha, mCheckBoxTermsAndConditions;
     GoogleApiClient googleApiClient;
 
     //Put sitekey as a string
@@ -55,7 +56,9 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         mEditTextCreateAccountConfirmPassword = findViewById(R.id.create_account_confirm_password);
         mButtonCreateAccount = findViewById(R.id.create_account_create);
         mCheckBoxCaptcha = findViewById(R.id.create_account_captcha);
+        mCheckBoxTermsAndConditions = findViewById(R.id.create_account_terms);
 
+        //---CAPTCHA
         //CreateGoogle Api client
         googleApiClient = new GoogleApiClient.Builder(this).addApi(SafetyNet.API).addConnectionCallbacks(CreateAccountActivity.this).build();
         googleApiClient.connect();
@@ -83,6 +86,17 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                 }
             }
         });
+
+
+        //----TERMS AND CONTIDIONS
+        mCheckBoxTermsAndConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+
+        });
+
 
         mButtonDateOfBirth.setText(getTodaysDate());
 
@@ -199,6 +213,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
     }
 
+    //DATE PICKER
     private String getTodaysDate() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -234,6 +249,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             datePickerDialog.show();
     }
 
+    //CAPTCHA
     @Override
     public void onConnected(@Nullable @org.jetbrains.annotations.Nullable Bundle bundle) {
 
@@ -242,5 +258,11 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     @Override
     public void onConnectionSuspended(int i) {
 
+    }
+
+    //TERMS AND CONDITIONS
+    public void openDialog() {
+        TermsDialog termsDialog = new TermsDialog();
+        termsDialog.show(getSupportFragmentManager(), "terms and conditions dialog");
     }
 }

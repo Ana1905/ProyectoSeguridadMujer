@@ -1,27 +1,44 @@
 package com.example.proyectoseguridadmujer;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.safetynet.SafetyNet;
+import com.google.android.gms.safetynet.SafetyNetApi;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 
 import httpurlconnection.PutData;
 
-public class CreateAccountActivity extends AppCompatActivity {
+public class CreateAccountActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks {
     private DatePickerDialog datePickerDialog;
 
     EditText mEditTextCreateAccountEmail, mEditTextCreateAccountName, mEditTextCreateAccountPaternalSurname, mEditTextCreateAccountMaternalSurname,  mEditTextCreateAccountPassword, mEditTextCreateAccountConfirmPassword;
     Button mButtonCreateAccount,  mButtonDateOfBirth;
+    CheckBox mCheckBoxCaptcha;
+    GoogleApiClient googleApiClient;
+
+    //Put sitekey as a string
+    String SiteKey= "6LesLFEbAAAAAEmJtNkxvnLUJhQKuN2v4SzRbE8f";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +54,38 @@ public class CreateAccountActivity extends AppCompatActivity {
         mEditTextCreateAccountPassword = findViewById(R.id.create_account_password);
         mEditTextCreateAccountConfirmPassword = findViewById(R.id.create_account_confirm_password);
         mButtonCreateAccount = findViewById(R.id.create_account_create);
+        mCheckBoxCaptcha = findViewById(R.id.create_account_captcha);
+
+        //CreateGoogle Api client
+        googleApiClient = new GoogleApiClient.Builder(this).addApi(SafetyNet.API).addConnectionCallbacks(CreateAccountActivity.this).build();
+        googleApiClient.connect();
+        mCheckBoxCaptcha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             //Set if condition when checbox checked
+                if(mCheckBoxCaptcha.isChecked()){
+                    SafetyNet.SafetyNetApi.verifyWithRecaptcha(googleApiClient,SiteKey).setResultCallback(new ResultCallback<SafetyNetApi.RecaptchaTokenResult>() {
+                        @Override
+                        public void onResult(@NonNull @NotNull SafetyNetApi.RecaptchaTokenResult recaptchaTokenResult) {
+                            Status status = recaptchaTokenResult.getStatus();
+                            if((status != null) && status.isSuccess() ){
+                                //Display Success Message
+                                Toast.makeText(getApplicationContext(),"Verificado con exito",Toast.LENGTH_SHORT).show();
+                                //Change checkbox text color
+                                mCheckBoxCaptcha.setTextColor(Color.GREEN);
+                            }
+                            else{
+                                //Default checkbox text color
+                                mCheckBoxCaptcha.setTextColor(Color.WHITE);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
         mButtonDateOfBirth.setText(getTodaysDate());
+
 
         //On Click
         mButtonCreateAccount.setOnClickListener(new View.OnClickListener() {
@@ -184,5 +232,15 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     public void openDatePicker(View view) {
             datePickerDialog.show();
+    }
+
+    @Override
+    public void onConnected(@Nullable @org.jetbrains.annotations.Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
     }
 }

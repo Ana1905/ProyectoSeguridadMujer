@@ -67,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
                             String[] data = new String[2];
                             data[0] = email;
                             data[1] = contraseña;
-
-                            PutData putData = new PutData("http://192.168.1.109:80/LoginRegister/login.php", "POST", field, data);
+                            //Change ip and port of your computer and xampp
+                            PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/login.php", "POST", field, data);
 
 
                             if (putData.startPut()) {

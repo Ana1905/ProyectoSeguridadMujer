@@ -74,8 +74,42 @@ public class CreateAccountActivity extends AppCompatActivity {
                             data[3] = apellido_materno;
                             data[4] = fecha_nacimiento;
                             data[5] = contraseña;
+
+                            String[] data2 = new String[1];
+                            data[0] = email;
+
+                            String[] field2 = new String[1];
+                            field[0] = "email";
+
                             //Change ip and port of your computer and xampp
+                            PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/email_validation.php", "POST", field2, data2);
+                            if (putData.startPut()) {
+                                if (putData.onComplete()) {
+                                    String validation = putData.getResult();
+                                        if(validation.equals("valid email")){
+                                        Toast.makeText(getApplicationContext(),"bien",Toast.LENGTH_SHORT).show();
+                                        //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        //startActivity(intent);
+                                        finish();
+                                    }
+                                    else{
+                                        Toast.makeText(getApplicationContext(),validation,Toast.LENGTH_SHORT).show();
+
+                                    }
+                                }
+                            }
+
+
+
+
+
+
+
+
+                           /*
                             PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/signup.php", "POST", field, data);
+
+
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();
@@ -90,17 +124,20 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                                     }
                                 }
-                            }
+                            }*/
                             //End Write and Read data with URL
                         }
                     });
 
                 }
-
+/*
                 else{
                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
-                }
+                } */
+
+
             }
+
         });
 
 

@@ -20,7 +20,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
-
+/*
         //Wiring up
         mEditTextCreateAccountEmail= findViewById(R.id.create_account_email);
         mEditTextCreateAccountName = findViewById(R.id.create_account_name);
@@ -31,6 +31,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         mEditTextCreateAccountConfirmPassword = findViewById(R.id.create_account_confirm_password);
         mButtonCreateAccount = findViewById(R.id.create_account_create);
 
+
+ */
+
+        /*
         //On Click
         mButtonCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +103,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             }
         });
-
+*/
 
 
 

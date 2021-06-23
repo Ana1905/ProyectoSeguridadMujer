@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,6 +30,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 
 import httpurlconnection.PutData;
+
+import static android.graphics.Color.GREEN;
 
 public class CreateAccountActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks {
     private DatePickerDialog datePickerDialog;
@@ -68,7 +71,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             public void onClick(View v) {
              //Set if condition when checbox checked
                 if(mCheckBoxCaptcha.isChecked()){
-                    mCheckBoxCaptcha.setEnabled(false); //Once it is checked unchecking is not enable
+                    //mCheckBoxCaptcha.setEnabled(false); //Once it is checked unchecking is not enable
                     SafetyNet.SafetyNetApi.verifyWithRecaptcha(googleApiClient,SiteKey).setResultCallback(new ResultCallback<SafetyNetApi.RecaptchaTokenResult>() {
                         @Override
                         public void onResult(@NonNull @NotNull SafetyNetApi.RecaptchaTokenResult recaptchaTokenResult) {
@@ -77,14 +80,16 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                 //Display Success Message
                                 Toast.makeText(getApplicationContext(),"Verificado con exito",Toast.LENGTH_SHORT).show();
                                 //Change checkbox text color
-                                mCheckBoxCaptcha.setTextColor(Color.GREEN);
+                                mCheckBoxCaptcha.setTextColor(GREEN);
+
                             }
-                            else{
-                                //Default checkbox text color
-                                mCheckBoxCaptcha.setTextColor(Color.WHITE);
-                            }
+
                         }
                     });
+                }
+                else{
+                    mCheckBoxCaptcha.setChecked(false);
+                    mCheckBoxCaptcha.setTextColor(Color.WHITE);
                 }
             }
         });
@@ -133,36 +138,38 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                 confirmPassword = String.valueOf(mEditTextCreateAccountConfirmPassword.getText());
 
                 if (!email.equals("") && !nombres.equals("") && !apellido_paterno.equals("") && !apellido_materno.equals("") && !fecha_nacimiento.equals("") && !contraseña.equals("")) {
-                    //Start ProgressBar first (Set visibility VISIBLE)
-                    Handler handler = new Handler();
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            //Starting Write and Read data with URL
-                            //Creating array for parameters
-                            String[] field = new String[6];
-                            field[0] = "email";
-                            field[1] = "nombres";
-                            field[2] = "apellido_paterno";
-                            field[3] = "apellido_materno";
-                            field[4] = "fecha_nacimiento";
-                            field[5] = "contraseña";
+                    if (mCheckBoxCaptcha.getCurrentTextColor()==GREEN) {
+                        if (mCheckBoxTermsAndConditions.isChecked()) {
+                            //Start ProgressBar first (Set visibility VISIBLE)
+                            Handler handler = new Handler();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Starting Write and Read data with URL
+                                    //Creating array for parameters
+                                    String[] field = new String[6];
+                                    field[0] = "email";
+                                    field[1] = "nombres";
+                                    field[2] = "apellido_paterno";
+                                    field[3] = "apellido_materno";
+                                    field[4] = "fecha_nacimiento";
+                                    field[5] = "contraseña";
 
 
-                            //Creating array for data
-                            String[] data = new String[6];
-                            data[0] = email;
-                            data[1] = nombres;
-                            data[2] = apellido_paterno;
-                            data[3] = apellido_materno;
-                            data[4] = fecha_nacimiento;
-                            data[5] = contraseña;
+                                    //Creating array for data
+                                    String[] data = new String[6];
+                                    data[0] = email;
+                                    data[1] = nombres;
+                                    data[2] = apellido_paterno;
+                                    data[3] = apellido_materno;
+                                    data[4] = fecha_nacimiento;
+                                    data[5] = contraseña;
 
-                            String[] data2 = new String[1];
-                            data[0] = email;
+                                    String[] data2 = new String[1];
+                                    data[0] = email;
 
-                            String[] field2 = new String[1];
-                            field[0] = "email";
+                                    String[] field2 = new String[1];
+                                    field[0] = "email";
 
                             /*
                             //Change ip and port of your computer and xampp
@@ -187,32 +194,36 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 */
 
 
+                                    PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/signup.php", "POST", field, data);
 
 
+                                    if (putData.startPut()) {
+                                        if (putData.onComplete()) {
+                                            String result = putData.getResult();
+                                            if (result.equals("Sign Up Success")) {
+                                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
-
-                            PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/signup.php", "POST", field, data);
-
-
-                            if (putData.startPut()) {
-                                if (putData.onComplete()) {
-                                    String result = putData.getResult();
-                                    if(result.equals("Sign Up Success")){
-                                        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+                                            }
+                                        }
                                     }
-                                    else{
-                                        Toast.makeText(getApplicationContext(),result,Toast.LENGTH_SHORT).show();
-
-                                    }
+                                    //End Write and Read data with URL
                                 }
-                            }
-                            //End Write and Read data with URL
-                        }
-                    });
+                            });
 
+                        }
+
+                        else{
+                            Toast.makeText(getApplicationContext(), "Debe aceptar los términos y condiciones", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "Debemos verificar que no sea un robot", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
                 else{
@@ -223,8 +234,6 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             }
 
         });
-
-
 
     }
 
@@ -257,7 +266,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     }
 
     private String makeDateString(int day, int month, int year) {
-        return month + "/" +  day + "/" + year ;
+        return year + "/" +  month + "/" + day ; //date format changes here
     }
 
     public void openDatePicker(View view) {

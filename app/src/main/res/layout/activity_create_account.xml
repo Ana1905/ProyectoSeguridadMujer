@@ -94,7 +94,7 @@
         android:textColor="@color/Purple_Dark"
         android:textColorHighlight="@color/Purple_Dark"
         android:textColorHint="@color/Purple_Dark"
-        android:textSize="15dp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.857"
@@ -183,45 +183,70 @@
         android:id="@+id/create_account_captcha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:enabled="true"
         android:paddingHorizontal="10dp"
         android:text="@string/captcha_label"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.771" />
+        app:layout_constraintVertical_bias="0.775" />
+
+    <Button
+        android:id="@+id/button_create_account_terms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:paddingHorizontal="15dp"
+        android:background="@drawable/button_shape"
+        android:backgroundTint="@color/white"
+        android:text="Términos y condiciones"
+
+        android:textColor="@color/Purple_Dark"
+        android:textColorHighlight="@color/Purple_Dark"
+        android:textColorHint="@color/Purple_Dark"
+
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.846"
+        android:visibility="visible"/>
 
     <CheckBox
         android:id="@+id/create_account_terms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:enabled="true"
         android:paddingHorizontal="10dp"
         android:text="@string/sign_up_terms"
         android:textColor="@android:color/white"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.841"
-       />
+        app:layout_constraintVertical_bias="0.846" />
 
     <Button
         android:id="@+id/create_account_create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="266dp"
+        android:layout_height="44dp"
         android:background="@drawable/sign_in_button_shape"
         android:paddingHorizontal="10dp"
         android:text="@string/sign_up_create_account"
         android:textColor="@android:color/white"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_account_confirm_password"
-        app:layout_constraintVertical_bias="0.789" />
+        app:layout_constraintVertical_bias="0.861" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

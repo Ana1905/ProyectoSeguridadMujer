@@ -34,7 +34,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     private DatePickerDialog datePickerDialog;
 
     EditText mEditTextCreateAccountEmail, mEditTextCreateAccountName, mEditTextCreateAccountPaternalSurname, mEditTextCreateAccountMaternalSurname,  mEditTextCreateAccountPassword, mEditTextCreateAccountConfirmPassword;
-    Button mButtonCreateAccount,  mButtonDateOfBirth;
+    Button mButtonCreateAccount,  mButtonDateOfBirth, mButtonTermsAndConditions;
     CheckBox mCheckBoxCaptcha, mCheckBoxTermsAndConditions;
     GoogleApiClient googleApiClient;
 
@@ -57,6 +57,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         mButtonCreateAccount = findViewById(R.id.create_account_create);
         mCheckBoxCaptcha = findViewById(R.id.create_account_captcha);
         mCheckBoxTermsAndConditions = findViewById(R.id.create_account_terms);
+        mButtonTermsAndConditions = findViewById(R.id.button_create_account_terms);
 
         //---CAPTCHA
         //CreateGoogle Api client
@@ -67,6 +68,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             public void onClick(View v) {
              //Set if condition when checbox checked
                 if(mCheckBoxCaptcha.isChecked()){
+                    mCheckBoxCaptcha.setEnabled(false); //Once it is checked unchecking is not enable
                     SafetyNet.SafetyNetApi.verifyWithRecaptcha(googleApiClient,SiteKey).setResultCallback(new ResultCallback<SafetyNetApi.RecaptchaTokenResult>() {
                         @Override
                         public void onResult(@NonNull @NotNull SafetyNetApi.RecaptchaTokenResult recaptchaTokenResult) {
@@ -89,10 +91,23 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
 
         //----TERMS AND CONTIDIONS
-        mCheckBoxTermsAndConditions.setOnClickListener(new View.OnClickListener() {
+        mButtonTermsAndConditions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog();
+                mButtonTermsAndConditions.setVisibility(View.INVISIBLE);
+                mCheckBoxTermsAndConditions.setVisibility(View.VISIBLE);
+
+            }
+        });
+        mCheckBoxTermsAndConditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(mCheckBoxTermsAndConditions.isChecked()) {
+                    mCheckBoxTermsAndConditions.setEnabled(false); //Once it is checked unchecking is not enable
+                }
+
             }
 
         });
@@ -264,5 +279,6 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     public void openDialog() {
         TermsDialog termsDialog = new TermsDialog();
         termsDialog.show(getSupportFragmentManager(), "terms and conditions dialog");
+
     }
 }

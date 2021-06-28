@@ -43,4 +43,7 @@
     <string name="date_of_birth_label">Fecha de nacimiento</string>
     <string name="captcha_label">No soy un robot</string>
     <string name="forgot_password_label_string">Recuperar contraseña</string>
+
+
+    <string name="ip">http://192.168.56.1</string>
 </resources>

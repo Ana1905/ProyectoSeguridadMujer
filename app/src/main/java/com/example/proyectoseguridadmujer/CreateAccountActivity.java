@@ -26,6 +26,9 @@ import com.google.android.gms.safetynet.SafetyNet;
 import com.google.android.gms.safetynet.SafetyNetApi;
 import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import httpurlconnection.PutData;
 import static android.graphics.Color.GREEN;
 public class CreateAccountActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks {
@@ -114,6 +117,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
             }
         });
+
         mCheckBoxTermsAndConditions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,15 +130,12 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
         });
 
-
         mButtonDateOfBirth.setText(getTodaysDate());
-
 
         //On Click
         mButtonCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 //Variables to catch data
                 String email, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, contraseña, confirmPassword;
@@ -146,93 +147,110 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                 contraseña = String.valueOf(mEditTextCreateAccountPassword.getText());
                 confirmPassword = String.valueOf(mEditTextCreateAccountConfirmPassword.getText());
 
-                if (!email.equals("") && !nombres.equals("") && !apellido_paterno.equals("") && !apellido_materno.equals("") && !fecha_nacimiento.equals("") && !contraseña.equals("")) {
-                    if (mCheckBoxCaptcha.getCurrentTextColor()==GREEN) {
-                        if (mCheckBoxTermsAndConditions.isChecked()) {
-                            //Start ProgressBar first (Set visibility VISIBLE)
-                            Handler handler = new Handler();
-                            handler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    //Starting Write and Read data with URL
-                                    //Creating array for parameters
-                                    String[] field = new String[6];
-                                    field[0] = "email";
-                                    field[1] = "nombres";
-                                    field[2] = "apellido_paterno";
-                                    field[3] = "apellido_materno";
-                                    field[4] = "fecha_nacimiento";
-                                    field[5] = "contraseña";
+                //validations
+                if (!email.equals("") && !nombres.equals("") && !apellido_paterno.equals("") && !apellido_materno.equals("") && !fecha_nacimiento.equals("") && !contraseña.equals("") && !confirmPassword.equals("")) {
+                   if(emailFormatValidation(email)) {
+                       if(emailDomainValidation(email).equals("@gmail.com") || emailDomainValidation(email).equals("@outlook.com")){
+                           if (contraseña.equals(confirmPassword)) {
+                               if (mCheckBoxCaptcha.getCurrentTextColor() == GREEN) {
+                                   if (mCheckBoxTermsAndConditions.isChecked()) {
+                                       //Start ProgressBar first (Set visibility VISIBLE)
+                                       Handler handler = new Handler();
+                                       handler.post(new Runnable() {
+                                           @Override
+                                           public void run() {
+                                               //Starting Write and Read data with URL
+                                               //Creating array for parameters
+                                               String[] field = new String[6];
+                                               field[0] = "email";
+                                               field[1] = "nombres";
+                                               field[2] = "apellido_paterno";
+                                               field[3] = "apellido_materno";
+                                               field[4] = "fecha_nacimiento";
+                                               field[5] = "contraseña";
 
 
-                                    //Creating array for data
-                                    String[] data = new String[6];
-                                    data[0] = email;
-                                    data[1] = nombres;
-                                    data[2] = apellido_paterno;
-                                    data[3] = apellido_materno;
-                                    data[4] = fecha_nacimiento;
-                                    data[5] = contraseña;
+                                               //Creating array for data
+                                               String[] data = new String[6];
+                                               data[0] = email;
+                                               data[1] = nombres;
+                                               data[2] = apellido_paterno;
+                                               data[3] = apellido_materno;
+                                               data[4] = fecha_nacimiento;
+                                               data[5] = contraseña;
 
-                                    String[] data2 = new String[1];
-                                    data[0] = email;
+                                               String[] data2 = new String[1];
+                                               data[0] = email;
 
-                                    String[] field2 = new String[1];
-                                    field[0] = "email";
+                                               String[] field2 = new String[1];
+                                               field[0] = "email";
 
-                            /*
-                            //Change ip and port of your computer and xampp
-                            PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/email_validation.php", "POST", field2, data2);
-                            if (putData.startPut()) {
-                                if (putData.onComplete()) {
-                                    String validation = putData.getResult();
-                                        if(validation.equals("valid email")){
-                                        Toast.makeText(getApplicationContext(),"bien",Toast.LENGTH_SHORT).show();
-                                        //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        //startActivity(intent);
-                                        finish();
-                                    }
-                                    else{
-                                        Toast.makeText(getApplicationContext(),validation,Toast.LENGTH_SHORT).show();
-
-                                    }
-                                }
-                            }
-
-*/
-                                    PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/signup.php", "POST", field, data);
-
-
+                                    /*
+                                    //Change ip and port of your computer and xampp
+                                    PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/email_validation.php", "POST", field2, data2);
                                     if (putData.startPut()) {
                                         if (putData.onComplete()) {
-                                            String result = putData.getResult();
-                                            if (result.equals("Sign Up Success")) {
-                                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                                startActivity(intent);
+                                            String validation = putData.getResult();
+                                                if(validation.equals("valid email")){
+                                                Toast.makeText(getApplicationContext(),"bien",Toast.LENGTH_SHORT).show();
+                                                //Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                //startActivity(intent);
                                                 finish();
-                                            } else {
-                                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                            }
+                                            else{
+                                                Toast.makeText(getApplicationContext(),validation,Toast.LENGTH_SHORT).show();
 
                                             }
                                         }
                                     }
-                                    //End Write and Read data with URL
-                                }
-                            });
 
-                        }
+        */
+                                               PutData putData = new PutData("https://seguridadmujer.000webhostapp.com/app_movil/LoginRegister/signup.php", "POST", field, data);
 
-                        else{
-                            Toast.makeText(getApplicationContext(), "Debe aceptar los términos y condiciones", Toast.LENGTH_SHORT).show();
-                        }
+
+                                               if (putData.startPut()) {
+                                                   if (putData.onComplete()) {
+                                                       String result = putData.getResult();
+                                                       if (result.equals("Sign Up Success")) {
+                                                           Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                                           Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                           startActivity(intent);
+                                                           finish();
+                                                       } else {
+                                                           Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+
+                                                       }
+                                                   }
+                                               }
+                                               //End Write and Read data with URL
+                                           }
+                                       });
+
+                                   } else {
+                                       Toast.makeText(getApplicationContext(), "Debe aceptar los términos y condiciones", Toast.LENGTH_SHORT).show();
+                                   }
+                               } else {
+                                   Toast.makeText(getApplicationContext(), "Debemos verificar que no sea un robot", Toast.LENGTH_SHORT).show();
+                               }
+                           } else {
+                               Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+
+                           }
+                       }
+
+                       else{
+                           Toast.makeText(getApplicationContext(), "Los dominios de correo admitidos son gmail y outlook ", Toast.LENGTH_SHORT).show();
+                       }
+
                     }
-                    else{
-                        Toast.makeText(getApplicationContext(), "Debemos verificar que no sea un robot", Toast.LENGTH_SHORT).show();
+
+                    else {
+                        Toast.makeText(getApplicationContext(), "El email ingresado no corresponde a un formato válido", Toast.LENGTH_SHORT).show();
+
                     }
                 }
 
-                else{
+                else {
                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                 }
 
@@ -294,6 +312,29 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     public void openDialog() {
         TermsDialog termsDialog = new TermsDialog();
         termsDialog.show(getSupportFragmentManager(), "terms and conditions dialog");
+
+    }
+
+    //Email validation
+    public boolean emailFormatValidation(String email){
+        // Patrón para validar el email
+        Pattern pattern = Pattern
+                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+
+        // El email a validar
+        Matcher mather = pattern.matcher(email);
+
+        if (mather.find() == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String emailDomainValidation(String email){
+        String domain=email.substring(email.indexOf("@"));
+        return domain;
 
     }
 }

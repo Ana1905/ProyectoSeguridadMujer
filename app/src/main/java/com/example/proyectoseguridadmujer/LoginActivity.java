@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                             data[0] = email;
                             data[1] = contraseña;
                             //Change ip and port of your computer and xampp
-                            PutData putData = new PutData("http://192.168.56.1:80/LoginRegister/login.php", "POST", field, data);
+                            PutData putData = new PutData("https://seguridadmujer.000webhostapp.com/app_movil/LoginRegister/login.php", "POST", field, data);
 
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {

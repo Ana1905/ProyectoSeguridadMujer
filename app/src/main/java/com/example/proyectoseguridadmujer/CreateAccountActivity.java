@@ -40,7 +40,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     TextView mTextViewGotoLogin;
     GoogleApiClient googleApiClient;
 
-    //Put sitekey as a string
+    //Put sitekey as a string CAPTCHA
     String SiteKey= "6LesLFEbAAAAAEmJtNkxvnLUJhQKuN2v4SzRbE8f";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,9 +216,9 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                                            startActivity(intent);
                                                            finish();
-                                                       } else {
-                                                           Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-
+                                                       }
+                                                       else{
+                                                           Toast.makeText(getApplicationContext(), "El correo ingresado ya fue usado en otra cuenta", Toast.LENGTH_SHORT).show();
                                                        }
                                                    }
                                                }

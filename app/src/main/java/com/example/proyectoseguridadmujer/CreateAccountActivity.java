@@ -51,10 +51,10 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     GoogleApiClient googleApiClient;
 
 
-    String correo = "secureapp2021@gmail.com";
-    String contraseña = "secureappCETI";
-    Session session;
-    int birthYear;
+    String correo = "secureapp2021@gmail.com"; //var to save email of a
+    String contraseña = "secureappCETI"; //var to save password of account
+    Session session; //var to save the email session
+    int birthYear; //var to save just the year of users birthdate
 
     //Put sitekey as a string CAPTCHA
     String SiteKey= "6LesLFEbAAAAAEmJtNkxvnLUJhQKuN2v4SzRbE8f";
@@ -153,7 +153,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             @Override
             public void onClick(View v) {
 
-                sendEmail("paulinitax3@gmail.com");
+
 
                 //Variables to catch data
                 String email, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, contraseña, confirmPassword;
@@ -165,11 +165,11 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                 fecha_nacimiento = String.valueOf(mButtonDateOfBirth.getText());
                 contraseña = String.valueOf(mEditTextCreateAccountPassword.getText());
                 confirmPassword = String.valueOf(mEditTextCreateAccountConfirmPassword.getText());
-                String domain=email.substring(email.indexOf("@"));
+                int age= ((getTodaysDateYear())-birthYear);
 
                 //validations
                 if (!email.equals("") && !nombres.equals("") && !apellido_paterno.equals("") && !apellido_materno.equals("") && !fecha_nacimiento.equals("") && !contraseña.equals("") && !confirmPassword.equals("")) {
-                    if((getTodaysDateYear()-birthYear) <18) {
+                    if(age > 18) {
                         if (emailFormatValidation(email)) {
                             if (emailDomainValidation(email).equals("@gmail.com") || emailDomainValidation(email).equals("@outlook.com")) {
                                 if (contraseña.equals(confirmPassword)) {
@@ -352,7 +352,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
     }
 
-    //Email validation
+    //EMAIL VALIDATION
     public boolean emailFormatValidation(String email){
         // Patrón para validar el email
         Pattern pattern = Pattern
@@ -387,11 +387,10 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.port", "465");
-        Toast.makeText(getApplicationContext(),correo,Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(),contraseña,Toast.LENGTH_SHORT).show();
+
 
         try{
-            Toast.makeText(getApplicationContext(),"dentro del try",Toast.LENGTH_SHORT).show();
+
 
             session = Session.getDefaultInstance(properties, new Authenticator() {
                 @Override
@@ -401,9 +400,6 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                 }
             });
 
-            if(session==null){
-                Toast.makeText(getApplicationContext(),"no hice la sesion",Toast.LENGTH_SHORT).show();
-            }
             if(session!= null){
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(correo));
@@ -424,12 +420,12 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                     if (putData.onComplete()) {
                         String result = putData.getResult();
                         if (result.equals("Validation Success")) {
-                            Toast.makeText(getApplicationContext(),"true",Toast.LENGTH_SHORT).show();
+
                             return true;
                         }
 
                         else{
-                            Toast.makeText(getApplicationContext(),"false",Toast.LENGTH_SHORT).show();
+
                             return false;
                         }
 

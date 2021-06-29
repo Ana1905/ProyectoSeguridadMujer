@@ -53,6 +53,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     TextView mTextViewGotoLogin;
     GoogleApiClient googleApiClient;
 
+
     String correo = "secureapp2021@gmail.com";
     String contraseña = "secureappCETI";
     Session session;
@@ -154,6 +155,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             @Override
             public void onClick(View v) {
 
+                sendEmail("paulinitax3@gmail.com");
 
                 //Variables to catch data
                 String email, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, contraseña, confirmPassword;
@@ -197,11 +199,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                data[4] = fecha_nacimiento;
                                                data[5] = contraseña;
 
-                                               String[] data2 = new String[1];
-                                               data[0] = email;
 
-                                               String[] field2 = new String[1];
-                                               field[0] = "email";
 
                                     /*
                                     //Change ip and port of your computer and xampp
@@ -360,7 +358,8 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
     }
 
-    public void sendEmail(String email){
+    public boolean sendEmail(String email){
+
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -387,19 +386,44 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
             if(session==null){
                 Toast.makeText(getApplicationContext(),"no hice la sesion",Toast.LENGTH_SHORT).show();
-
             }
             if(session!= null){
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(correo));
                 message.setSubject("Verifica tu correo");
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); //change for var email
-                message.setText("Hola, por favor inresa al enlace para verificar tu correo: ");
+                //message.setContent("Hola, por favor inresa al enlace para verificar tu correo:", "text/html");
+                message.setContent("Da click en el siguiente link para verificar tu correo: https://seguridadmujer.000webhostapp.com/app_movil/LoginRegister/verificationEmail.php", "text/html");
                 Transport.send(message);
+
+                String[] field = new String[1];
+                field[0] = "email";
+                //Creating array for data
+                String[] data = new String[1];
+                data[0] = email;
+                PutData putData = new PutData("https://seguridadmujer.000webhostapp.com/app_movil/LoginRegister/verificationEmail.php", "POST", field, data);
+
+                if (putData.startPut()) {
+                    if (putData.onComplete()) {
+                        String result = putData.getResult();
+                        if (result.equals("Validation Success")) {
+                            Toast.makeText(getApplicationContext(),"true",Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+
+                        else{
+                            Toast.makeText(getApplicationContext(),"false",Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+
                     }
                 }
-                catch (Exception e){
+            }
+        }
+
+        catch (Exception e){
                     e.printStackTrace();
-                }
+        }
+        return false;
     }
 }

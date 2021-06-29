@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/welcome_label"
-        android:textSize="25dp"
+        android:textSize="25sp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,8 +24,8 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿Qué quieres hacer hoy?"
-        android:textSize="20dp"
+        android:text="@string/Informative_option_label"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -33,12 +33,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.218" />
 
-    <ImageView
-        android:id="@+id/imageViewInstitution"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+    <ImageButton
+        android:id="@+id/ImageButtonInstitution"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="@drawable/logo_shape"
         android:src="@drawable/building"
+        tools:ignore="contentDescription"
+
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,16 +49,50 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/ImageViewTest"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+    <ImageButton
+        android:id="@+id/ImageButtonTest"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="@drawable/logo_shape"
         android:src="@drawable/icon_test"
+        tools:ignore="contentDescription"
+
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.857"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Catalog_image_button"
+        tools:layout_editor_absoluteX="86dp"
+        tools:layout_editor_absoluteY="495dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ImageButtonInstitution"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/ImageButtonInstitution"
+        app:layout_constraintTop_toBottomOf="@id/ImageButtonInstitution"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Test_image_button"
+        android:gravity="center"
+        tools:layout_editor_absoluteX="270dp"
+        tools:layout_editor_absoluteY="520dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ImageButtonTest"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/ImageButtonTest"
+        app:layout_constraintTop_toBottomOf="@id/ImageButtonTest"
+        app:layout_constraintVertical_bias="0.1"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

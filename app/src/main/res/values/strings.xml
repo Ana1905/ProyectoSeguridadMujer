@@ -35,7 +35,7 @@
     <string name="sign_up_verify_robot">No soy un robot</string>
     <string name="sign_up_terms">He leido y acepto los términos y condiciones</string>
     <string name="forgot_password_text">Forgot password?</string>
-    <string name="email_forgot_password">Please tell us ur email</string>
+    <string name="email_forgot_password">Please tell us your email</string>
     <string name="recover_password">Recover</string>
     <string name="restore_password_label">Reestablecer contraseña</string>
     <string name="welcome_label">Bienvenida</string>
@@ -46,4 +46,11 @@
 
 
     <string name="ip">http://192.168.56.1</string>
+
+    <string name="Catalog_image_button">Catálogo de instituciones</string>
+    <string name="Informative_option_label">¿Qué quieres hacer hoy?</string>
+    <string name="Test_image_button">Identificar institución de <br />  apoyo</string>
+    <string name="Institution_list_fragment">Lista de instituciones</string>
+    <string name="Test_fragment">Test</string>
+
 </resources>

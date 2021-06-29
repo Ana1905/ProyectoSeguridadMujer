@@ -49,8 +49,13 @@
 
     <string name="Catalog_image_button">Catálogo de instituciones</string>
     <string name="Informative_option_label">¿Qué quieres hacer hoy?</string>
+    <string name="Self_defense_option_label">¿Qué deseas aprender hoy?</string>
     <string name="Test_image_button">Identificar institución de <br />  apoyo</string>
+    <string name="Body_image_button">Defensa cuerpo a cuerpo</string>
+    <string name="Weapon_image_button">Manejo de herramientas</string>
     <string name="Institution_list_fragment">Lista de instituciones</string>
     <string name="Test_fragment">Test</string>
+    <string name="Body_defense_fragment">Defensa cuerpo a cuerpo</string>
+    <string name="Weapon_defense_fragment">Manejo de herramientas</string>
 
 </resources>

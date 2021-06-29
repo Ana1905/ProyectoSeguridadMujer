@@ -8,8 +8,10 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaCas;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,10 +26,21 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.safetynet.SafetyNet;
 import com.google.android.gms.safetynet.SafetyNetApi;
+import com.sun.mail.imap.IMAPMessage;
+
 import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import httpurlconnection.PutData;
 import static android.graphics.Color.GREEN;
@@ -39,6 +52,10 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     CheckBox mCheckBoxCaptcha, mCheckBoxTermsAndConditions;
     TextView mTextViewGotoLogin;
     GoogleApiClient googleApiClient;
+
+    String correo = "secureapp2021@gmail.com";
+    String contraseña = "secureappCETI";
+    Session session;
 
     //Put sitekey as a string CAPTCHA
     String SiteKey= "6LesLFEbAAAAAEmJtNkxvnLUJhQKuN2v4SzRbE8f";
@@ -137,6 +154,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             @Override
             public void onClick(View v) {
 
+
                 //Variables to catch data
                 String email, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, contraseña, confirmPassword;
                 email = String.valueOf(mEditTextCreateAccountEmail.getText());
@@ -213,13 +231,16 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                        String result = putData.getResult();
                                                        if (result.equals("Sign Up Success")) {
                                                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                                           Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                                           startActivity(intent);
-                                                           finish();
+                                                           sendEmail(email);
+
                                                        }
+
+
+
                                                        else{
                                                            Toast.makeText(getApplicationContext(), "El correo ingresado ya fue usado en otra cuenta", Toast.LENGTH_SHORT).show();
                                                        }
+
                                                    }
                                                }
                                                //End Write and Read data with URL
@@ -253,6 +274,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                 else {
                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                 }
+
 
 
             }
@@ -336,5 +358,48 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         String domain=email.substring(email.indexOf("@"));
         return domain;
 
+    }
+
+    public void sendEmail(String email){
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", "smtp.googlemail.com");
+        properties.put("mail.smtp.socketFactory.port", "465");
+        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.port", "465");
+        Toast.makeText(getApplicationContext(),correo,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),contraseña,Toast.LENGTH_SHORT).show();
+
+        try{
+            Toast.makeText(getApplicationContext(),"dentro del try",Toast.LENGTH_SHORT).show();
+
+            session = Session.getDefaultInstance(properties, new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+
+                    return new PasswordAuthentication(correo,contraseña);
+                }
+            });
+
+            if(session==null){
+                Toast.makeText(getApplicationContext(),"no hice la sesion",Toast.LENGTH_SHORT).show();
+
+            }
+            if(session!= null){
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(correo));
+                message.setSubject("Verifica tu correo");
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); //change for var email
+                message.setText("Hola, por favor inresa al enlace para verificar tu correo: ");
+                Transport.send(message);
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
     }
 }

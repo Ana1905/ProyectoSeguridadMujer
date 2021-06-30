@@ -12,11 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.proyectoseguridadmujer.BasedFragment;
 import com.example.proyectoseguridadmujer.R;
 
 import org.jetbrains.annotations.NotNull;
 
-public class InformativeMenuFragment extends Fragment {
+public class InformativeMenuFragment extends BasedFragment {
 
     ImageButton mImageButtonInstitution, mImageButtonTest;
 
@@ -40,18 +41,24 @@ public class InformativeMenuFragment extends Fragment {
         mImageButtonInstitution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 Intent intent = new Intent(view.getContext(), InstitutionListFragment.class);
                 startActivity(intent);
                 getActivity().finish();
+                */
+                 changeFragment(new InstitutionListFragment(), R.id.mainLayout);
             }
         });
 
         mImageButtonTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 Intent intent = new Intent(view.getContext(), TestFragment.class);
                 startActivity(intent);
                 getActivity().finish();
+                 */
+                changeFragment(new TestFragment(), R.id.mainLayout);
             }
         });
     }

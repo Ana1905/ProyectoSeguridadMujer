@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import org.jetbrains.annotations.NotNull;
 
-public class TemporaryBannedAcountDialog  extends AppCompatDialogFragment {
+public class TemporaryBannedAccountDialog extends AppCompatDialogFragment {
     @NonNull
     @NotNull
     @Override

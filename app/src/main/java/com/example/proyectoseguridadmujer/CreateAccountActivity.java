@@ -229,7 +229,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                             String result = putData.getResult();
                                                             if (result.equals("Sign Up Success")) {
                                                                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                                               // sendEmail(email);
+                                                               // sendVerificationEmail(email);
 
                                                             } else {
                                                                 Toast.makeText(getApplicationContext(), "El correo ingresado ya fue usado en otra cuenta", Toast.LENGTH_SHORT).show();
@@ -374,7 +374,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
     }
 
-    public boolean sendEmail(String email){
+    public boolean sendVerificationEmail(String email){
 
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

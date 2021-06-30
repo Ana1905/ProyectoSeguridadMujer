@@ -104,5 +104,13 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+
     }
+
+    public void openTermsDialog() {
+        TemporaryBannedAcountDialog blacklistEailDialog = new TemporaryBannedAcountDialog();
+        blacklistEailDialog.show(getSupportFragmentManager(), "Temporary banned acount dialog");
+
+    }
+
     }

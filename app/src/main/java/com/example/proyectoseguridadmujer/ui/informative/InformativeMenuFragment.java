@@ -46,8 +46,14 @@ public class InformativeMenuFragment extends Fragment {
                 /*
                 Intent intent = new Intent(view.getContext(), InstitutionListFragment.class);
                 startActivity(intent);
-                getActivity().finish();*/
+                getActivity().finish();
+                Fragment nuevoFragmento = new InstitutionListFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fra)
+                transaction.addToBackStack(null);
 
+                // Commit a la transacción
+                transaction.commit();*/
 
             }
         });

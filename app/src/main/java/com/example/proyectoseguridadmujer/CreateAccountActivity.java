@@ -231,7 +231,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                             String result = putData.getResult();
                                                             if (result.equals("Sign Up Success")) {
                                                                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                                                sendEmail(email);
+                                                               // sendEmail(email);
 
                                                             } else {
                                                                 Toast.makeText(getApplicationContext(), "El correo ingresado ya fue usado en otra cuenta", Toast.LENGTH_SHORT).show();

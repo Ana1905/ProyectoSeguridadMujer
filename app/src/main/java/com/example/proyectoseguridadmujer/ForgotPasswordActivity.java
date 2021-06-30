@@ -103,8 +103,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 message.setSubject("Recupera tu contraseña");
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); //change for var email
                 //message.setContent("Hola, por favor inresa al enlace para verificar tu correo:", "text/html");
-                message.setContent("Da click en el siguiente link para reestablecer tu contraseña: http://seguridadmujer.com/app_movil/LoginRegister/recoverPassword.html", "text/html");
+                message.setContent("Da click en el siguiente link para reestablecer tu contraseña: http://seguridadmujer.com/app_movil/LoginRegister/recoverPassword.php?email=" + email, "text/html");
                 Transport.send(message);
+
+
+
 
             }
         }

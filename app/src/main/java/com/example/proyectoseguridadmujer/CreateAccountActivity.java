@@ -111,7 +111,6 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                 Toast.makeText(getApplicationContext(),"Verificado con exito",Toast.LENGTH_SHORT).show();
                                 //Change checkbox text color
                                 mCheckBoxCaptcha.setTextColor(GREEN);
-
                             }
                         }
                     });
@@ -170,7 +169,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
                 //validations
                 if (!email.equals("") && !nombres.equals("") && !apellido_paterno.equals("") && !apellido_materno.equals("") && !fecha_nacimiento.equals("") && !contraseña.equals("") && !confirmPassword.equals("")) {
-                    if(age > 18) {
+                    if(age > 12) {
                         if (emailFormatValidation(email)) {
                             if (emailDomainValidation(email).equals("@gmail.com") || emailDomainValidation(email).equals("@outlook.com")) {
                                 if (contraseña.equals(confirmPassword)) {
@@ -228,9 +227,12 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                         if (putData.onComplete()) {
                                                             String result = putData.getResult();
                                                             if (result.equals("Sign Up Success")) {
-                                                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                                               // sendVerificationEmail(email);
-
+                                                                //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                                                sendVerificationEmail(email);
+                                                                Toast.makeText(getApplicationContext(), "Se ha enviado un link de verificacion a su correo", Toast.LENGTH_SHORT).show();
+                                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                                startActivity(intent);
+                                                                finish();
                                                             } else {
                                                                 Toast.makeText(getApplicationContext(), "El correo ingresado ya fue usado en otra cuenta", Toast.LENGTH_SHORT).show();
                                                             }
@@ -405,31 +407,9 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                 message.setSubject("Verifica tu correo");
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); //change for var email
                 //message.setContent("Hola, por favor inresa al enlace para verificar tu correo:", "text/html");
-                message.setContent("Da click en el siguiente link para verificar tu correo: https://seguridadmujer.000webhostapp.com/app_movil/LoginRegister/verificationEmail.php", "text/html");
+                message.setContent("Da click en el siguiente link para verificar tu correo: http://seguridadmujer.com/app_movil/LoginRegister/emailVerification.php?email=" + email, "text/html");
                 Transport.send(message);
 
-                String[] field = new String[1];
-                field[0] = "email";
-                //Creating array for data
-                String[] data = new String[1];
-                data[0] = email;
-                PutData putData = new PutData("https://seguridadmujer.000webhostapp.com/app_movil/LoginRegister/verificationEmail.php", "POST", field, data);
-
-                if (putData.startPut()) {
-                    if (putData.onComplete()) {
-                        String result = putData.getResult();
-                        if (result.equals("Validation Success")) {
-
-                            return true;
-                        }
-
-                        else{
-
-                            return false;
-                        }
-
-                    }
-                }
             }
         }
 

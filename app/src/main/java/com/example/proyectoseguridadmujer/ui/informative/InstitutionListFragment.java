@@ -3,28 +3,24 @@ package com.example.proyectoseguridadmujer.ui.informative;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proyectoseguridadmujer.R;
 
 public class InstitutionListFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    RecyclerView mRecyclerView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    String Titles[], Descriptions[];
+    int Images[] = {R.drawable.building, R.drawable.icon_test, R.drawable.instagram_profile_image, R.drawable.logo_app,
+    R.drawable.logo_transparent, R.drawable.selfdefense_icon1, R.drawable.selfdefense_icon2};
 
     public InstitutionListFragment() {
         // Required empty public constructor
     }
 
+    /*
     // TODO: Rename and change types and number of parameters
     public static InstitutionListFragment newInstance(String param1, String param2) {
         InstitutionListFragment fragment = new InstitutionListFragment();
@@ -34,20 +30,28 @@ public class InstitutionListFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        mRecyclerView = getView().findViewById(R.id.InstitutionList);
+
+        Titles = getResources().getStringArray(R.array.Test_values_Recycler_view);
+        Descriptions = getResources().getStringArray(R.array.Test_values_Descriptions_Recycler_view);
+
+        InstitutionListAdapter adapter = new InstitutionListAdapter(getView().getContext(), Titles, Descriptions, Images);
+        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getView().getContext()));
     }
 
+    /*
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_institution_list, container, false);
     }
+    */
 }

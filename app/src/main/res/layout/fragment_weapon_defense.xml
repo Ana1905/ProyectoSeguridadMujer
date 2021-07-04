@@ -10,4 +10,10 @@
         android:layout_height="match_parent"
         android:text="@string/Weapon_defense_fragment" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="271dp"
+        android:layout_height="390dp"
+        android:text="Button" />
+
 </FrameLayout>

@@ -46,7 +46,7 @@ public class InformativeMenuFragment extends BasedFragment {
                 startActivity(intent);
                 getActivity().finish();
                 */
-                 changeFragment(new InstitutionListFragment(), R.id.mainLayout);
+                changeFragment(new InstitutionListFragment(), R.id.nav_host_fragment);
             }
         });
 
@@ -58,7 +58,7 @@ public class InformativeMenuFragment extends BasedFragment {
                 startActivity(intent);
                 getActivity().finish();
                  */
-                changeFragment(new TestFragment(), R.id.mainLayout);
+                changeFragment(new TestFragment(), R.id.nav_host_fragment);
             }
         });
     }

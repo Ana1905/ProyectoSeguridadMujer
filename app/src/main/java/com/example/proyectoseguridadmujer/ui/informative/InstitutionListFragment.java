@@ -38,15 +38,7 @@ public class InstitutionListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mRecyclerView = getView().findViewById(R.id.InstitutionList);
-
-        Titles = getResources().getStringArray(R.array.Test_values_Recycler_view);
-        Descriptions = getResources().getStringArray(R.array.Test_values_Descriptions_Recycler_view);
-
-        InstitutionListAdapter adapter = new InstitutionListAdapter(getView().getContext(), Titles, Descriptions, Images);
-        mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getView().getContext()));
+        /*Titles = getResources().getStringArray(R.array.Test_values_Recycler_view);*/
     }
 
 
@@ -54,7 +46,13 @@ public class InstitutionListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_institution_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_institution_list, container, false);
+        mRecyclerView = view.findViewById(R.id.InstitutionList);
+        Descriptions = getResources().getStringArray(R.array.Test_values_Descriptions_Recycler_view);
+        InstitutionListAdapter adapter = new InstitutionListAdapter(view.getContext(), Titles, Descriptions, Images);
+        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        return view;
     }
 
 }

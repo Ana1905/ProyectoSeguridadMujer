@@ -46,7 +46,7 @@ public class SelfDefenseFragment extends BasedFragment {
                 startActivity(intent);
                 getActivity().finish();
                 */
-                changeFragment(new BodyDefenseFragment(), R.id.mainLayout);
+                changeFragment(new BodyDefenseFragment(), R.id.nav_host_fragment);
             }
         });
 
@@ -59,7 +59,7 @@ public class SelfDefenseFragment extends BasedFragment {
                 getActivity().finish();
                 */
 
-                changeFragment(new WeaponDefenseFragment(), R.id.mainLayout);
+                changeFragment(new WeaponDefenseFragment(), R.id.nav_host_fragment);
             }
         });
     }

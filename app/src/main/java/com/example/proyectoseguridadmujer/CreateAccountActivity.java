@@ -41,6 +41,7 @@ import javax.mail.internet.MimeMessage;
 
 import httpurlconnection.PutData;
 import static android.graphics.Color.GREEN;
+
 public class CreateAccountActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks {
     private DatePickerDialog datePickerDialog;
 
@@ -156,6 +157,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
 
                 sendVerificationEmail("paulinitax3@gmail.com");
+                /*
                 //Variables to catch data
                 String email, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, contraseña, confirmPassword;
 
@@ -222,7 +224,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                             }
                                         }
 
-            */
+            */ /*
                                                     PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/signup.php", "POST", field, data);
                                                     if (putData.startPut()) {
                                                         if (putData.onComplete()) {
@@ -288,7 +290,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                 }
 
 
-
+*/
             }
 
         });
@@ -415,6 +417,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             if(session!= null){
                 Toast.makeText(getApplicationContext(), "session no null", Toast.LENGTH_SHORT).show();
                 Toast.makeText(getApplicationContext(), email, Toast.LENGTH_SHORT).show();
+
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(correo));
                 message.setSubject("Verifica tu correo");

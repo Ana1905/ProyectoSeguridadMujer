@@ -58,6 +58,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
     //Put sitekey as a string CAPTCHA
     String SiteKey= "6LesLFEbAAAAAEmJtNkxvnLUJhQKuN2v4SzRbE8f";
+    private Message message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +155,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             public void onClick(View v) {
 
 
-
+                sendVerificationEmail("paulinitax3@gmail.com");
                 //Variables to catch data
                 String email, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, contraseña, confirmPassword;
 
@@ -234,8 +235,19 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                                 startActivity(intent);
                                                                 finish();
                                                             } else {
-                                                                Toast.makeText(getApplicationContext(), "El correo ingresado ya fue usado en otra cuenta", Toast.LENGTH_SHORT).show();
+
+                                                                if (result.equals("Email in blacklist Sign up Failed")) {
+                                                                    OpenBannedEmailDialog();
+                                                                }
+                                                                else{
+
+                                                                    if (result.equals("Invalid email Sign up Failed")) {
+                                                                        Toast.makeText(getApplicationContext(), "Este correo ya fue utilizado en otra cuemta", Toast.LENGTH_SHORT).show();
+                                                                    }
+
+                                                                }
                                                             }
+
 
                                                         }
                                                     }
@@ -392,7 +404,6 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
         try{
 
-
             session = Session.getDefaultInstance(properties, new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
@@ -402,13 +413,17 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             });
 
             if(session!= null){
+                Toast.makeText(getApplicationContext(), "session no null", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), email, Toast.LENGTH_SHORT).show();
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(correo));
                 message.setSubject("Verifica tu correo");
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); //change for var email
                 //message.setContent("Hola, por favor inresa al enlace para verificar tu correo:", "text/html");
                 message.setContent("Da click en el siguiente link para verificar tu correo: http://seguridadmujer.com/app_movil/LoginRegister/emailVerification.php?email=" + email, "text/html");
+                //message.setText("Hola");
                 Transport.send(message);
+                Toast.makeText(getApplicationContext(), "done", Toast.LENGTH_SHORT).show();
 
             }
         }

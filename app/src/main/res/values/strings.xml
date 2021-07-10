@@ -57,5 +57,6 @@
     <string name="Test_fragment">Test</string>
     <string name="Body_defense_fragment">Defensa cuerpo a cuerpo</string>
     <string name="Weapon_defense_fragment">Manejo de herramientas</string>
+    <string name="action_logout">logout</string>
 
 </resources>

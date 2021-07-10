@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -19,15 +20,23 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import httpurlconnection.PutData;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     MenuItem item;
+    //String email = getIntent().getStringExtra("email");
+    Bundle datos;
+    String email="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        datos = getIntent().getExtras();
+        email= datos.getString("Sendemail");
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -69,13 +78,44 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                finish();
+
+                CloseSession(email);
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public boolean CloseSession(String email){
+        String[] field = new String[1];
+        field[0] = "email";
+
+        //Creating array for data
+        String[] data = new String[1];
+        data[0] = email;
+
+        PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/closeActiveSession.php", "POST", field, data);
+        if (putData.startPut()) {
+            if (putData.onComplete()) {
+                String result = putData.getResult();
+
+
+                if (result.equals("Success")) {
+                    //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+
+
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        }
+        return true;
     }
 }

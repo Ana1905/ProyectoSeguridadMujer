@@ -85,10 +85,21 @@ public class LoginActivity extends AppCompatActivity {
                                     if (result.equals("Login Success")) {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        intent.putExtra("Sendemail", email);
                                         startActivity(intent);
                                         finish();
                                     } else {
-                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                        if (result.equals("Active email or Password wrong")) {
+                                            Toast.makeText(getApplicationContext(), "Esta cuenta esta activa en otro dispositivo. Cierre sesión para poder acceder", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            if (result.equals("Missing email verification email or Password wrong")) {
+                                                Toast.makeText(getApplicationContext(), "La cuenta aun no ha sido creada pues no se ha verificado la dirección de correo", Toast.LENGTH_LONG).show();
+                                            }
+                                            else {
+                                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
 
                                     }
                                 }

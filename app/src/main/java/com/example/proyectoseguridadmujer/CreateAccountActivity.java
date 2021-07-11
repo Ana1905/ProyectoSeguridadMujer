@@ -163,13 +163,13 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                 //Variables to catch data
                 String email, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, contraseña, confirmPassword;
 
-                email = String.valueOf(mEditTextCreateAccountEmail.getText());
-                nombres = String.valueOf(mEditTextCreateAccountName.getText());
-                apellido_paterno = String.valueOf(mEditTextCreateAccountPaternalSurname.getText());
-                apellido_materno = String.valueOf(mEditTextCreateAccountMaternalSurname.getText());
-                fecha_nacimiento = String.valueOf(mButtonDateOfBirth.getText());
-                contraseña = String.valueOf(mEditTextCreateAccountPassword.getText());
-                confirmPassword = String.valueOf(mEditTextCreateAccountConfirmPassword.getText());
+                email = String.valueOf(mEditTextCreateAccountEmail.getText()).trim();
+                nombres = String.valueOf(mEditTextCreateAccountName.getText()).trim();
+                apellido_paterno = String.valueOf(mEditTextCreateAccountPaternalSurname.getText()).trim();
+                apellido_materno = String.valueOf(mEditTextCreateAccountMaternalSurname.getText()).trim();
+                fecha_nacimiento = String.valueOf(mButtonDateOfBirth.getText()).trim();
+                contraseña = String.valueOf(mEditTextCreateAccountPassword.getText()).trim();
+                confirmPassword = String.valueOf(mEditTextCreateAccountConfirmPassword.getText()).trim();
                 int age = ((getTodaysDateYear()) - birthYear);
 
                 //validations

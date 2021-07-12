@@ -3,6 +3,7 @@ package com.example.proyectoseguridadmujer;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -476,4 +477,10 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         return cadenaRotada;
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = NavUtils.getParentActivityIntent(CreateAccountActivity.this);
+        startActivity(intent);
+        finish();
+    }
 }

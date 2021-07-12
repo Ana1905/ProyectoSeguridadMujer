@@ -1,6 +1,8 @@
 package com.example.proyectoseguridadmujer.ui.informative;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,14 +21,15 @@ import com.example.proyectoseguridadmujer.R;
 import org.jetbrains.annotations.NotNull;
 
 public class InformativeMenuFragment extends Fragment {
-
+    private String email="";
     ImageButton mImageButtonInstitution, mImageButtonTest;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_informative_menu, container, false);
-
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("Credencials", Context.MODE_PRIVATE);
+        email = preferences.getString("email", "");
 
         return root;
     }

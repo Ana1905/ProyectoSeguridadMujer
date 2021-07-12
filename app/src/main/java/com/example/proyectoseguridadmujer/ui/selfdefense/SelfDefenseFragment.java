@@ -1,30 +1,33 @@
 package com.example.proyectoseguridadmujer.ui.selfdefense;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.proyectoseguridadmujer.BodyDefenseActivity;
 import com.example.proyectoseguridadmujer.R;
 
 import org.jetbrains.annotations.NotNull;
 
 public class SelfDefenseFragment extends Fragment {
-
+    private String email="";
     ImageButton mImageButtonBody, mImageButtonWeapon;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_self_defense, container, false);
-
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("Credencials", Context.MODE_PRIVATE);
+        email = preferences.getString("email", "");
 
         return root;
     }
@@ -40,7 +43,8 @@ public class SelfDefenseFragment extends Fragment {
         mImageButtonBody.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), BodyDefenseFragment.class);
+                Intent intent = new Intent(view.getContext(), BodyDefenseActivity.class);
+              //  intent.putExtra("Sendemail", email);
                 startActivity(intent);
                 getActivity().finish();
             }
@@ -49,7 +53,7 @@ public class SelfDefenseFragment extends Fragment {
         mImageButtonWeapon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), WeaponDefenseFragment.class);
+                Intent intent = new Intent(view.getContext(), BodyDefenseActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }

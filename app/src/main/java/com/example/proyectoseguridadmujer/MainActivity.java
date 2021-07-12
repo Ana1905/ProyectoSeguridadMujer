@@ -2,16 +2,23 @@ package com.example.proyectoseguridadmujer;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.example.proyectoseguridadmujer.ui.alert.AlertFragment;
+import com.example.proyectoseguridadmujer.ui.profile.ProfileFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,15 +34,14 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     MenuItem item;
     //String email = getIntent().getStringExtra("email");
-    Bundle datos;
+
     String email="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        datos = getIntent().getExtras();
-        email= datos.getString("Sendemail");
+       getCredentialData();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,12 +64,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
@@ -72,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+
     }
 
 
@@ -82,40 +93,32 @@ public class MainActivity extends AppCompatActivity {
                 CloseSession(email);
                 return true;
 
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+
+    public void getCredentialData(){
+        SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
+        email = preferences.getString("email", "");
+    }
+
+
     public boolean CloseSession(String email){
-        String[] field = new String[1];
-        field[0] = "email";
 
-        //Creating array for data
-        String[] data = new String[1];
-        data[0] = email;
+            SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("email", "");
+            editor.putString("password", "");
+            editor.commit();
 
-        PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/closeActiveSession.php", "POST", field, data);
-        if (putData.startPut()) {
-            if (putData.onComplete()) {
-                String result = putData.getResult();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
 
-
-                if (result.equals("Success")) {
-                    //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-
-
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        }
         return true;
     }
+
 }

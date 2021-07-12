@@ -3,6 +3,7 @@ package com.example.proyectoseguridadmujer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -17,6 +18,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText mEditTextSignInEmail, mEditTextSignInPassword;
     Button mButtonSignIn,mButtonCreateAccount;
     TextView mTextViewForgotPassword;
+    String email, contraseña;
+    public static String STRING_PREFERENCES = "test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         mButtonSignIn = findViewById(R.id.sign_in_enter_button);
         mButtonCreateAccount = findViewById(R.id.sign_in_create_account_button);
         mTextViewForgotPassword = findViewById(R.id.sign_in_forgot_password_label);
+
+        cargarSession();
 
         //OnClicks
         mButtonCreateAccount.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Variables to catch data
-                String email, contraseña;
+
                 email = String.valueOf(mEditTextSignInEmail.getText());
                 contraseña = String.valueOf(mEditTextSignInPassword.getText());
 
@@ -84,10 +89,11 @@ public class LoginActivity extends AppCompatActivity {
 
                                     if (result.equals("Login Success")) {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                        guardarSession();
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        intent.putExtra("Sendemail", email);
                                         startActivity(intent);
                                         finish();
+
                                     } else {
                                         if (result.equals("Active email or Password wrong")) {
                                             Toast.makeText(getApplicationContext(), "Esta cuenta esta activa en otro dispositivo. Cierre sesión para poder acceder", Toast.LENGTH_SHORT).show();
@@ -113,6 +119,55 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    public void guardarSession(){
+        SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("email", email);
+        editor.putString("password", contraseña);
+        editor.commit();
+
+    }
+
+
+    public void cargarSession(){
+        SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
+        email = preferences.getString("email", "");
+        contraseña = preferences.getString("password", "");
+
+        String[] field = new String[2];
+        field[0] = "email";
+        field[1] = "contraseña";
+
+
+        //Creating array for data
+        String[] data = new String[2];
+        data[0] = email;
+        data[1] = contraseña;
+        //Change ip and port of your computer and xampp
+        PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
+
+        if (putData.startPut()) {
+            if (putData.onComplete()) {
+                String result = putData.getResult();
+
+                if (result.equals("Login Success")) {
+                   // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                    //guardarSession();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+
+                } else {
+
+
+                }
+            }
+        }
+
+
 
     }
 

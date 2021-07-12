@@ -12,21 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoSeguridadMujer"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".ForgotPasswordActivity">
-        </activity>
-
-
+        <activity android:name=".BodyDefenseActivity"></activity>
+        <activity android:name=".ForgotPasswordActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.ProyectoSeguridadMujer.NoActionBar">
-        </activity>
-
-        <activity android:name=".CreateAccountActivity">
-        </activity>
-
-
+            android:theme="@style/Theme.ProyectoSeguridadMujer.NoActionBar" />
+        <activity android:name=".CreateAccountActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

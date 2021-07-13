@@ -42,14 +42,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-
-
-
         //Wiring up
         mEditTextEmailRecovery = findViewById(R.id.forgot_password_email);
         mButtonRecover = findViewById(R.id.forgot_password_recovery_button);
-
-
 
         //Onclicks
         mButtonRecover.setOnClickListener(new View.OnClickListener() {
@@ -58,11 +53,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 String email;
                 email = String.valueOf(mEditTextEmailRecovery.getText());
                 if (!email.equals("")) {
-
-
                     verifyEmailExistance(email);
-
-                    //sendRecoveryEmail(email);
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();
@@ -73,11 +64,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         });
 
-
     }
+
     public boolean sendRecoveryEmail(String email){
-
-
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -89,7 +78,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.port", "465");
 
-        String decode_text="";
         String encode_email="";
 
         try{
@@ -157,14 +145,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             }
         }
-
-
-
-
-
-
-
-
             return true;
     }
 
@@ -172,7 +152,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     public static String cifrar(String cadenaOriginal) {
         return rotar(cadenaOriginal, 5);
     }
-
 
     public static String rotar(String cadenaOriginal, int rotaciones) {
         // En ASCII, la a es 97, b 98, A 65, B 66, etcétera

@@ -23,6 +23,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,9 +40,14 @@ import httpurlconnection.PutData;
 public class DialogNewPostFragment extends DialogFragment {
 
     LinearLayout mLinearLayoutBarra;
+    boolean categoryIsChosen;
+    int ID_Category;
+    EditText mEditTextPostContent;
     Button mButtonClose;
+    Button mButtonAccept;
     Spinner mSpinnerCategory;
     TextView mTextiewName;
+    String post_content;
     String email="";
     String name="";
     Activity actividad;
@@ -56,7 +62,9 @@ public class DialogNewPostFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_dialog_new_post, container, false);
+        mEditTextPostContent = root.findViewById(R.id.post_content_label_comunity);
         mButtonClose = root.findViewById(R.id.button_close);
+        mButtonAccept = root.findViewById(R.id.Button_publish);
         mTextiewName = root.findViewById(R.id.user_name_comunity);
         mButtonClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,19 +86,29 @@ public class DialogNewPostFragment extends DialogFragment {
                 switch (position) {
                     case 0:
                         //Toast.makeText(parent.getContext(), "Seleccione una categoria", Toast.LENGTH_SHORT).show();
+                        categoryIsChosen=false;
                         break;
                     case 1:
                         //Toast.makeText(parent.getContext(), "Contar una experiencia sobre violencia", Toast.LENGTH_SHORT).show();
+                        categoryIsChosen=true;
+                        ID_Category=1;
                         break;
                     case 2:
                         //Toast.makeText(parent.getContext(), "Anuncio importante sobre la seguridad", Toast.LENGTH_SHORT).show();
+                        categoryIsChosen=true;
+                        ID_Category=2;
                         break;
                     case 3:
                         //Toast.makeText(parent.getContext(), "Reporte de acontecimiento", Toast.LENGTH_SHORT).show();
+                        categoryIsChosen=true;
+                        ID_Category=3;
                         break;
                     case 4:
                        // Toast.makeText(parent.getContext(), "Otro", Toast.LENGTH_SHORT).show();
                         showDialog();
+                        ID_Category=4;
+                       //  EditText txtApellidos = (EditText)root.findViewById(R.id.EditTextCategory);
+                       //  Toast.makeText(getActivity(), "Agregado cliente: " + txtApellidos.getText().toString(), Toast.LENGTH_SHORT).show();
                         break;
 
                 }
@@ -102,6 +120,26 @@ public class DialogNewPostFragment extends DialogFragment {
                 // sometimes you need nothing here
             }
         });
+
+        mButtonAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                post_content= mEditTextPostContent.getText().toString();
+                if(post_content.equals("") || categoryIsChosen==false){
+                    if(categoryIsChosen==false) {
+                        Toast.makeText(getActivity(), "Debe elegir una categoria", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "Debe incluir contenido a su publicación", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getActivity(), "publicando", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                }
+            }
+        });
+
 
         getName();
         mTextiewName.setText(name);
@@ -125,6 +163,10 @@ public class DialogNewPostFragment extends DialogFragment {
         dialogOtherCategory.setCancelable(false);
 
         dialogOtherCategory.show(ft, "dialog");
+        categoryIsChosen=false;
+
+
+
     }
 
 

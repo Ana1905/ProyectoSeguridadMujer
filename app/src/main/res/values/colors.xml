@@ -12,4 +12,9 @@
     <color name="purple_500">#BC9BE4</color>
     <color name="purple_700">#6B00ED</color>
     <color name="purple_200">#473063</color>
-</resources>
+    <color name="button_normal">#929392</color>
+    <color name="button_pressed">#c0c1c0</color>
+    <color name="dialog_divider">@android:color/black</color>
+
+
+    </resources>

@@ -59,5 +59,7 @@
     <string name="Weapon_defense_fragment">Manejo de herramientas</string>
     <string name="action_logout">logout</string>
     <string name="seach_label_comunity">¿Qué andas buscando?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

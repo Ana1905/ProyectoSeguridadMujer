@@ -4,23 +4,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
 
-import httpurlconnection.PutData;
+import Dialogs.DialogNewPostFragment;
 
 public class BodyDefenseActivity extends AppCompatActivity {
 
     String email="";
-
+    Button mButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_body_defense);
        // Toast.makeText(getApplicationContext(), "OnCreate", Toast.LENGTH_SHORT).show();
-       getCredentialData();
-
+        getCredentialData();
+        mButton=findViewById(R.id.test);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogNewPostFragment dialogNewPostFragment = new DialogNewPostFragment();
+                dialogNewPostFragment.show(getSupportFragmentManager(),"Nueva publicacion");
+            }
+        });
     }
 
 

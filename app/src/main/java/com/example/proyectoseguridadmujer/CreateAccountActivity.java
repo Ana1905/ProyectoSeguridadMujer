@@ -3,6 +3,7 @@ package com.example.proyectoseguridadmujer;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -39,13 +40,19 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import java.security.Key;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.spec.SecretKeySpec;
+
 import httpurlconnection.PutData;
 import static android.graphics.Color.GREEN;
 public class CreateAccountActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks {
     private DatePickerDialog datePickerDialog;
 
-    EditText mEditTextCreateAccountEmail, mEditTextCreateAccountName, mEditTextCreateAccountPaternalSurname, mEditTextCreateAccountMaternalSurname,  mEditTextCreateAccountPassword, mEditTextCreateAccountConfirmPassword;
-    Button mButtonCreateAccount,  mButtonDateOfBirth, mButtonTermsAndConditions;
+    EditText mEditTextCreateAccountEmail, mEditTextCreateAccountName, mEditTextCreateAccountPaternalSurname, mEditTextCreateAccountMaternalSurname, mEditTextCreateAccountPassword, mEditTextCreateAccountConfirmPassword;
+    Button mButtonCreateAccount, mButtonDateOfBirth, mButtonTermsAndConditions;
     CheckBox mCheckBoxCaptcha, mCheckBoxTermsAndConditions;
     TextView mTextViewGotoLogin;
     GoogleApiClient googleApiClient;
@@ -57,7 +64,8 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     int birthYear; //var to save just the year of users birthdate
 
     //Put sitekey as a string CAPTCHA
-    String SiteKey= "6LesLFEbAAAAAEmJtNkxvnLUJhQKuN2v4SzRbE8f";
+    String SiteKey = "6LesLFEbAAAAAEmJtNkxvnLUJhQKuN2v4SzRbE8f";
+    private Message message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +74,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         initDatePicker();
 
         //Wiring up
-        mEditTextCreateAccountEmail= findViewById(R.id.create_account_email);
+        mEditTextCreateAccountEmail = findViewById(R.id.create_account_email);
         mEditTextCreateAccountName = findViewById(R.id.create_account_name);
         mEditTextCreateAccountPaternalSurname = findViewById(R.id.create_account_paternal_surname);
         mEditTextCreateAccountMaternalSurname = findViewById(R.id.create_account_maternal_surname);
@@ -91,7 +99,6 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         });
 
 
-
         //---CAPTCHA
         //CreateGoogle Api client
         googleApiClient = new GoogleApiClient.Builder(this).addApi(SafetyNet.API).addConnectionCallbacks(CreateAccountActivity.this).build();
@@ -99,24 +106,22 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         mCheckBoxCaptcha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //Set if condition when checbox checked
-                if(mCheckBoxCaptcha.isChecked()){
+                //Set if condition when checbox checked
+                if (mCheckBoxCaptcha.isChecked()) {
                     //mCheckBoxCaptcha.setEnabled(false); //Once it is checked unchecking is not enable
-                    SafetyNet.SafetyNetApi.verifyWithRecaptcha(googleApiClient,SiteKey).setResultCallback(new ResultCallback<SafetyNetApi.RecaptchaTokenResult>() {
+                    SafetyNet.SafetyNetApi.verifyWithRecaptcha(googleApiClient, SiteKey).setResultCallback(new ResultCallback<SafetyNetApi.RecaptchaTokenResult>() {
                         @Override
                         public void onResult(@NonNull @NotNull SafetyNetApi.RecaptchaTokenResult recaptchaTokenResult) {
                             Status status = recaptchaTokenResult.getStatus();
-                            if((status != null) && status.isSuccess() ){
+                            if ((status != null) && status.isSuccess()) {
                                 //Display Success Message
-                                Toast.makeText(getApplicationContext(),"Verificado con exito",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Verificado con exito", Toast.LENGTH_SHORT).show();
                                 //Change checkbox text color
                                 mCheckBoxCaptcha.setTextColor(GREEN);
-
                             }
                         }
                     });
-                }
-                else{
+                } else {
                     mCheckBoxCaptcha.setChecked(false);
                     mCheckBoxCaptcha.setTextColor(Color.WHITE);
                 }
@@ -139,7 +144,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             @Override
             public void onClick(View v) {
 
-                if(mCheckBoxTermsAndConditions.isChecked()) {
+                if (mCheckBoxTermsAndConditions.isChecked()) {
                     mCheckBoxTermsAndConditions.setEnabled(false); //Once it is checked unchecking is not enable
                 }
 
@@ -155,22 +160,22 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             public void onClick(View v) {
 
 
-
+                //sendVerificationEmail("paulinitax3@gmail.com");
                 //Variables to catch data
                 String email, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, contraseña, confirmPassword;
 
-                email = String.valueOf(mEditTextCreateAccountEmail.getText());
-                nombres = String.valueOf(mEditTextCreateAccountName.getText());
-                apellido_paterno = String.valueOf(mEditTextCreateAccountPaternalSurname.getText());
-                apellido_materno = String.valueOf(mEditTextCreateAccountMaternalSurname.getText());
-                fecha_nacimiento = String.valueOf(mButtonDateOfBirth.getText());
-                contraseña = String.valueOf(mEditTextCreateAccountPassword.getText());
-                confirmPassword = String.valueOf(mEditTextCreateAccountConfirmPassword.getText());
-                int age= ((getTodaysDateYear())-birthYear);
+                email = String.valueOf(mEditTextCreateAccountEmail.getText()).trim();
+                nombres = String.valueOf(mEditTextCreateAccountName.getText()).trim();
+                apellido_paterno = String.valueOf(mEditTextCreateAccountPaternalSurname.getText()).trim();
+                apellido_materno = String.valueOf(mEditTextCreateAccountMaternalSurname.getText()).trim();
+                fecha_nacimiento = String.valueOf(mButtonDateOfBirth.getText()).trim();
+                contraseña = String.valueOf(mEditTextCreateAccountPassword.getText()).trim();
+                confirmPassword = String.valueOf(mEditTextCreateAccountConfirmPassword.getText()).trim();
+                int age = ((getTodaysDateYear()) - birthYear);
 
                 //validations
                 if (!email.equals("") && !nombres.equals("") && !apellido_paterno.equals("") && !apellido_materno.equals("") && !fecha_nacimiento.equals("") && !contraseña.equals("") && !confirmPassword.equals("")) {
-                    if(age > 18) {
+                    if (age > 12) {
                         if (emailFormatValidation(email)) {
                             if (emailDomainValidation(email).equals("@gmail.com") || emailDomainValidation(email).equals("@outlook.com")) {
                                 if (contraseña.equals(confirmPassword)) {
@@ -223,19 +228,30 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                         }
 
             */
-                                                    PutData putData = new PutData("https://seguridadmujer.000webhostapp.com/app_movil/LoginRegister/signup.php", "POST", field, data);
-
-
+                                                    PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/signup.php", "POST", field, data);
                                                     if (putData.startPut()) {
                                                         if (putData.onComplete()) {
                                                             String result = putData.getResult();
                                                             if (result.equals("Sign Up Success")) {
-                                                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                                                sendEmail(email);
-
+                                                                //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                                                sendVerificationEmail(email);
+                                                                Toast.makeText(getApplicationContext(), "Se ha enviado un link de verificacion a su correo", Toast.LENGTH_SHORT).show();
+                                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                                startActivity(intent);
+                                                                finish();
                                                             } else {
-                                                                Toast.makeText(getApplicationContext(), "El correo ingresado ya fue usado en otra cuenta", Toast.LENGTH_SHORT).show();
+
+                                                                if (result.equals("Email in blacklist Sign up Failed")) {
+                                                                    OpenBannedEmailDialog();
+                                                                } else {
+
+                                                                    if (result.equals("Invalid email Sign up Failed")) {
+                                                                        Toast.makeText(getApplicationContext(), "Este correo ya fue utilizado en otra cuemta", Toast.LENGTH_SHORT).show();
+                                                                    }
+
+                                                                }
                                                             }
+
 
                                                         }
                                                     }
@@ -262,19 +278,14 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
                         }
 
-                    }
-
-                    else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "No se cumplen los requisitos mínimos de edad", Toast.LENGTH_SHORT).show();
 
                     }
 
-                }
-
-                else {
+                } else {
                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                 }
-
 
 
             }
@@ -294,11 +305,11 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     }
 
     private void initDatePicker() {
-        DatePickerDialog.OnDateSetListener dateSetListener =  new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
                 month = month + 1;
-                String date = makeDateString( day, month, year);
+                String date = makeDateString(day, month, year);
                 mButtonDateOfBirth.setText(date);
             }
         };
@@ -312,13 +323,13 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     }
 
     private String makeDateString(int day, int month, int year) {
-        birthYear=year;
-        return year + "/" +  month + "/" + day ; //date format changes here
+        birthYear = year;
+        return year + "/" + month + "/" + day; //date format changes here
 
     }
 
     public void openDatePicker(View view) {
-            datePickerDialog.show();
+        datePickerDialog.show();
     }
 
     //EXTRA
@@ -354,7 +365,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     }
 
     //EMAIL VALIDATION
-    public boolean emailFormatValidation(String email){
+    public boolean emailFormatValidation(String email) {
         // Patrón para validar el email
         Pattern pattern = Pattern
                 .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -370,14 +381,14 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         }
     }
 
-    public String emailDomainValidation(String email){
-        String domain=email.substring(email.indexOf("@"));
+    public String emailDomainValidation(String email) {
+        String domain = email.substring(email.indexOf("@"));
         return domain;
 
     }
 
-    public boolean sendEmail(String email){
-
+    public boolean sendVerificationEmail(String email) {
+        //Si no envia nada desactiva tu antivirus
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -389,55 +400,87 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.port", "465");
 
-
-        try{
-
+        String decode_text="";
+        String encode_email="";
+        try {
 
             session = Session.getDefaultInstance(properties, new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
 
-                    return new PasswordAuthentication(correo,contraseña);
+                    return new PasswordAuthentication(correo, contraseña);
                 }
             });
 
-            if(session!= null){
+            if (session != null) {
+
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(correo));
                 message.setSubject("Verifica tu correo");
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); //change for var email
                 //message.setContent("Hola, por favor inresa al enlace para verificar tu correo:", "text/html");
-                message.setContent("Da click en el siguiente link para verificar tu correo: https://seguridadmujer.000webhostapp.com/app_movil/LoginRegister/verificationEmail.php", "text/html");
+
+                encode_email= cifrar(email);
+                message.setContent("Da click en el siguiente link para verificar tu correo: http://seguridadmujer.com/app_movil/LoginRegister/emailVerification.php?email=" + encode_email, "text/html");
+                //message.setText("Hola");
                 Transport.send(message);
 
-                String[] field = new String[1];
-                field[0] = "email";
-                //Creating array for data
-                String[] data = new String[1];
-                data[0] = email;
-                PutData putData = new PutData("https://seguridadmujer.000webhostapp.com/app_movil/LoginRegister/verificationEmail.php", "POST", field, data);
 
-                if (putData.startPut()) {
-                    if (putData.onComplete()) {
-                        String result = putData.getResult();
-                        if (result.equals("Validation Success")) {
-
-                            return true;
-                        }
-
-                        else{
-
-                            return false;
-                        }
-
-                    }
-                }
             }
-        }
 
-        catch (Exception e){
-                    e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
+    }
+
+
+
+
+    //ENCRIPTAR
+    public static String cifrar(String cadenaOriginal) {
+        return rotar(cadenaOriginal, 5);
+    }
+
+
+    public static String rotar(String cadenaOriginal, int rotaciones) {
+        // En ASCII, la a es 97, b 98, A 65, B 66, etcétera
+        final int LONGITUD_ALFABETO = 26, INICIO_MINUSCULAS = 97, INICIO_MAYUSCULAS = 65;
+        String cadenaRotada = ""; // La cadena nueva, la que estará rotada
+        for (int x = 0; x < cadenaOriginal.length(); x++) {
+            char caracterActual = cadenaOriginal.charAt(x);
+            // Si no es una letra del alfabeto entonces ponemos el char tal y como está
+            // y pasamos a la siguiente iteración
+            if (!Character.isLetter(caracterActual)) {
+                cadenaRotada += caracterActual;
+                continue;
+            }
+
+            int codigoAsciiDeCaracterActual = (int) caracterActual;
+            boolean esMayuscula = Character.isUpperCase(caracterActual);
+
+            // La posición (1 a 26) que ocupará la letra después de ser rotada
+            // El % LONGITUD_ALFABETO se utiliza por si se pasa de 26. Por ejemplo,
+            // la "z", al ser rotada una vez da el valor de 27, pero en realidad debería
+            // regresar a la letra "a", y con mod hacemos eso ya que 27 % 26 == 1,
+            // 28 % 26 == 2, etcétera ;)
+            int nuevaPosicionEnAlfabeto = ((codigoAsciiDeCaracterActual
+                    - (esMayuscula ? INICIO_MAYUSCULAS : INICIO_MINUSCULAS)) + rotaciones) % LONGITUD_ALFABETO;
+            // Arreglar rotaciones negativas
+            if (nuevaPosicionEnAlfabeto < 0)
+                nuevaPosicionEnAlfabeto += LONGITUD_ALFABETO;
+            int nuevaPosicionAscii = (esMayuscula ? INICIO_MAYUSCULAS : INICIO_MINUSCULAS) + nuevaPosicionEnAlfabeto;
+            // Convertir el código ASCII numérico a su representación como símbolo o letra y
+            // concatenar
+            cadenaRotada += Character.toString((char) nuevaPosicionAscii);
+        }
+        return cadenaRotada;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = NavUtils.getParentActivityIntent(CreateAccountActivity.this);
+        startActivity(intent);
+        finish();
     }
 }

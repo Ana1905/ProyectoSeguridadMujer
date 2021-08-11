@@ -13,9 +13,26 @@
         android:theme="@style/Theme.ProyectoSeguridadMujer"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".ForgotPasswordActivity">
+        <activity
+            android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:parentActivityName=".LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.proyectoseguridadmujer.LoginActivity" />
+        </activity>
+
+        <activity
+            android:name=".CreateAccountActivity"
+            android:parentActivityName=".LoginActivity">
+        </activity>
 
         <activity
             android:name=".MainActivity"
@@ -23,16 +40,9 @@
             android:theme="@style/Theme.ProyectoSeguridadMujer.NoActionBar">
         </activity>
 
-        <activity android:name=".CreateAccountActivity">
-        </activity>
-
-
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name=".BodyDefenseActivity"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

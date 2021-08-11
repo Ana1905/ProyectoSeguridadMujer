@@ -17,7 +17,7 @@ public class BannedEmailDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Correo baneado").setMessage("Lo sentimos el correo ingresado no se puede utilizar, elija uno distinto").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        builder.setTitle("Correo bloqueado").setMessage("Lo sentimos , el correo ingresado fue bloqueado permanentemente por infringir las normas de la comunidad.Elija uno distinto.").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //si quieres que al picar aceptar haga algo, ponlo aqui. Si no pones nada solo lo va a cerrar

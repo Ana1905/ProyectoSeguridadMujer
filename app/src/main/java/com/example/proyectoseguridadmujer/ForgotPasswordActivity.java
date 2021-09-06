@@ -50,10 +50,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         mButtonRecover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendRecoveryEmail("paulinitax3@gmail.com");
                 String email;
                 email = String.valueOf(mEditTextEmailRecovery.getText());
                 if (!email.equals("")) {
-                    verifyEmailExistance(email);
+
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();

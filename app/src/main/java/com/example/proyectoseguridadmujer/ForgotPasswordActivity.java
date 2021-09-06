@@ -98,7 +98,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); //change for var email
                 encode_email= cifrar(email);
                 //message.setContent("Hola, por favor inresa al enlace para verificar tu correo:", "text/html");
-                message.setContent("Da click en el siguiente link para reestablecer tu contraseña: http://seguridadmujer.com/app_movil/LoginRegister/recoverPassword.php?email=" + encode_email, "text/html");
+                message.setContent("Da click en el siguiente link para reestablecer tu contraseña: https://seguridadmujer.com/app_movil/LoginRegister/recoverPassword.php?email=" + encode_email, "text/html");
                 Transport.send(message);
                 Toast.makeText(getApplicationContext(), "Hemos enviado el link de reestablecimiento a su correo electrónico", Toast.LENGTH_LONG).show();
 
@@ -119,7 +119,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         String[] data = new String[1];
         data[0] = email;
 
-        PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/emailExistanceValidation.php", "POST", field, data);
+        PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/emailExistanceValidation.php", "POST", field, data);
         if (putData.startPut()) {
             if (putData.onComplete()) {
                 String result = putData.getResult();

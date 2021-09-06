@@ -39,7 +39,6 @@ public class DialogOtherCategory extends DialogFragment {
         mButtonAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 category = String.valueOf(mEditTextCategory.getText()).trim();
                 if(category.equals("")){
                     Toast.makeText(getContext(), "Por favor escriba su categoria", Toast.LENGTH_SHORT).show();

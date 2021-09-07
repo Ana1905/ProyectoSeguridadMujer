@@ -1,6 +1,7 @@
 package com.example.proyectoseguridadmujer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -188,5 +189,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         return cadenaRotada;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = NavUtils.getParentActivityIntent(ForgotPasswordActivity.this);
+        startActivity(intent);
+        finish();
+    }
 }

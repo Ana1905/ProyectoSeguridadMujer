@@ -48,7 +48,7 @@ public class InstitutionListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_institution_list, container, false);
         mRecyclerView = view.findViewById(R.id.InstitutionList);
-        Descriptions = getResources().getStringArray(R.array.Test_values_Descriptions_Recycler_view);
+        //Descriptions = getResources().getStringArray(R.array.Test_values_Descriptions_Recycler_view);
         InstitutionListAdapter adapter = new InstitutionListAdapter(view.getContext(), Titles, Descriptions, Images);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       getCredentialData();
+        getCredentialData();
+        //checkPetitions();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
     }
+
+
 
 
     @Override
@@ -99,6 +103,53 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void checkPetitions() {
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                //Starting Write and Read data with URL
+                //Creating array for parameters
+                String[] field = new String[1];
+                field[0] = "email";
+
+
+
+                //Creating array for data
+                String[] data = new String[1];
+                data[0] = email;
+
+
+                PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/checkPetitions.php", "POST", field, data);
+
+                if (putData.startPut()) {
+                    if (putData.onComplete()) {
+                        String result = putData.getResult();
+
+                        if (result.equals("Login Success")) {
+                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
+
+                        } else {
+
+                            if (result.equals("Missing email verification email or Password wrong")) {
+                                Toast.makeText(getApplicationContext(), "La cuenta aún no ha sido creada pues no se ha verificado la dirección de correo", Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        }
+                    }
+                }
+                //End Write and Read data with URL
+            }
+        });
+    }
 
     public void getCredentialData(){
         SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);

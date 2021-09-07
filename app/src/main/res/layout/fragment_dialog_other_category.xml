@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_container"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/titulo"
+        android:text="Otra categoria"
+        android:textColor="@color/white"
+        style="bold"
+        android:gravity="center"
+        android:background="@color/purple_200"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+
+        android:layout_weight="0"/>
+
+
+
+    <ScrollView
+        android:id="@+id/cuerpo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/EditTextCategory"
+            android:hint="Ingrese la categoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/botones"
+        android:layout_marginLeft="230dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
+
+        <Button
+            android:id="@+id/ButtonAccept"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/dialog_button_selector"
+            android:text="aceptar"
+            android:textColor="@android:color/white" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -228,7 +228,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                         }
 
             */
-                                                    PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/signup.php", "POST", field, data);
+                                                    PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/signup.php", "POST", field, data);
                                                     if (putData.startPut()) {
                                                         if (putData.onComplete()) {
                                                             String result = putData.getResult();

@@ -43,27 +43,19 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-
-
-
         //Wiring up
         mEditTextEmailRecovery = findViewById(R.id.forgot_password_email);
         mButtonRecover = findViewById(R.id.forgot_password_recovery_button);
-
-
 
         //Onclicks
         mButtonRecover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendRecoveryEmail("paulinitax3@gmail.com");
                 String email;
                 email = String.valueOf(mEditTextEmailRecovery.getText());
                 if (!email.equals("")) {
 
-
-                    verifyEmailExistance(email);
-
-                    //sendRecoveryEmail(email);
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();
@@ -74,11 +66,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         });
 
-
     }
+
     public boolean sendRecoveryEmail(String email){
-
-
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -90,7 +80,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.port", "465");
 
-        String decode_text="";
         String encode_email="";
 
         try{
@@ -111,7 +100,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email)); //change for var email
                 encode_email= cifrar(email);
                 //message.setContent("Hola, por favor inresa al enlace para verificar tu correo:", "text/html");
-                message.setContent("Da click en el siguiente link para reestablecer tu contraseña: http://seguridadmujer.com/app_movil/LoginRegister/recoverPassword.php?email=" + encode_email, "text/html");
+                message.setContent("Da click en el siguiente link para reestablecer tu contraseña: https://seguridadmujer.com/app_movil/LoginRegister/recoverPassword.php?email=" + encode_email, "text/html");
                 Transport.send(message);
                 Toast.makeText(getApplicationContext(), "Hemos enviado el link de reestablecimiento a su correo electrónico", Toast.LENGTH_LONG).show();
 
@@ -132,7 +121,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         String[] data = new String[1];
         data[0] = email;
 
-        PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/emailExistanceValidation.php", "POST", field, data);
+        PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/emailExistanceValidation.php", "POST", field, data);
         if (putData.startPut()) {
             if (putData.onComplete()) {
                 String result = putData.getResult();
@@ -158,14 +147,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
             }
         }
-
-
-
-
-
-
-
-
             return true;
     }
 
@@ -173,7 +154,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     public static String cifrar(String cadenaOriginal) {
         return rotar(cadenaOriginal, 5);
     }
-
 
     public static String rotar(String cadenaOriginal, int rotaciones) {
         // En ASCII, la a es 97, b 98, A 65, B 66, etcétera

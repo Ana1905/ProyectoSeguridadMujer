@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="categories">
+        <item>Selecciona una opción</item>
+        <item>Contar una experiencia sobre violencia</item>
+        <item>Anuncio importante sobre la seguridad</item>
+        <item>Reporte de acontecimiento</item>
+        <item>Otro</item>
+    </string-array>
+
+</resources>

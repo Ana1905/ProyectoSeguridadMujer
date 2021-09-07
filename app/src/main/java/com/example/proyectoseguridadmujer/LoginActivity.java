@@ -57,8 +57,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Variables to catch data
+
                 email = String.valueOf(mEditTextSignInEmail.getText());
                 contraseña = String.valueOf(mEditTextSignInPassword.getText());
+
 
                 if (!email.equals("") && !contraseña.equals("")) {
                     //Start ProgressBar first (Set visibility VISIBLE)
@@ -72,12 +74,13 @@ public class LoginActivity extends AppCompatActivity {
                             field[0] = "email";
                             field[1] = "contraseña";
 
+
                             //Creating array for data
                             String[] data = new String[2];
                             data[0] = email;
                             data[1] = contraseña;
-                            //Change ip and port of your computer and xampp
-                            PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
+
+                            PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
 
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
@@ -89,31 +92,30 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                         finish();
-                                    }
-                                    else {
-                                        if (result.equals("Active email or Password wrong")) {
-                                            Toast.makeText(getApplicationContext(), "Esta cuenta esta activa en otro dispositivo. Cierre sesión para poder acceder", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else {
+
+                                    } else {
+
                                             if (result.equals("Missing email verification email or Password wrong")) {
-                                                Toast.makeText(getApplicationContext(), "La cuenta aun no ha sido creada pues no se ha verificado la dirección de correo", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(), "La cuenta aún no ha sido creada pues no se ha verificado la dirección de correo", Toast.LENGTH_LONG).show();
                                             }
                                             else {
                                                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                             }
-                                        }
+
+
                                     }
                                 }
                             }
                             //End Write and Read data with URL
                         }
                     });
-                }
-                else {
+
+                } else {
                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
     }
 
     public void guardarSesion(){
@@ -122,7 +124,9 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("email", email);
         editor.putString("password", contraseña);
         editor.commit();
+
     }
+
 
     public void cargarSesion(){
         SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
@@ -133,23 +137,33 @@ public class LoginActivity extends AppCompatActivity {
         field[0] = "email";
         field[1] = "contraseña";
 
+
         //Creating array for data
         String[] data = new String[2];
         data[0] = email;
         data[1] = contraseña;
         //Change ip and port of your computer and xampp
-        PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
+        PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
 
         if (putData.startPut()) {
             if (putData.onComplete()) {
                 String result = putData.getResult();
 
                 if (result.equals("Login Success")) {
+                   // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                    //guardarSession();
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
+
                 }
             }
         }
+
+
+
     }
-}
+
+
+
+    }

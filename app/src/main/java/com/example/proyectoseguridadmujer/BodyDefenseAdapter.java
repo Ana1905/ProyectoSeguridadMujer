@@ -1,4 +1,4 @@
-package com.example.proyectoseguridadmujer.ui.informative;
+package com.example.proyectoseguridadmujer;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,17 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.proyectoseguridadmujer.R;
+import com.example.proyectoseguridadmujer.ui.informative.InstitutionListAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
-public class InstitutionListAdapter extends RecyclerView.Adapter<InstitutionListAdapter.ListViewHolder> {
+public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.BodyDefenseViewHolder> {
 
     String Titles[], Descriptions[];
     int Images[];
     Context context;
 
-    public InstitutionListAdapter (Context context, String[] Titles, String[] Descriptions, int[] Images) {
+    public BodyDefenseAdapter (Context context, String[] Titles, String[] Descriptions, int[] Images) {
         this.context = context;
         this.Titles = Titles;
         this.Descriptions = Descriptions;
@@ -30,14 +30,14 @@ public class InstitutionListAdapter extends RecyclerView.Adapter<InstitutionList
     @NonNull
     @NotNull
     @Override
-    public ListViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public BodyDefenseViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.row_institution_list, parent, false);
-        return new ListViewHolder(view);
+        View view = inflater.inflate(R.layout.row_body_defense, parent, false);
+        return new BodyDefenseAdapter.BodyDefenseViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull BodyDefenseViewHolder holder, int position) {
         holder.Title.setText(Titles[position]);
         holder.Description.setText(Descriptions[position]);
         holder.Image.setImageResource(Images[position]);
@@ -48,12 +48,13 @@ public class InstitutionListAdapter extends RecyclerView.Adapter<InstitutionList
         return Titles.length;
     }
 
-    public class ListViewHolder extends RecyclerView.ViewHolder{
+
+    public class BodyDefenseViewHolder extends RecyclerView.ViewHolder {
 
         TextView Title, Description;
         ImageView Image;
 
-        public ListViewHolder(@NonNull @NotNull View itemView) {
+        public BodyDefenseViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
             Title = itemView.findViewById(R.id.BodyDefenseTechnique);

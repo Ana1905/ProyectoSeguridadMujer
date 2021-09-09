@@ -1,6 +1,7 @@
 package com.example.proyectoseguridadmujer;
 
 import android.content.ClipData;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +13,11 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.proyectoseguridadmujer.ui.alert.AlertFragment;
 import com.example.proyectoseguridadmujer.ui.profile.ProfileFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -19,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,6 +35,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import httpurlconnection.PutData;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     MenuItem item;
     //String email = getIntent().getStringExtra("email");
-
+    RequestQueue requestQueue;
     String email="";
 
     @Override
@@ -43,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getCredentialData();
-        //checkPetitions();
+        checkPetitions();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -104,7 +115,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkPetitions() {
-        Handler handler = new Handler();
+
+        obtenerPeticiones("https://seguridadmujer.com/app_movil/PeticionesRecibidas/obtener_solicitudes.php?email=" + email);
+
+
+
+
+       /* Handler handler = new Handler();
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -148,7 +165,59 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //End Write and Read data with URL
             }
+        });*/
+    }
+
+    public void obtenerPeticiones(String URL){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                JSONObject jsonObject = null;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        jsonObject = jsonArray.getJSONObject(i);
+                        String NombreUsuarioWeb= jsonObject.getString("Nombre");
+                        String CorreoUsuarioWeb= jsonObject.getString("Correo");
+                        Toast.makeText(getApplicationContext(), NombreUsuarioWeb, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), CorreoUsuarioWeb, Toast.LENGTH_LONG).show();
+                        int count=0;
+                        dialogopeticion( count);
+
+                    } catch (JSONException e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+
+        }
+    }
+        );
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public void dialogopeticion(int count){
+        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getApplicationContext());
+        dialogo1.setTitle("Importante");
+        dialogo1.setMessage("El usuario web llamado");
+        //dialogo1.setMessage("El usuario web llamado " + NombreUsuarioWeb + " con el correo " + CorreoUsuarioWeb +" desea vincularse a su cuenta. Acepte o rechace esta petición: ");
+        dialogo1.setCancelable(false);
+        dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
+            }
         });
+        dialogo1.setNegativeButton("Declinar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                Toast.makeText(getApplicationContext(), "Declinar", Toast.LENGTH_LONG).show();
+            }
+        });
+        dialogo1.show();
     }
 
     public void getCredentialData(){

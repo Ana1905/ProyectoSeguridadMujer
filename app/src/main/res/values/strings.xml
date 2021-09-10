@@ -66,6 +66,8 @@
     <string name="test_selection_label">¿Sabes si vives en violencia?</string>
     <string name="test_selection_separation">-------------------------------------------------- o --------------------------------------------------</string>
 
+    <string name="Body_defense_url">https://seguridadmujer.com/app_movil/Defensa/getBodyDefenseList.php</string>
+
     <string-array name="Test_values_Recycler_view">
         <item>building</item>
         <item>icon test</item>

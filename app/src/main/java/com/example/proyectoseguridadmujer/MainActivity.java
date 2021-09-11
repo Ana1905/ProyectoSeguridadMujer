@@ -54,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getCredentialData();
+        //dialogopeticion();
+
+
+
         checkPetitions();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -121,51 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       /* Handler handler = new Handler();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                //Starting Write and Read data with URL
-                //Creating array for parameters
-                String[] field = new String[1];
-                field[0] = "email";
-
-
-
-                //Creating array for data
-                String[] data = new String[1];
-                data[0] = email;
-
-
-                PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/checkPetitions.php", "POST", field, data);
-
-                if (putData.startPut()) {
-                    if (putData.onComplete()) {
-                        String result = putData.getResult();
-
-                        if (result.equals("Login Success")) {
-                            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-
-                            if (result.equals("Missing email verification email or Password wrong")) {
-                                Toast.makeText(getApplicationContext(), "La cuenta aún no ha sido creada pues no se ha verificado la dirección de correo", Toast.LENGTH_LONG).show();
-                            }
-                            else {
-                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                            }
-
-
-                        }
-                    }
-                }
-                //End Write and Read data with URL
-            }
-        });*/
+       /* */
     }
 
     public void obtenerPeticiones(String URL){
@@ -178,10 +138,11 @@ public class MainActivity extends AppCompatActivity {
                         jsonObject = jsonArray.getJSONObject(i);
                         String NombreUsuarioWeb= jsonObject.getString("Nombre");
                         String CorreoUsuarioWeb= jsonObject.getString("Correo");
+                        String IDUsuarioWeb= jsonObject.getString("ID_UsuarioWeb");
                         Toast.makeText(getApplicationContext(), NombreUsuarioWeb, Toast.LENGTH_LONG).show();
                         Toast.makeText(getApplicationContext(), CorreoUsuarioWeb, Toast.LENGTH_LONG).show();
                         int count=0;
-                        dialogopeticion( count);
+                        dialogopeticion(NombreUsuarioWeb,CorreoUsuarioWeb,IDUsuarioWeb);
 
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -201,23 +162,67 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
-    public void dialogopeticion(int count){
-        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getApplicationContext());
-        dialogo1.setTitle("Importante");
+    public void updatepetitionstatus(String IDUsuarioWeb, String status){
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                //Starting Write and Read data with URL
+                //Creating array for parameters
+                String[] field = new String[2];
+                field[0] = "ID_UsuarioWeb";
+                field[1] = "estatus";
+
+
+
+                //Creating array for data
+                String[] data = new String[2];
+                data[0] = IDUsuarioWeb;
+                data[1] = status;
+
+
+                PutData putData = new PutData("https://seguridadmujer.com/app_movil/PeticionesRecibidas/updatePetitions.php", "POST", field, data);
+
+                if (putData.startPut()) {
+                    if (putData.onComplete()) {
+                        String result = putData.getResult();
+
+                        if (result.equals("Update Success")) {
+                            Toast.makeText(getApplicationContext(), "Le notificaremos al usuario web tu decisión ¡Gracias!", Toast.LENGTH_SHORT).show();
+
+
+                        }
+
+
+                    }
+                }
+                //End Write and Read data with URL
+            }
+        });
+    }
+
+    public void dialogopeticion(String nombre, String correo,String IDUsuarioWeb){
+        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MainActivity.this);
+        dialogo1.setTitle("Tiene nuevas peticiones de enlace");
         dialogo1.setMessage("El usuario web llamado");
-        //dialogo1.setMessage("El usuario web llamado " + NombreUsuarioWeb + " con el correo " + CorreoUsuarioWeb +" desea vincularse a su cuenta. Acepte o rechace esta petición: ");
+        dialogo1.setMessage("El usuario web llamado " + nombre + " con el correo " + correo +" desea vincularse a su cuenta. Acepte o rechace esta petición: ");
         dialogo1.setCancelable(false);
+
         dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
+                updatepetitionstatus(IDUsuarioWeb,"1");
             }
         });
-        dialogo1.setNegativeButton("Declinar", new DialogInterface.OnClickListener() {
+        dialogo1.setNegativeButton("Rechazar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 Toast.makeText(getApplicationContext(), "Declinar", Toast.LENGTH_LONG).show();
+                updatepetitionstatus(IDUsuarioWeb,"0");
             }
         });
-        dialogo1.show();
+        AlertDialog dialogo = dialogo1.create();
+        dialogo.show();
+
     }
 
     public void getCredentialData(){

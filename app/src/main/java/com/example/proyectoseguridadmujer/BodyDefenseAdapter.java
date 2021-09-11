@@ -10,10 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.proyectoseguridadmujer.ui.informative.InstitutionListAdapter;
-
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.BodyDefenseViewHolder> {
@@ -21,7 +20,7 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
     String Titles[], Descriptions[];
     int Images[];
     Context context;
-    List<BodyDefenseTechniques> list;
+    List<BodyDefenseTechniques> list = new ArrayList();
 
     public BodyDefenseAdapter (Context context, String[] Titles, String[] Descriptions, int[] Images) {
         this.context = context;
@@ -30,10 +29,11 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
         this.Images = Images;
     }
 
-    public BodyDefenseAdapter (Context context, List<BodyDefenseTechniques> list)
+    public BodyDefenseAdapter (Context context, List<BodyDefenseTechniques> list, int[] Images)
     {
         this.context = context;
         this.list = list;
+        this.Images = Images;
     }
 
     @NonNull
@@ -47,16 +47,16 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull BodyDefenseViewHolder holder, int position) {
-        /*
-        holder.Title.setText(Titles[position]);
-        holder.Description.setText(Descriptions[position]);
+
+        //holder.Title.setText(Titles[position]);
+        //holder.Description.setText(Descriptions[position]);
         holder.Image.setImageResource(Images[position]);
-        */
+
 
 
         holder.Title.setText(list.get(position).getTitulo());
-        holder.Description.setText(list.get(position).getComentario());
-        holder.Image.setImageResource(list.get(position).getImagen());
+        holder.Description.setText(list.get(position).getContenido());
+        //holder.Image.setImageResource(list.get(position).getImagen());
 
     }
 

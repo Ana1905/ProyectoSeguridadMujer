@@ -2,28 +2,28 @@ package com.example.proyectoseguridadmujer;
 
 public class BodyDefenseTechniques {
 
-    String IdTecnica;
+    int ID_PublicacionDefensa;
     String Titulo;
     String Seccion;
-    String Comentario;
+    String Contenido;
     int Imagen;
     String Video;
 
-    public BodyDefenseTechniques(String idTecnica, String titulo, String seccion, String comentario, int imagen, String video) {
-        IdTecnica = idTecnica;
+    public BodyDefenseTechniques(int idTecnica, String titulo, String seccion, String comentario, int imagen, String video) {
+        ID_PublicacionDefensa = idTecnica;
         Titulo = titulo;
         Seccion = seccion;
-        Comentario = comentario;
+        Contenido = comentario;
         Imagen = imagen;
         Video = video;
     }
 
-    public String getIdTecnica() {
-        return IdTecnica;
+    public int getID_PublicacionDefensa() {
+        return ID_PublicacionDefensa;
     }
 
-    public void setIdTecnica(String idTecnica) {
-        IdTecnica = idTecnica;
+    public void setID_PublicacionDefensa(int ID_PublicacionDefensa) {
+        this.ID_PublicacionDefensa = ID_PublicacionDefensa;
     }
 
     public String getTitulo() {
@@ -42,12 +42,12 @@ public class BodyDefenseTechniques {
         Seccion = seccion;
     }
 
-    public String getComentario() {
-        return Comentario;
+    public String getContenido() {
+        return Contenido;
     }
 
-    public void setComentario(String comentario) {
-        Comentario = comentario;
+    public void setContenido(String contenido) {
+        Contenido = contenido;
     }
 
     public int getImagen() {

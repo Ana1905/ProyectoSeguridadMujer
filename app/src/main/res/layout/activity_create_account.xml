@@ -46,26 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="40sp"
         android:background="@drawable/edit_text_shape"
-        android:hint="@string/sign_up_maternal_surname"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:padding="10sp"
-        android:textColor="@color/Gray_highlight"
-        android:textColorHighlight="@color/black"
-        android:textColorHint="@color/Gray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.387" />
-
-    <EditText
-        android:id="@+id/create_account_maternal_surname"
-        android:layout_width="match_parent"
-        android:layout_height="40sp"
-
-        android:background="@drawable/edit_text_shape"
         android:hint="@string/sign_up_paternal_surname"
         android:importantForAutofill="no"
         android:inputType="text"
@@ -78,7 +58,31 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.306" />
+        app:layout_constraintVertical_bias="0.306"/>
+
+    <EditText
+        android:id="@+id/create_account_maternal_surname"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+
+        android:background="@drawable/edit_text_shape"
+        android:hint="@string/sign_up_maternal_surname"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:padding="10sp"
+        android:textColor="@color/Gray_highlight"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/Gray"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.387"
+
+
+         />
 
     <Button
         android:id="@+id/create_account_dateOfBirth"

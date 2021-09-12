@@ -1,13 +1,16 @@
 package com.example.proyectoseguridadmujer;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
@@ -24,11 +27,16 @@ public class LoginActivity extends AppCompatActivity {
     Button mButtonSignIn,mButtonCreateAccount;
     TextView mTextViewForgotPassword;
     String email, contraseña;
-
+    int REQUEST_CODE= 200;
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //PERMISOS
+
+        verificarPermisos();
 
         //PHONE
         TelephonyManager tMgr = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
@@ -77,10 +85,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mButtonSignIn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
                 //Variables to catch data
-
+                //Toast.makeText(getApplicationContext(), "IMPORTANTE: Recuerda que si no aceptaste el permiso de teléfono para aplicacion seguridad mujer no tendrás acceso a la aplicacion)", Toast.LENGTH_LONG).show();
                 email = String.valueOf(mEditTextSignInEmail.getText());
                 contraseña = String.valueOf(mEditTextSignInPassword.getText());
 
@@ -145,6 +154,20 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void verificarPermisos(){
+
+        int permiso= ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE);
+        if(permiso==PackageManager.PERMISSION_GRANTED){
+
+        }
+        else{
+
+            requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},REQUEST_CODE);
+        }
 
     }
 

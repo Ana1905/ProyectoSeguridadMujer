@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
     public void dialogopeticion(String nombre, String correo,String IDUsuarioWeb){
         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MainActivity.this);
         dialogo1.setTitle("Tiene nuevas peticiones de enlace");
-        dialogo1.setMessage("El usuario web llamado");
+        //dialogo1.setMessage("El usuario web llamado");
         dialogo1.setMessage("El usuario web llamado " + nombre + " con el correo " + correo +" desea vincularse a su cuenta. Acepte o rechace esta petición: ");
         dialogo1.setCancelable(false);
 

@@ -1,12 +1,16 @@
 package com.example.proyectoseguridadmujer;
 
+import android.Manifest;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +30,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     MenuItem item;
     //String email = getIntent().getStringExtra("email");
     RequestQueue requestQueue;
-    String email="";
+    String email = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getCredentialData();
         //dialogopeticion();
-
 
 
         checkPetitions();

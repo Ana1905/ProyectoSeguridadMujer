@@ -3,14 +3,19 @@ package com.example.proyectoseguridadmujer;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -71,6 +76,23 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         initDatePicker();
+
+        //PHONE
+        TelephonyManager tMgr = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        String mPhoneNumber = tMgr.getLine1Number();
+        Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_SHORT).show();
+
 
         //Wiring up
         mEditTextCreateAccountEmail = findViewById(R.id.create_account_email);
@@ -187,23 +209,25 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                 public void run() {
                                                     //Starting Write and Read data with URL
                                                     //Creating array for parameters
-                                                    String[] field = new String[6];
+                                                    String[] field = new String[7];
                                                     field[0] = "email";
                                                     field[1] = "nombres";
                                                     field[2] = "apellido_paterno";
                                                     field[3] = "apellido_materno";
                                                     field[4] = "fecha_nacimiento";
                                                     field[5] = "contraseña";
+                                                    field[6] = "telefono";
 
 
                                                     //Creating array for data
-                                                    String[] data = new String[6];
+                                                    String[] data = new String[7];
                                                     data[0] = email;
                                                     data[1] = nombres;
                                                     data[2] = apellido_paterno;
                                                     data[3] = apellido_materno;
                                                     data[4] = fecha_nacimiento;
                                                     data[5] = contraseña;
+                                                    data[6] = mPhoneNumber;
 
 
 

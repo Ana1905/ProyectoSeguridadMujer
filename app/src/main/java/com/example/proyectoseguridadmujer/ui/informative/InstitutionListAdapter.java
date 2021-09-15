@@ -56,9 +56,9 @@ public class InstitutionListAdapter extends RecyclerView.Adapter<InstitutionList
         public ListViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
-            Title = itemView.findViewById(R.id.BodyDefenseTechnique);
-            Description = itemView.findViewById(R.id.BodyDefenseDescription);
-            Image = itemView.findViewById(R.id.BodyDefenseImage);
+            Title = itemView.findViewById(R.id.DefenseTechnique);
+            Description = itemView.findViewById(R.id.DefenseDescription);
+            Image = itemView.findViewById(R.id.DefenseImage);
         }
     }
 }

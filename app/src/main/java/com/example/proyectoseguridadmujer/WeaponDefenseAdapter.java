@@ -17,12 +17,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.BodyDefenseViewHolder>
+public class WeaponDefenseAdapter extends RecyclerView.Adapter<WeaponDefenseAdapter.WeaponDefenseViewHolder>
 {
     Context context;
     List<DefenseTechniques> list = new ArrayList();
 
-    public BodyDefenseAdapter (Context context, List<DefenseTechniques> list)
+    public WeaponDefenseAdapter (Context context, List<DefenseTechniques> list)
     {
         this.context = context;
         this.list = list;
@@ -31,15 +31,15 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
     @NonNull
     @NotNull
     @Override
-    public BodyDefenseViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType)
+    public WeaponDefenseViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType)
     {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.row_defense, parent, false);
-        return new BodyDefenseAdapter.BodyDefenseViewHolder(view);
+        return new WeaponDefenseAdapter.WeaponDefenseViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull BodyDefenseViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull @NotNull WeaponDefenseViewHolder holder, int position)
     {
         holder.Title.setText(list.get(position).getTitulo());
         holder.Description.setText(list.get(position).getContenido());
@@ -52,12 +52,12 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
         return list.size();
     }
 
-    public class BodyDefenseViewHolder extends RecyclerView.ViewHolder
+    public class WeaponDefenseViewHolder extends RecyclerView.ViewHolder
     {
         TextView Title, Description;
         ImageView Image;
 
-        public BodyDefenseViewHolder(@NonNull @NotNull View itemView)
+        public WeaponDefenseViewHolder(@NonNull @NotNull View itemView)
         {
             super(itemView);
 

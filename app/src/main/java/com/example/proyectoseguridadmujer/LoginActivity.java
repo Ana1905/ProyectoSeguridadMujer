@@ -70,15 +70,17 @@ public class LoginActivity extends AppCompatActivity {
                         public void run() {
                             //Starting Write and Read data with URL
                             //Creating array for parameters
-                            String[] field = new String[2];
+                            String[] field = new String[3];
                             field[0] = "email";
                             field[1] = "contraseña";
+                            field[2] = "telefono";
 
 
                             //Creating array for data
-                            String[] data = new String[2];
+                            String[] data = new String[3];
                             data[0] = email;
                             data[1] = contraseña;
+                            data[2] = "1";
 
                             PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
 

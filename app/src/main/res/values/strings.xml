@@ -67,25 +67,6 @@
     <string name="test_selection_separation">-------------------------------------------------- o --------------------------------------------------</string>
 
     <string name="Body_defense_url">https://seguridadmujer.com/app_movil/Defensa/getBodyDefenseList.php</string>
-
-    <string-array name="Test_values_Recycler_view">
-        <item>building</item>
-        <item>icon test</item>
-        <item>instagram profile image</item>
-        <item>logo app</item>
-        <item>logo transparent</item>
-        <item>self defense icon 1</item>
-        <item>self defense icon 2</item>
-    </string-array>
-
-    <string-array name="Test_values_Descriptions_Recycler_view">
-        <item>Description1</item>
-        <item>Description2</item>
-        <item>Description3</item>
-        <item>Description4</item>
-        <item>Description5</item>
-        <item>Description6</item>
-        <item>Description7</item>
-    </string-array>
+    <string name="Weapon_defense_url">https://seguridadmujer.com/app_movil/Defensa/getWeaponDefenseList.php</string>
 
 </resources>

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.proyectoseguridadmujer.BodyDefenseActivity;
 import com.example.proyectoseguridadmujer.R;
+import com.example.proyectoseguridadmujer.WeaponDefenseActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +54,7 @@ public class SelfDefenseFragment extends Fragment {
         mImageButtonWeapon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), BodyDefenseActivity.class);
+                Intent intent = new Intent(view.getContext(), WeaponDefenseActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }

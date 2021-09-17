@@ -94,7 +94,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         }
 
         String mPhoneNumber = tMgr.getLine1Number();
-        //Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_SHORT).show();
 
 
         //Wiring up

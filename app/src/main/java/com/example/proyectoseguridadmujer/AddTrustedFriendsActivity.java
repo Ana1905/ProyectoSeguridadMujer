@@ -29,6 +29,7 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
     ImageView mImageViewIcon;
     TextView mTextViewLabel;
     Button mButtonAddFriend;
+    Button mButtonConfirm;
     EditText mNombre;
     EditText mTel;
     static final int PICK_CONTACT_REQUEST=1;
@@ -43,6 +44,8 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
         mButtonAddFriend=findViewById(R.id.alert_Add_friend);
         mNombre= findViewById(R.id.nombre);
         mTel= findViewById(R.id.telefono);
+        //mButtonConfirm.findViewById(R.id.add_confirm_button);
+
         LoadView();
 
         mButtonAddFriend.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +54,8 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
                 selectContact();
             }
         });
+
+
     }
     public void selectContact(){
 
@@ -80,8 +85,17 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
                     String nombre = cursor.getString(columnaNombre);
                     String number = cursor.getString(columnaNumber);
 
+                    mImageViewIcon.setVisibility(View.INVISIBLE);
+                    mTextViewLabel.setVisibility(View.INVISIBLE);
+                    mButtonAddFriend.setVisibility(View.INVISIBLE);
+
+                    //mButtonConfirm.setVisibility(View.VISIBLE);
+                    mNombre.setVisibility(View.VISIBLE);
+                    mTel.setVisibility(View.VISIBLE);
+
                     mNombre.setText(nombre);
                     mTel.setText(number);
+
 
                 }
             }

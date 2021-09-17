@@ -53,8 +53,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-       mPhoneNumber = tMgr.getLine1Number();
-        //Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_LONG).show();
+        mPhoneNumber = tMgr.getLine1Number();
+        Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_LONG).show();
 
 
 

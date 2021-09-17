@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     Button mButtonSignIn,mButtonCreateAccount;
     TextView mTextViewForgotPassword;
     String email, contraseña;
+    String mPhoneNumber;
     int REQUEST_CODE= 200;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -51,8 +52,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        String mPhoneNumber = tMgr.getLine1Number();
-        Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_LONG).show();
+       mPhoneNumber = tMgr.getLine1Number();
+        //Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_LONG).show();
 
 
 
@@ -186,15 +187,16 @@ public class LoginActivity extends AppCompatActivity {
         email = preferences.getString("email", "");
         contraseña = preferences.getString("password", "");
 
-        String[] field = new String[2];
+        String[] field = new String[3];
         field[0] = "email";
         field[1] = "contraseña";
-
+        field[2] = "telefono";
 
         //Creating array for data
-        String[] data = new String[2];
+        String[] data = new String[3];
         data[0] = email;
         data[1] = contraseña;
+        data[2] = mPhoneNumber;
         //Change ip and port of your computer and xampp
         PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
 

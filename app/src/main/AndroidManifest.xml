@@ -49,6 +49,11 @@
             android:name=".WeaponDefenseActivity"
             android:parentActivityName=".MainActivity">
         </activity>
+
+        <activity
+            android:name=".DefenseTechniqueActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

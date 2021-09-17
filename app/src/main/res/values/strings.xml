@@ -68,5 +68,8 @@
 
     <string name="Body_defense_url">https://seguridadmujer.com/app_movil/Defensa/getBodyDefenseList.php</string>
     <string name="Weapon_defense_url">https://seguridadmujer.com/app_movil/Defensa/getWeaponDefenseList.php</string>
+    <string name="Defense_publication_content_label">Contenido de la publicación:</string>
+    <string name="Defense_publication_video_label">Video de la publicación:</string>
+    <string name="Defense_publication_additional_image_label">Imagenes adicionales:</string>
 
 </resources>

@@ -60,9 +60,10 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     EditText mEditTextCreateAccountEmail, mEditTextCreateAccountName, mEditTextCreateAccountPaternalSurname, mEditTextCreateAccountMaternalSurname, mEditTextCreateAccountPassword, mEditTextCreateAccountConfirmPassword;
     Button mButtonCreateAccount, mButtonDateOfBirth, mButtonTermsAndConditions;
     CheckBox mCheckBoxCaptcha, mCheckBoxTermsAndConditions;
-    TextView mTextViewGotoLogin;
+    TextView mTextViewGotoLogin, mTextViewGif;
     GoogleApiClient googleApiClient;
-    ImageView mImageViewTest;
+    ImageView mImageViewTest, mImageViewlogo;
+    TextView mTextViewDoB;
 
     String correo = "secureapp2021@gmail.com"; //var to save email of a
     String contraseña = "secureappCETI"; //var to save password of account
@@ -93,7 +94,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         }
 
         String mPhoneNumber = tMgr.getLine1Number();
-        Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_SHORT).show();
 
 
         //Wiring up
@@ -109,10 +110,12 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         mCheckBoxTermsAndConditions = findViewById(R.id.create_account_terms);
         mButtonTermsAndConditions = findViewById(R.id.button_create_account_terms);
         mTextViewGotoLogin = findViewById(R.id.TextViewGotoLogin);
-        mImageViewTest= findViewById(R.id.imageViewPuteada);
+        mImageViewTest= findViewById(R.id.imageViewgif);
+        mImageViewlogo= findViewById(R.id.imageView);
+        mTextViewDoB= findViewById(R.id.labeldateofbirth);
+        mTextViewGif= findViewById(R.id.TextViewCargando);
 
 
-        waitigView();
 
 
 
@@ -326,7 +329,26 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
     }
     public void waitigView(){
-        Glide.with(this).load("https://seguridadmujer.com/web/Zz04NjA3ZjljMjQ0ODkxMWViOWRjYzU1OGJkNjI1ZjVkZA==.gif").into(mImageViewTest);
+        mEditTextCreateAccountName.setVisibility(View.INVISIBLE);
+        mEditTextCreateAccountEmail.setVisibility(View.INVISIBLE);
+        mEditTextCreateAccountPassword.setVisibility(View.INVISIBLE);
+        mEditTextCreateAccountConfirmPassword.setVisibility(View.INVISIBLE);
+        mEditTextCreateAccountPaternalSurname.setVisibility(View.INVISIBLE);
+        mEditTextCreateAccountMaternalSurname.setVisibility(View.INVISIBLE);
+        mTextViewDoB.setVisibility(View.INVISIBLE);
+        mButtonDateOfBirth.setVisibility(View.INVISIBLE);
+        mCheckBoxTermsAndConditions.setVisibility(View.INVISIBLE);
+        mCheckBoxCaptcha.setVisibility(View.INVISIBLE);
+        mButtonTermsAndConditions.setVisibility(View.INVISIBLE);
+        mButtonCreateAccount.setVisibility(View.INVISIBLE);
+        mImageViewlogo.setVisibility(View.INVISIBLE);
+        mTextViewGotoLogin.setVisibility(View.INVISIBLE);
+
+        mImageViewTest.setVisibility(View.VISIBLE);
+        mTextViewGif.setVisibility(View.VISIBLE);
+
+
+        Glide.with(this).load("https://seguridadmujer.com/web/spinner.gif").into(mImageViewTest);
     }
 
     //DATE PICKER

@@ -43,17 +43,33 @@
 
 
     <ImageView
-        android:id="@+id/imageViewPuteada"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:background="@drawable/logo_shape"
-        android:src="@drawable/logo_app"
+        android:id="@+id/imageViewgif"
+        android:layout_width="250dp"
+        android:layout_height="213dp"
+        android:visibility="invisible"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.351" />
+        app:layout_constraintVertical_bias="0.415" />
+
+    <TextView
+        android:id="@+id/TextViewCargando"
+        android:layout_width="392dp"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:text="Ve a verificar tu cuenta. Una vez verificada ingresaremos. "
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.614" />
 
     <EditText
         android:id="@+id/create_account_paternal_surname"
@@ -121,6 +137,7 @@
         app:layout_constraintVertical_bias="0.712" />
 
     <TextView
+        android:id="@+id/labeldateofbirth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fecha de nacimiento:"

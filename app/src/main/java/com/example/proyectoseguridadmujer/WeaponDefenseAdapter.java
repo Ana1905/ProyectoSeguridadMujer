@@ -1,6 +1,8 @@
 package com.example.proyectoseguridadmujer;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +46,19 @@ public class WeaponDefenseAdapter extends RecyclerView.Adapter<WeaponDefenseAdap
         holder.Title.setText(list.get(position).getTitulo());
         holder.Description.setText(list.get(position).getContenido());
         Glide.with(context).load(list.get(position).getRutaImagenPresentacion()).into(holder.Image);
+        holder.bind(list.get(position));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DefenseTechniqueActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("Technique", list.get(position));
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -56,6 +71,8 @@ public class WeaponDefenseAdapter extends RecyclerView.Adapter<WeaponDefenseAdap
     {
         TextView Title, Description;
         ImageView Image;
+        DefenseTechniques Data;
+
 
         public WeaponDefenseViewHolder(@NonNull @NotNull View itemView)
         {
@@ -64,6 +81,11 @@ public class WeaponDefenseAdapter extends RecyclerView.Adapter<WeaponDefenseAdap
             Title = itemView.findViewById(R.id.DefenseTechnique);
             Description = itemView.findViewById(R.id.DefenseDescription);
             Image = itemView.findViewById(R.id.DefenseImage);
+        }
+
+        public void bind (DefenseTechniques techniques)
+        {
+            Data = techniques;
         }
     }
 }

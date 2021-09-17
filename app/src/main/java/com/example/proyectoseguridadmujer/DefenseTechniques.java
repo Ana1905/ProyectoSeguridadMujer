@@ -1,6 +1,9 @@
 package com.example.proyectoseguridadmujer;
 
-public class DefenseTechniques {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class DefenseTechniques implements Parcelable {
 
     int ID_PublicacionDefensa;
     String Titulo;
@@ -17,6 +20,27 @@ public class DefenseTechniques {
         RutaImagenPresentacion = imagen;
         RutaVideo = video;
     }
+
+    protected DefenseTechniques(Parcel in) {
+        ID_PublicacionDefensa = in.readInt();
+        Titulo = in.readString();
+        Seccion = in.readString();
+        Contenido = in.readString();
+        RutaImagenPresentacion = in.readString();
+        RutaVideo = in.readString();
+    }
+
+    public static final Creator<DefenseTechniques> CREATOR = new Creator<DefenseTechniques>() {
+        @Override
+        public DefenseTechniques createFromParcel(Parcel in) {
+            return new DefenseTechniques(in);
+        }
+
+        @Override
+        public DefenseTechniques[] newArray(int size) {
+            return new DefenseTechniques[size];
+        }
+    };
 
     public int getID_PublicacionDefensa() {
         return ID_PublicacionDefensa;
@@ -64,5 +88,20 @@ public class DefenseTechniques {
 
     public void setRutaVideo(String rutaVideo) {
         RutaVideo = rutaVideo;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(ID_PublicacionDefensa);
+        dest.writeString(Titulo);
+        dest.writeString(Seccion);
+        dest.writeString(Contenido);
+        dest.writeString(RutaImagenPresentacion);
+        dest.writeString(RutaVideo);
     }
 }

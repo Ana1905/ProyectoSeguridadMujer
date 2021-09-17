@@ -2,14 +2,12 @@ package com.example.proyectoseguridadmujer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +37,7 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
     {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.row_defense, parent, false);
-        view.setOnClickListener(mOnClickListener);
+        //view.setOnClickListener(mOnClickListener);
         return new BodyDefenseAdapter.BodyDefenseViewHolder(view);
     }
 
@@ -50,6 +48,19 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
         holder.Description.setText(list.get(position).getContenido());
         Glide.with(context).load(list.get(position).getRutaImagenPresentacion()).into(holder.Image);
         holder.bind(list.get(position));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(context.getApplicationContext(), "Toast watonoso", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(v.getContext(), DefenseTechniqueActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("Technique", list.get(position));
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -78,22 +89,4 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
             Data = techniques;
         }
     }
-    /*
-    public interface OnTechniqueListener
-    {
-        void onTechniqueClick (int position);
-    }
-    */
-    private final View.OnClickListener mOnClickListener = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View v)
-        {
-            //list.get(int )
-            Toast.makeText(context.getApplicationContext(), "Toast watonoso", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(v.getContext(), DefenseTechniqueActivity.class);
-            //intent.putExtra("Technique", );
-            context.startActivity(intent);
-        }
-    };
 }

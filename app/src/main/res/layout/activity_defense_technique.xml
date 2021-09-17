@@ -78,19 +78,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TechniqueContent" />
 
-    <VideoView
-        android:id="@+id/TechniqueVideo"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
+    <FrameLayout
+        android:id="@+id/VideoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TechniqueVideoLabel"
-        tools:ignore="InvalidId" />
+        app:layout_constraintTop_toBottomOf="@+id/TechniqueVideoLabel">
+
+        <VideoView
+            android:id="@+id/TechniqueVideo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TechniqueVideoLabel"
+            tools:ignore="InvalidId" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/TechniqueAdittionalImage"
@@ -103,7 +113,7 @@
         android:text="@string/Defense_publication_additional_image_label"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TechniqueVideo" />
+        app:layout_constraintTop_toBottomOf="@+id/VideoLayout" />
 
 
 

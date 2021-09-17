@@ -61,5 +61,6 @@
     <string name="seach_label_comunity">¿Qué andas buscando?</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="alert_añadir_contacto">Añadir contacto</string>
 
 </resources>

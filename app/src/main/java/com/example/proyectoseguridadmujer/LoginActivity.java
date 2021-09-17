@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText mEditTextSignInEmail, mEditTextSignInPassword;
     Button mButtonSignIn,mButtonCreateAccount;
     TextView mTextViewForgotPassword;
+
     String email, contraseña;
     String mPhoneNumber;
     int REQUEST_CODE= 200;

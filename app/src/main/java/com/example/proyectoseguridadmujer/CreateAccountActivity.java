@@ -21,9 +21,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -60,7 +62,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     CheckBox mCheckBoxCaptcha, mCheckBoxTermsAndConditions;
     TextView mTextViewGotoLogin;
     GoogleApiClient googleApiClient;
-
+    ImageView mImageViewTest;
 
     String correo = "secureapp2021@gmail.com"; //var to save email of a
     String contraseña = "secureappCETI"; //var to save password of account
@@ -107,6 +109,11 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         mCheckBoxTermsAndConditions = findViewById(R.id.create_account_terms);
         mButtonTermsAndConditions = findViewById(R.id.button_create_account_terms);
         mTextViewGotoLogin = findViewById(R.id.TextViewGotoLogin);
+        mImageViewTest= findViewById(R.id.imageViewPuteada);
+
+
+        waitigView();
+
 
 
         //---GOTOLOGIN TEXTVIEW ONCLICK
@@ -259,9 +266,11 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                                 //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                                                 sendVerificationEmail(email);
                                                                 Toast.makeText(getApplicationContext(), "Se ha enviado un link de verificacion a su correo", Toast.LENGTH_SHORT).show();
-                                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                                                startActivity(intent);
-                                                                finish();
+                                                                //Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                                                //startActivity(intent);
+                                                                //finish();
+                                                                waitigView();
+
                                                             } else {
 
                                                                 if (result.equals("Email in blacklist Sign up Failed")) {
@@ -315,6 +324,9 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
 
         });
 
+    }
+    public void waitigView(){
+        Glide.with(this).load("https://seguridadmujer.com/web/Zz04NjA3ZjljMjQ0ODkxMWViOWRjYzU1OGJkNjI1ZjVkZA==.gif").into(mImageViewTest);
     }
 
     //DATE PICKER

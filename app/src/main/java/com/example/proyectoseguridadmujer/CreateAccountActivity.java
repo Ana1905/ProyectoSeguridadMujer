@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NavUtils;
 
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,9 +23,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
@@ -58,7 +62,8 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
     EditText mEditTextCreateAccountEmail, mEditTextCreateAccountName, mEditTextCreateAccountPaternalSurname, mEditTextCreateAccountMaternalSurname, mEditTextCreateAccountPassword, mEditTextCreateAccountConfirmPassword;
     Button mButtonCreateAccount, mButtonDateOfBirth, mButtonTermsAndConditions;
     CheckBox mCheckBoxCaptcha, mCheckBoxTermsAndConditions;
-    TextView mTextViewGotoLogin;
+    TextView mTextViewGotoLogin, mTextViewDateOfBirth, mTextViewLoading;
+    ImageView mImageView, mImageViewLoading;
     GoogleApiClient googleApiClient;
 
 
@@ -107,7 +112,11 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         mCheckBoxTermsAndConditions = findViewById(R.id.create_account_terms);
         mButtonTermsAndConditions = findViewById(R.id.button_create_account_terms);
         mTextViewGotoLogin = findViewById(R.id.TextViewGotoLogin);
-
+        mImageView = findViewById(R.id.imageView);
+        mTextViewDateOfBirth = findViewById(R.id.fechaNacimientoLabel);
+        mTextViewLoading = findViewById(R.id.waitingLabel);
+        mImageViewLoading = findViewById(R.id.imageViewLoading);
+        mImageViewLoading.setVisibility(View.INVISIBLE);                //Se esconde el Image View de espera de confirmacion de cuenta.
 
         //---GOTOLOGIN TEXTVIEW ONCLICK
         mTextViewGotoLogin.setOnClickListener(new View.OnClickListener() {
@@ -256,12 +265,12 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                         if (putData.onComplete()) {
                                                             String result = putData.getResult();
                                                             if (result.equals("Sign Up Success")) {
-                                                                //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                                                                 sendVerificationEmail(email);
                                                                 Toast.makeText(getApplicationContext(), "Se ha enviado un link de verificacion a su correo", Toast.LENGTH_SHORT).show();
-                                                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                                                startActivity(intent);
-                                                                finish();
+                                                                mostrarLoadingGif();
+                                                                comprobarCorreoVerificado();
+                                                                cerrarActivity();
                                                             } else {
 
                                                                 if (result.equals("Email in blacklist Sign up Failed")) {
@@ -457,14 +466,160 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         return false;
     }
 
+    //Este metodo esconde el formulario de creacion de cuenta y muestra la "pantalla de espera" de verificacion de cuenta:
+    public void mostrarLoadingGif(){
+        //Se esconden todos los campos para la creacion de la cuenta:
+        mEditTextCreateAccountEmail.setVisibility(View.INVISIBLE);
+        mEditTextCreateAccountName.setVisibility(View.INVISIBLE);
+        mEditTextCreateAccountPaternalSurname.setVisibility(View.INVISIBLE);
+        mEditTextCreateAccountMaternalSurname.setVisibility(View.INVISIBLE);
+        mButtonDateOfBirth.setVisibility(View.INVISIBLE);
+        mEditTextCreateAccountPassword.setVisibility(View.INVISIBLE);
+        mEditTextCreateAccountConfirmPassword.setVisibility(View.INVISIBLE);
+        mButtonCreateAccount.setVisibility(View.INVISIBLE);
+        mCheckBoxCaptcha.setVisibility(View.INVISIBLE);
+        mCheckBoxTermsAndConditions.setVisibility(View.INVISIBLE);
+        mButtonTermsAndConditions.setVisibility(View.INVISIBLE);
+        mTextViewGotoLogin.setVisibility(View.INVISIBLE);
+        mTextViewDateOfBirth.setVisibility(View.INVISIBLE);
+        mImageView.setVisibility(View.INVISIBLE);
 
+        //Se muestra el gif de carga:
+        mImageViewLoading.setVisibility(View.VISIBLE);
+        mTextViewLoading.setVisibility(View.VISIBLE);
+        Glide.with(this).load("https://seguridadmujer.com/app_movil/Resources/waiting.gif").into(mImageViewLoading);
+    }
 
+    //Este metodo crea un hilo que valida cada 10 segundos si se ha verificado la cuenta y, en dado caso, hacer login automaticamente:
+    public void comprobarCorreoVerificado(){
+        Handler handler = new Handler();
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                ///////// Se ejecuta la query para comprobar si ya se ha verificado la cuenta: /////////
+                String email = String.valueOf(mEditTextCreateAccountEmail.getText()).trim();            //Se obtiene el email introducido.
+                String contraseña = String.valueOf(mEditTextCreateAccountPassword.getText()).trim();    //Se obtiene la contraseña introducida.
+
+                //Se obtiene el numero telefonico del dispositivo:
+                TelephonyManager tMgr = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                String mPhoneNumber = tMgr.getLine1Number();
+
+                //Creating array for parameters
+                String[] field = new String[1];
+                field[0] = "email";
+
+                //Creating array for data
+                String[] data = new String[1];
+                data[0] = email;
+
+                PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/verifyEmailVerification.php", "POST", field, data);
+                if(putData.startPut()){
+                    if(putData.onComplete()){
+                        String result = putData.getResult();
+                        //Si se obtiene que el correo ha sido verificado, se hace login:
+                        if(result.equals("Correo verificado")) {
+                            Toast.makeText(getApplicationContext(), "El correo ha sido verificado", Toast.LENGTH_LONG).show();
+                            //Hace el login:
+                            if (!email.equals("") && !contraseña.equals("")) {
+                                //Start ProgressBar first (Set visibility VISIBLE)
+                                Handler handler = new Handler();
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //Starting Write and Read data with URL
+                                        //Creating array for parameters
+                                        String[] field = new String[3];
+                                        field[0] = "email";
+                                        field[1] = "contraseña";
+                                        field[2] = "telefono";
+
+                                        //Creating array for data
+                                        String[] data = new String[3];
+                                        data[0] = email;
+                                        data[1] = contraseña;
+                                        data[2] = mPhoneNumber;
+
+                                        PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
+
+                                        if (putData.startPut()) {
+                                            if (putData.onComplete()) {
+                                                String result = putData.getResult();
+                                                if (result.equals("Login Success")) {
+                                                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                                                    guardarSesion(email, contraseña);
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                                else{
+                                                    if(result.equals("Missing email verification email or Password wrong")){
+                                                        Toast.makeText(getApplicationContext(), "La cuenta aún no ha sido creada pues no se ha verificado la dirección de correo", Toast.LENGTH_LONG).show();
+                                                    }
+                                                    else{
+                                                        if(result.equals("phones not match email or Password wrong")){
+                                                            Toast.makeText(getApplicationContext(), "Estás intentando acceder desde un dispositivo que no es el que tenemos registrado, por tu seguridad no te daremos acceso", Toast.LENGTH_LONG).show();
+                                                        }
+                                                        else{
+                                                            Toast.makeText(getApplicationContext(), "Correo o contraseña erróneos", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        //End Write and Read data with URL
+                                    }
+                                });
+                            }
+                            else{
+                                Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "El correo no ha sido verificado aún, reintentando...", Toast.LENGTH_LONG).show();
+                            handler.postDelayed(this, 10000);
+                        }
+                    }
+                }
+            }
+        }, 10000);
+    }
+
+    //Este metodo crea la sesion al hacer login:
+    public void guardarSesion(String email, String contraseña){
+        SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("email", email);
+        editor.putString("password", contraseña);
+        editor.commit();
+    }
+
+    //Este metodo crea un hilo para redirigir a Login Activity pasada la media hora de espera para la confirmacion de la cuenta:
+    public void cerrarActivity(){
+        Handler handler = new Handler();
+
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                Toast.makeText(getApplicationContext(), "No se ha verificado la cuenta, ingrese manualmente cuando esta haya sido verificada.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        }, 1800000);
+    }
 
     //ENCRIPTAR
     public static String cifrar(String cadenaOriginal) {
         return rotar(cadenaOriginal, 5);
     }
-
 
     public static String rotar(String cadenaOriginal, int rotaciones) {
         // En ASCII, la a es 97, b 98, A 65, B 66, etcétera
@@ -498,6 +653,13 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             cadenaRotada += Character.toString((char) nuevaPosicionAscii);
         }
         return cadenaRotada;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = NavUtils.getParentActivityIntent(CreateAccountActivity.this);
+        startActivity(intent);
+        finish();
     }
 
 }

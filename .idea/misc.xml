@@ -3,18 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/puto-/Desktop/ProyectoSeguridadMujer/app/src/main/res/layout/activity_create_account.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/puto-/Desktop/ProyectoSeguridadMujer/app/src/main/res/layout/activity_login.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/puto-/Desktop/ProyectoSeguridadMujer/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/puto-/Desktop/ProyectoSeguridadMujer/app/src/main/res/layout/app_bar_main.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/puto-/Desktop/ProyectoSeguridadMujer/app/src/main/res/layout/content_main.xml" value="0.33" />
-        <entry key="..\:/Users/puto-/Desktop/ProyectoSeguridadMujer/app/src/main/res/layout/fragment_institution_list.xml" value="0.20989583333333334" />
-        <entry key="..\:/Users/puto-/Desktop/ProyectoSeguridadMujer/app/src/main/res/layout/fragment_route.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/puto-/Desktop/ProyectoSeguridadMujer/app/src/main/res/layout/fragment_weapon_defense.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pauli/OneDrive/Documentos/GitHub/ProyectoSeguridadMujer/app/src/main/res/layout/activity_add_trusted_friends.xml" value="0.26403985507246375" />
+        <entry key="..\:/Users/pauli/OneDrive/Documentos/GitHub/ProyectoSeguridadMujer/app/src/main/res/layout/activity_trusted_friends.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pauli/OneDrive/Documentos/GitHub/ProyectoSeguridadMujer/app/src/main/res/layout/contact_list.xml" value="0.3446557971014493" />
+        <entry key="..\:/Users/pauli/OneDrive/Documentos/GitHub/ProyectoSeguridadMujer/app/src/main/res/layout/fragment_alert.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pauli/OneDrive/Documentos/GitHub/ProyectoSeguridadMujer/app/src/main/res/layout/list_post.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

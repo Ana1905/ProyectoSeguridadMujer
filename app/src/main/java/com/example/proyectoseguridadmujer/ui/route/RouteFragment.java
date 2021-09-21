@@ -15,8 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.proyectoseguridadmujer.BodyDefenseActivity;
 import com.example.proyectoseguridadmujer.MainActivity;
 import com.example.proyectoseguridadmujer.R;
+import com.example.proyectoseguridadmujer.RouteActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 public class RouteFragment extends Fragment {
     private String email="";
@@ -30,5 +34,10 @@ public class RouteFragment extends Fragment {
         return root;
     }
 
-
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        Intent intent = new Intent(view.getContext(), RouteActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
 }

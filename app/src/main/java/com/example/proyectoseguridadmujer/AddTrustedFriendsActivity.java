@@ -46,6 +46,9 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
         mTel= findViewById(R.id.telefono);
         //mButtonConfirm.findViewById(R.id.add_confirm_button);
 
+        //ver si tiene amigos o no
+        //si tiene mandar a la vista de lista de amigs
+        //Si no , quedarse aqui
         LoadView();
 
         mButtonAddFriend.setOnClickListener(new View.OnClickListener() {

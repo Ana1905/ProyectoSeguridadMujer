@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoSeguridadMujer"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AddTrustedFriendsActivity"></activity>
+        <activity android:name=".TrustedFriendsActivity"></activity>
+        <activity android:name=".AddTrustedFriendsActivity" />
         <activity android:name=".BodyDefenseActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity

@@ -272,7 +272,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
                                                                 //Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                                                 //startActivity(intent);
                                                                 //finish();
-                                                                waitigView();
+
 
                                                             } else {
 
@@ -328,28 +328,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
         });
 
     }
-    public void waitigView(){
-        mEditTextCreateAccountName.setVisibility(View.INVISIBLE);
-        mEditTextCreateAccountEmail.setVisibility(View.INVISIBLE);
-        mEditTextCreateAccountPassword.setVisibility(View.INVISIBLE);
-        mEditTextCreateAccountConfirmPassword.setVisibility(View.INVISIBLE);
-        mEditTextCreateAccountPaternalSurname.setVisibility(View.INVISIBLE);
-        mEditTextCreateAccountMaternalSurname.setVisibility(View.INVISIBLE);
-        mTextViewDoB.setVisibility(View.INVISIBLE);
-        mButtonDateOfBirth.setVisibility(View.INVISIBLE);
-        mCheckBoxTermsAndConditions.setVisibility(View.INVISIBLE);
-        mCheckBoxCaptcha.setVisibility(View.INVISIBLE);
-        mButtonTermsAndConditions.setVisibility(View.INVISIBLE);
-        mButtonCreateAccount.setVisibility(View.INVISIBLE);
-        mImageViewlogo.setVisibility(View.INVISIBLE);
-        mTextViewGotoLogin.setVisibility(View.INVISIBLE);
 
-        mImageViewTest.setVisibility(View.VISIBLE);
-        mTextViewGif.setVisibility(View.VISIBLE);
-
-
-        Glide.with(this).load("https://seguridadmujer.com/web/spinner.gif").into(mImageViewTest);
-    }
 
     //DATE PICKER
     private String getTodaysDate() {

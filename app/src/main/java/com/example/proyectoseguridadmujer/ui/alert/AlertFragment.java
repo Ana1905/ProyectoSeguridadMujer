@@ -41,14 +41,13 @@ RecyclerView recyclerView;
 
         return root;
 
-
     }
 
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.findViewById(R.id.recyclerViewContacts);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ListContacts= new ArrayList<String>();
 
         for(int i=0;i<50;i++){

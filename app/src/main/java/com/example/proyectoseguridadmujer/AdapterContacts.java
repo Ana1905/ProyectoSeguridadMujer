@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdapterContacts extends RecyclerView.Adapter<AdapterContacts.ViewHolderContacts> {
 
-    ArrayList<String> ListContacts;
+    ArrayList<Contact> ListContacts;
 
-    public AdapterContacts(ArrayList<String> listContacts) {
+    public AdapterContacts(ArrayList<Contact> listContacts) {
         this.ListContacts = listContacts;
     }
 
@@ -30,7 +31,8 @@ public class AdapterContacts extends RecyclerView.Adapter<AdapterContacts.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolderContacts holder, int position) {
-        holder.asignarDatos(ListContacts.get(position));
+        holder.Nombre.setText(ListContacts.get(position).getNombre());
+        holder.Num.setText(ListContacts.get(position).getNumero());
     }
 
     @Override
@@ -40,16 +42,20 @@ public class AdapterContacts extends RecyclerView.Adapter<AdapterContacts.ViewHo
 
     public class ViewHolderContacts extends RecyclerView.ViewHolder {
 
-        TextView contacto;
+        TextView Nombre;
+        TextView Num;
+
         public ViewHolderContacts(@NonNull @NotNull View itemView) {
             super(itemView);
 
             //WIRING UP
-            contacto= (TextView) itemView.findViewById(R.id.contactoNombre);
+            Nombre= (TextView) itemView.findViewById(R.id.contactoNombre);
+            Num= (TextView)  itemView.findViewById(R.id.contactoTel);
         }
 
-        public void asignarDatos(String info) {
-            contacto.setText(info);
+        public void asignarDatos(String Name, String Number) {
+            Nombre.setText(Name);
+            Num.setText(Number);
         }
     }
 }

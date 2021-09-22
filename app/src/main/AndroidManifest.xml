@@ -2,12 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.proyectoseguridadmujer">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <application
         android:allowBackup="true"
@@ -16,48 +15,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoSeguridadMujer"
-        android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true">
-
-        <!-- Set your credentials for the HERE SDK. -->
-        <meta-data android:name="com.here.sdk.access_key_id" android:value="EWOAgq5fykXcPBR27TWlRQ" />
-        <meta-data android:name="com.here.sdk.access_key_secret" android:value="NlWq4_DHXNXqDymD5oiXhnp5szMO7bWtQZME3WpKmPWA-WXGh76HuqXWd_0lMMNMVMXhgFHWE2FzomA2wFq-xQ" />
-
         <activity
-            android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
+            android:name=".BluetoothTestingActivity"
+            android:exported="true" />
         <activity
-            android:name=".ForgotPasswordActivity"
-            android:parentActivityName=".LoginActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.proyectoseguridadmujer.LoginActivity" />
-        </activity>
-
-        <activity
-            android:name=".CreateAccountActivity"
-            android:parentActivityName=".LoginActivity">
-        </activity>
-
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity android:name=".TrustedFriendsActivity" />
+        <activity android:name=".AddTrustedFriendsActivity" />
+        <activity android:name=".BodyDefenseActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.ProyectoSeguridadMujer.NoActionBar">
-        </activity>
+            android:theme="@style/Theme.ProyectoSeguridadMujer.NoActionBar" />
+        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".BandVinculationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity
-            android:name=".BodyDefenseActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>
-
-        <activity
-            android:name=".RouteActivity"
-            android:parentActivityName=".MainActivity">
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

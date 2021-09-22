@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText mEditTextSignInEmail, mEditTextSignInPassword;
     Button mButtonSignIn,mButtonCreateAccount;
     TextView mTextViewForgotPassword;
+
     String email, contraseña;
     String mPhoneNumber;
     int REQUEST_CODE= 200;
@@ -52,8 +53,8 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-       mPhoneNumber = tMgr.getLine1Number();
-        //Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_LONG).show();
+        mPhoneNumber = tMgr.getLine1Number();
+        Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_LONG).show();
 
 
 

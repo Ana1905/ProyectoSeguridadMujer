@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.informative.TestFragment">
+    tools:context=".TestActivity" >
 
     <TextView
         android:id="@+id/textView5"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/TestButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -41,7 +41,7 @@
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button" />
+        app:layout_constraintTop_toBottomOf="@id/TestButton" />
 
     <TextView
         android:id="@+id/textView7"
@@ -58,14 +58,63 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/textView7"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
+        <Button
+            android:id="@+id/FamiliarTestButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/FamiliarViolenceButton"
+            android:padding="15dp"
+            android:layout_margin="5dp"
+            android:textSize="12dp"
+            />
 
+        <Button
+            android:id="@+id/CoupleTestButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/CoupleViolenceButton"
+            android:padding="15dp"
+            android:layout_margin="5dp"
+            android:textSize="12dp"
+            />
 
+        <Button
+            android:id="@+id/FriendTestButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/FriendViolenceButton"
+            android:padding="15dp"
+            android:layout_margin="5dp"
+            android:textSize="12dp"
+            />
 
-        />
+        <Button
+            android:id="@+id/WorkTestButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/WorkViolenceButton"
+            android:padding="15dp"
+            android:layout_margin="5dp"
+            android:textSize="12dp"
+            />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

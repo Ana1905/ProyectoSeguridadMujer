@@ -54,6 +54,16 @@
             android:name=".DefenseTechniqueActivity"
             android:parentActivityName=".MainActivity">
         </activity>
+
+        <activity
+            android:name=".TestActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".QuestionsActivity"
+            android:parentActivityName=".TestActivity">
+        </activity>
     </application>
 
 </manifest>

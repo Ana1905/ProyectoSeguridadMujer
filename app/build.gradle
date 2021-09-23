@@ -26,6 +26,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    viewBinding {
+        enabled true
+    }
 }
 
 dependencies {
@@ -54,4 +57,6 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:4.11.0"
     annotationProcessor "com.github.bumptech.glide:compiler:4.11.0"
     implementation files('libs/heresdk-explore-android-4.8.3.0.6500.aar')
+
+    implementation 'com.google.android.libraries.places:places:2.4.0'
 }

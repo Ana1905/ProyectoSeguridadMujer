@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.ProyectoSeguridadMujer.NoActionBar" >
+    <style name="Theme.ProyectoSeguridadMujer.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -22,6 +22,7 @@
     <style name="Theme.ProyectoSeguridadMujer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.ProyectoSeguridadMujer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="Theme_Dialog_Translucent" parent="android:Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>

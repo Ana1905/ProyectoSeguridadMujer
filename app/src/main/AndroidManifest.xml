@@ -64,6 +64,16 @@
             android:name=".QuestionsActivity"
             android:parentActivityName=".TestActivity">
         </activity>
+
+        <activity
+            android:name=".InstitutionListActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name=".ListContentActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

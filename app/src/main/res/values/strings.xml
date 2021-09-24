@@ -72,6 +72,13 @@
     <string name="Defense_publication_video_label">Video de la publicación:</string>
     <string name="Defense_publication_additional_image_label">Imagenes adicionales:</string>
 
+    <string name="Institution_list_url">https://seguridadmujer.com/app_movil/Institucion/getInstitutionList.php</string>
+    <string name="InstitutionAreaLabel">Area o rubro:</string>
+    <string name="Institution_description_label">Descripción y antecedentes:</string>
+    <string name="Institution_phone_label">Número de telefono:</string>
+    <string name="Institution_page_label">Pagina web:</string>
+    <string name="Institution_ubication_label">ubicación:</string>
+
     <string name="FamiliarViolenceButton">Familiar</string>
     <string name="CoupleViolenceButton">De pareja</string>
     <string name="FriendViolenceButton">Amigos</string>

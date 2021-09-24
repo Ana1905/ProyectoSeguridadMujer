@@ -34,8 +34,6 @@ public class QuestionsActivity extends AppCompatActivity
         SometimesAnswer = findViewById(R.id.SometimesAnswer);
         SeldomAnswer = findViewById(R.id.SeldomAnswer);
         NeverAnswer = findViewById(R.id.NeverAnswer);
-        PreviousQuestion = findViewById(R.id.PreviousQuestion);
-        NextQuestion = findViewById(R.id.NextQuestion);
         ResultsButton = findViewById(R.id.ResultsButton);
         resources = getResources();
 
@@ -105,12 +103,12 @@ public class QuestionsActivity extends AppCompatActivity
             {
                 if (Quiz == 0)
                 {
-                    Toast.makeText(getApplicationContext(), "Watonsito" + Type [0] + " " + Type [1] + " " + Type [2] + " " + Type [3] + " " + Variables [0]
+                    Toast.makeText(getApplicationContext(),  Type [0] + " " + Type [1] + " " + Type [2] + " " + Type [3] + " " + Variables [0]
                             + " " + Variables [1] + " " + Variables [2] + " " + Variables [3] + " " + Variables [4], Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "Watonsito" + Type [Quiz - 1] + " " + Variables [0] + " " + Variables [1] + " " + Variables [2]
+                    Toast.makeText(getApplicationContext(),  Type [Quiz - 1] + " " + Variables [0] + " " + Variables [1] + " " + Variables [2]
                             + " " + Variables [3] + " " + Variables [4], Toast.LENGTH_SHORT).show();
                 }
             }
@@ -220,16 +218,6 @@ public class QuestionsActivity extends AppCompatActivity
                 Question.setText(Questions[Counter]);
                 QuestionNumber.setText("Pregunta " + (Counter + 1) + " de 12 preguntas");
             }
-            /*
-            if (Counter == 0)
-            {
-                PreviousQuestion.setVisibility(View.INVISIBLE);
-            }
-            else
-            {
-                PreviousQuestion.setVisibility();
-            }
-            */
         }
     }
 

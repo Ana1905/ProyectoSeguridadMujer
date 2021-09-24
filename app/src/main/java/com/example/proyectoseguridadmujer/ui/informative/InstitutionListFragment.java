@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.proyectoseguridadmujer.InstitutionListAdapter;
 import com.example.proyectoseguridadmujer.R;
 
 public class InstitutionListFragment extends Fragment {
@@ -46,11 +47,11 @@ public class InstitutionListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_institution_list, container, false);
+        View view = inflater.inflate(R.layout.activity_institution_list, container, false);
         mRecyclerView = view.findViewById(R.id.InstitutionList);
         //Descriptions = getResources().getStringArray(R.array.Test_values_Descriptions_Recycler_view);
-        InstitutionListAdapter adapter = new InstitutionListAdapter(view.getContext(), Titles, Descriptions, Images);
-        mRecyclerView.setAdapter(adapter);
+        //InstitutionListAdapter adapter = new InstitutionListAdapter(view.getContext(), Titles, Descriptions, Images);
+        //mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         return view;
     }

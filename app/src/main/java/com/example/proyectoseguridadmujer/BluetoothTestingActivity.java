@@ -12,7 +12,6 @@ import java.util.UUID;
 
 public class BluetoothTestingActivity extends AppCompatActivity {
 
-
     Handler edtTextOut;
     final int handlerState = 0;
     private BluetoothAdapter btAdapter = null;

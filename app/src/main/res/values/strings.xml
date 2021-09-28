@@ -217,5 +217,7 @@
         <item>2</item>
         <item>2</item>
     </string-array>
+    <string name="title_activity_ubication">Map</string>
+    <string name="title_activity_institution_ubication">Map</string>
 
 </resources>

@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.proyectoseguridadmujer">
 
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the "MyLocation" functionality.
-    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -26,9 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoSeguridadMujer"
         android:usesCleartextTraffic="true">
-        <service
-            android:name=".WhatsAppService"
-            android:exported="false"></service>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -39,13 +32,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" /> <!-- Set your credentials for the HERE SDK. -->
-        <meta-data
-            android:name="com.here.sdk.access_key_id"
-            android:value="EWOAgq5fykXcPBR27TWlRQ" />
-        <meta-data
-            android:name="com.here.sdk.access_key_secret"
-            android:value="NlWq4_DHXNXqDymD5oiXhnp5szMO7bWtQZME3WpKmPWA-WXGh76HuqXWd_0lMMNMVMXhgFHWE2FzomA2wFq-xQ" />
+            android:value="@string/google_maps_key" />
 
         <activity
             android:name=".LoginActivity"
@@ -56,9 +43,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".CreateAccountActivity"
             android:parentActivityName=".LoginActivity" />
+
         <activity
             android:name=".ForgotPasswordActivity"
             android:parentActivityName=".LoginActivity">
@@ -66,41 +55,33 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.proyectoseguridadmujer.LoginActivity" />
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ProyectoSeguridadMujer.NoActionBar" />
+
         <activity
             android:name=".BodyDefenseActivity"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".RouteActivity"
-            android:parentActivityName=".MainActivity" />
+
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:parentActivityName=".MainActivity" />
+
         <activity
-            android:name=".BluetoothTestingActivity"
-            android:exported="true" />
-        <activity android:name=".TrustedFriendsActivity" />
-        <activity android:name=".AddTrustedFriendsActivity" />
-        <activity android:name=".BandVinculationActivity"
+            android:name=".BandVinculationActivity"
             android:parentActivityName=".MainActivity"/>
-        <activity android:name=".SendAlertTestingActivity" />
 
-        <service
-            android:name=".WhatsAppAccessibilityService"
-            android:label="My WhatsApp Accessibility"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/whatsappservice" />
+        <activity
+            android:name=".AddTrustedFriendsActivity"
+            android:parentActivityName=".MainActivity" />
 
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-        </service>
+        <activity
+            android:name=".SendAlertTestingActivity"
+            android:parentActivityName=".MainActivity"/>
+
     </application>
 
 </manifest>

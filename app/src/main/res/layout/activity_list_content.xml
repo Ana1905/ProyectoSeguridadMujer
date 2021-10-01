@@ -116,6 +116,8 @@
 
         <TextView
             android:id="@+id/InstitutionPhone"
+            android:autoLink="phone"
+            android:linksClickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -147,6 +149,8 @@
 
         <TextView
             android:id="@+id/InstitutionPage"
+            android:autoLink="web"
+            android:linksClickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -172,6 +176,18 @@
             android:textSize="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/InstitutionPage" />
+
+        <fragment
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            tools:context=".ListContentActivity"
+            app:layout_constraintTop_toBottomOf="@+id/InstitutionUbicationLabel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

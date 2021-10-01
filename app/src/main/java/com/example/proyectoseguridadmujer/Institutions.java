@@ -12,9 +12,8 @@ public class Institutions implements Parcelable {
     String Descripcion;
     String Telefono;
     String PaginaWeb;
-    //String Latitud;
-    //String Longitud;
-
+    double Latitud;
+    double Longitud;
 
     protected Institutions(Parcel in) {
         ID_Institucion = in.readInt();
@@ -24,8 +23,8 @@ public class Institutions implements Parcelable {
         Descripcion = in.readString();
         Telefono = in.readString();
         PaginaWeb = in.readString();
-        //Latitud = in.readString();
-        //Longitud = in.readString();
+        Latitud = in.readDouble();
+        Longitud = in.readDouble();
     }
 
     public static final Creator<Institutions> CREATOR = new Creator<Institutions>() {
@@ -96,6 +95,22 @@ public class Institutions implements Parcelable {
         PaginaWeb = paginaWeb;
     }
 
+    public double getLatitud() {
+        return Latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        Latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return Longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        Longitud = longitud;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -110,7 +125,7 @@ public class Institutions implements Parcelable {
         dest.writeString(Descripcion);
         dest.writeString(Telefono);
         dest.writeString(PaginaWeb);
-        //dest.writeString(Latitud);
-        //dest.writeString(Longitud);
+        dest.writeDouble(Latitud);
+        dest.writeDouble(Longitud);
     }
 }

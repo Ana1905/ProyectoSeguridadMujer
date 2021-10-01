@@ -2,20 +2,36 @@ package com.example.proyectoseguridadmujer;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.view.View;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
+import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class ListContentActivity extends AppCompatActivity
+import java.net.URI;
+
+public class ListContentActivity extends FragmentActivity implements OnMapReadyCallback
 {
     TextView InstitutionName, InstitutionArea, InstitutionDescription, InstitutionPhone, InstitutionPage;
     ImageView InstitutionImage;
+    private GoogleMap mMap;
     Institutions institutions;
     Bundle bundle;
 
@@ -37,6 +53,10 @@ public class ListContentActivity extends AppCompatActivity
 
         bundle = getIntent().getExtras();
         institutions = bundle.getParcelable("Institution");
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         getCredentialData();
 
@@ -62,8 +82,19 @@ public class ListContentActivity extends AppCompatActivity
         InstitutionName.setText(institutions.getNombre());
         Glide.with(this).load(institutions.getRutaImagenPresentacion()).into(InstitutionImage);
         InstitutionArea.setText(institutions.getArea());
+        //InstitutionArea.setText("áéíóú");
         InstitutionDescription.setText(institutions.getDescripcion());
         InstitutionPhone.setText(institutions.getTelefono());
         InstitutionPage.setText(institutions.getPaginaWeb());
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMinZoomPreference(15.0f);
+        mMap.setMaxZoomPreference(20.0f);
+        LatLng ubication = new LatLng(institutions.getLatitud(), institutions.getLongitud());
+        mMap.addMarker(new MarkerOptions().position(ubication).title("Institucion ubicacion"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(ubication));
     }
 }

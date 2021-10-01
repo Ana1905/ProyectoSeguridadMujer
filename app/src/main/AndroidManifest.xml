@@ -31,10 +31,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_institution_ubication"></activity>
-        <activity android:name=".InstitutionUbicationActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -75,7 +72,8 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ListContentActivity"
-            android:parentActivityName=".MainActivity" />
+            android:label="@string/title_activity_institution_ubication"
+            android:parentActivityName=".InstitutionListActivity" />
     </application>
 
 </manifest>

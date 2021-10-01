@@ -1,17 +1,23 @@
 package com.example.proyectoseguridadmujer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.icu.util.Output;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,159 +30,310 @@ import java.util.UUID;
 
 public class BandVinculationActivity extends AppCompatActivity {
 
-    private static final String TAG = "BandVinculationActivity";
-    ListView IdLista;
-    BluetoothSocket socket;
-    private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    Button mBotonMostrarDispositivos, mBotonTerminarConexion;
+    ListView mListaDispositivos;
+    TextView mTVMostrarDispositivos;
 
+    BluetoothAdapter mBluetoothAdapter;
+    BluetoothDevice[] mArrayDispositivos;
 
-    public static String EXTRA_DEVICE_ADRESS = "device_adress";
+    ClientClass mClientClass;
+    SendReceive mSendReceive;
 
-    private BluetoothAdapter mBtAdapter;
-    private ArrayAdapter mPairedDevicesAdapter;
-    Handler bluetoothIn;
-    final int handlerState = 0;
-    ConnectedThread connectedThread ;
+    static final int STATE_LISTENING = 1;
+    static final int STATE_CONNECTING = 2;
+    static final int STATE_CONNECTED = 3;
+    static final int STATE_CONNECTION_FAILED = 4;
+    static final int STATE_MESSAGE_RECEIVED = 5;
 
-    private class ConnectedThread extends Thread {
-        private final InputStream mmInStream;
-        private final OutputStream mmOutStream;
+    int REQUEST_ENABLE_BLUETOOTH = 1;
 
-        //creation of the connect thread
-        public ConnectedThread(BluetoothSocket socket) {
-            InputStream tmpIn = null;
-            OutputStream tmpOut = null;
+    private static final String APP_NAME = "ProyectoSeguridadMujer";
 
-            try {
-                //Create I/O streams for connection
-                tmpIn = socket.getInputStream();
-                tmpOut = socket.getOutputStream();
-            } catch (IOException e) { }
+    //private static final UUID MY_UUID = UUID.fromString("8ce255c0-223a-11e0-ac64-0803450c9a66");
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-            mmInStream = tmpIn;
-            mmOutStream = tmpOut;
-        }
-
-
-        public void run() {
-            byte[] buffer = new byte[256];
-            int bytes;
-
-            // Keep looping to listen for received messages
-            while (true) {
-                try {
-                    bytes = mmInStream.read(buffer);         //read bytes from input buffer
-                    String readMessage = new String(buffer, 0, bytes);
-                    // Send the obtained bytes to the UI Activity via handler
-                    bluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();
-                } catch (IOException e) {
-                    break;
-                }
-            }
-        }
-        //write method
-        public void write(String input) {
-            byte[] msgBuffer = input.getBytes();           //converts entered String into bytes
-            try {
-                mmOutStream.write(msgBuffer);                //write bytes over BT connection via outstream
-            } catch (IOException e) {
-                //if you cannot write, close the application
-                Toast.makeText(getBaseContext(), "La Conexión fallo", Toast.LENGTH_LONG).show();
-                finish();
-
-            }
-        }
-    }
-
-
+    boolean alertaRecibida = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_band_vinculation);
-        bluetoothIn = new Handler();
+
+        //Wiring Up:
+        mBotonMostrarDispositivos = findViewById(R.id.boton_mostrar_dispositivos);
+        mListaDispositivos = findViewById(R.id.list_bluetooth);
+        mTVMostrarDispositivos = findViewById(R.id.text_view_mostrar_dispositivos);
+        mBotonTerminarConexion = findViewById(R.id.boton_cerrar_conexion);
+
+        //Se esconde el boton para terminar la conexion con la pulsera y la lista:
+        mListaDispositivos.setVisibility(View.GONE);
+        mBotonTerminarConexion.setVisibility(View.GONE);
+
+        //Se crea el adaptador Bluetooth:
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            //En caso de que el dispositivo no soporte Bluetooth, se direccionara a la MainActivity.
+            Toast.makeText(getApplicationContext(), "Su dispositivo no soporta Bluetooth, lamentamos que no será capaz de utilizar la función de alerta", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        if(!mBluetoothAdapter.isEnabled()){
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BLUETOOTH);
+        }
+        
+        //onClick del boton para mostrar la lista de dispositivos:
+        mBotonMostrarDispositivos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarListaDispositivos();
+            }
+        });
+
+        //onClick boton para terminar la conexion con la pulsera:
+        mBotonTerminarConexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                String string = "Hola pulsera";
+                mSendReceive.write(string.getBytes());
+                */
+                mClientClass.cancel();
+            }
+        });
+    }
+
+    //Handler que monitorea los estados de conexion del Bluetooth:
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+
+            switch (msg.what){
+                case STATE_LISTENING:
+                    Toast.makeText(getApplicationContext(), "Escuchando...", Toast.LENGTH_SHORT).show();
+                    break;
+                case STATE_CONNECTING:
+                    Toast.makeText(getApplicationContext(), "Conectando...", Toast.LENGTH_SHORT).show();
+                    break;
+                case STATE_CONNECTED:
+                    Toast.makeText(getApplicationContext(), "Se ha conectado la pulsera con el dispositivo exitosamente.", Toast.LENGTH_LONG).show();
+                    //Se actualiza la interfaz:
+                    mTVMostrarDispositivos.setVisibility(View.GONE);
+                    mBotonMostrarDispositivos.setVisibility(View.GONE);
+                    mListaDispositivos.setVisibility(View.GONE);
+                    mBotonTerminarConexion.setVisibility(View.VISIBLE);
+                    break;
+                case STATE_CONNECTION_FAILED:
+                    Toast.makeText(getApplicationContext(), "Conexion fallida.", Toast.LENGTH_SHORT).show();
+                    break;
+                case STATE_MESSAGE_RECEIVED:
+                    byte[] readBuff = (byte[]) msg.obj;     //Se obtiene y castea el mensaje obtenido.
+                    String mensajeTemporal = new String(readBuff, 0, msg.arg1);
+                    Toast.makeText(getApplicationContext(), mensajeTemporal, Toast.LENGTH_LONG).show();
+                    if(mensajeTemporal.equals("ALERTA") && !alertaRecibida){
+                        alertaRecibida = true;
+                        Toast.makeText(getApplicationContext(), "Modo de alerta activado", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+            }
+            return true;
+        }
+    });
+    
+    //Metodo para mostrar la lista de dispositivos vinculados:
+    private void mostrarListaDispositivos(){
+        //Se obtienen los dispositivos vinculados:
+        Set<BluetoothDevice> listaDispositivos = mBluetoothAdapter.getBondedDevices();
+
+        String[] stringsDispositivos = new String[listaDispositivos.size()];
+        mArrayDispositivos = new BluetoothDevice[listaDispositivos.size()];
+        int contador = 0;
+
+        if(listaDispositivos.size()>0){
+            //Se crea una lista con los nombres de los dispositivos vinculados:
+            for(BluetoothDevice dispositivo:listaDispositivos){
+                mArrayDispositivos[contador] = dispositivo;
+                stringsDispositivos[contador] = dispositivo.getName();
+                contador++;
+            }
+
+            //Se carga la lista de los dispositivos en el ListView por medio de un ArrayAdapter:
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, stringsDispositivos);
+            mListaDispositivos.setAdapter(arrayAdapter);
+            mListaDispositivos.setVisibility(View.VISIBLE);
+        }
+        else{
+            Toast.makeText(getApplicationContext(), "No tiene dispositivos vinculados.", Toast.LENGTH_SHORT).show();
+        }
+
+        //onClick de los elementos de la lista:
+        mListaDispositivos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(stringsDispositivos[position].equals("SEGURIDAD MUJER CETI")){
+                    Toast.makeText(getApplicationContext(), "Conectando...", Toast.LENGTH_SHORT).show();
+
+                    mClientClass = new ClientClass(mArrayDispositivos[position]);
+                    mClientClass.start();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Este dispositivo no es una pulsera, favor de seleccionar una pulsera identificada bajo el nombre de 'SEGURIDAD MUJER CETI'", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private class ServerClass extends Thread{
+        private BluetoothServerSocket serverSocket;
+
+        public ServerClass(){
+            try {
+                serverSocket = mBluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord(APP_NAME, MY_UUID);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void run(){
+            BluetoothSocket socket=null;
+
+            while(socket == null){
+                try {
+                    Message mensaje = Message.obtain();
+                    mensaje.what = STATE_CONNECTING;
+                    handler.sendMessage(mensaje);
+
+                    socket = serverSocket.accept();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                    Message mensaje = Message.obtain();
+                    mensaje.what = STATE_CONNECTION_FAILED;
+                    handler.sendMessage(mensaje);
+                }
+
+                if(socket != null){
+                    Message mensaje = Message.obtain();
+                    mensaje.what = STATE_CONNECTED;
+                    handler.sendMessage(mensaje);
+
+                    //Codigo para enviar/recibir informacion
+                    mSendReceive = new SendReceive(socket);
+                    mSendReceive.start();
+                    break;
+                }
+            }
+        }
+    }
+
+    //Hilo que realiza la conexion con la pulsera
+    private class ClientClass extends Thread{
+        private BluetoothDevice dispositivo;
+        private BluetoothSocket socket;
+
+        //El constructor crea un socket para efectuar la conexion obteniendo la informacion del dispositivo correspondiente a la pulsera:
+        public ClientClass(BluetoothDevice dispositivoVinculado){
+            dispositivo = dispositivoVinculado;
+
+            try {
+                socket = dispositivo.createRfcommSocketToServiceRecord(MY_UUID);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //En el metodo run se intenta realizar la conexion por medio de socket.connect().
+        public void run(){
+            try {
+                socket.connect();
+                Message mensaje = Message.obtain();
+                mensaje.what = STATE_CONNECTED;
+                handler.sendMessage(mensaje);
+
+                //Codigo para enviar/recibir informacion
+                mSendReceive = new SendReceive(socket);
+                mSendReceive.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Message mensaje = Message.obtain();
+                mensaje.what = STATE_CONNECTION_FAILED;
+                handler.sendMessage(mensaje);
+            }
+        }
+
+        //Metodo para cerrar el socket y terminar la conexion Bluetooth:
+        public void cancel() {
+            try {
+                socket.close();
+                Toast.makeText(getApplicationContext(), "Se ha concluido la conexion Bluetooth con la pulsera.", Toast.LENGTH_LONG).show();
+                //Se actualiza la interfaz:
+                mTVMostrarDispositivos.setVisibility(View.VISIBLE);
+                mBotonMostrarDispositivos.setVisibility(View.VISIBLE);
+                mListaDispositivos.setVisibility(View.GONE);
+                mListaDispositivos.setAdapter(null);
+                mBotonTerminarConexion.setVisibility(View.GONE);
+            } catch (IOException e) {
+                Toast.makeText(getApplicationContext(), "No se pudo terminar la conexion Bluetooth con la pulsera.", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    //Hilo para enviar y recibir informacion por medio del socket Bluetooth:
+    private class SendReceive extends Thread{
+        private final BluetoothSocket bluetoothSocket;
+        private final InputStream inputStream;
+        private final OutputStream outputStream;
+
+        //En el constructor se proporciona el socket que contiene la conexion con la pulsera:
+        public SendReceive(BluetoothSocket socket){
+            bluetoothSocket = socket;
+            InputStream inputTemporal = null;
+            OutputStream outputTemporal = null;
+
+            try {
+                inputTemporal = bluetoothSocket.getInputStream();
+                outputTemporal = bluetoothSocket.getOutputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            inputStream = inputTemporal;
+            outputStream = outputTemporal;
+        }
+
+        //Lectura de informacion entrante:
+        public void run(){
+            byte[] buffer = new byte[1024];
+            int bytes;
+
+            while(true){
+                try {
+                    bytes = inputStream.read(buffer);
+                    handler.obtainMessage(STATE_MESSAGE_RECEIVED, bytes, -1, buffer).sendToTarget();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        //Metodo para enviar informacion:
+        public void write(byte[] bytes){
+            try {
+                outputStream.write(bytes);
+                Toast.makeText(getApplicationContext(), "Mensaje enviado.", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "No se pudo enviar el mensaje.", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        VerificarEstadoBt();
-        mPairedDevicesAdapter = new ArrayAdapter(this, R.layout.founded_bands);
-        IdLista = (ListView) findViewById(R.id.list_bluetooth);
-        IdLista.setAdapter(mPairedDevicesAdapter);
-        IdLista.setOnItemClickListener(mDeviceClickListener);
-        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
-
-        if (pairedDevices.size() > 0) {
-            for (BluetoothDevice device : pairedDevices) {
-                mPairedDevicesAdapter.add(device.getName() + "/n" + device.getAddress());
-
-            }
-        }
+    public void onBackPressed() {
+        Intent intent = NavUtils.getParentActivityIntent(BandVinculationActivity.this);
+        startActivity(intent);
+        finish();
     }
-
-    private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView av, View v, int arg2, long arg3) {
-            String info = ((TextView) v).getText().toString();
-            String address = info.substring(info.length() - 17);
-            finishAffinity();
-            conectBand(address);
-        }
-
-
-    };
-
-
-    private void conectBand(String device) {
-        BluetoothDevice mDevice = mBtAdapter.getRemoteDevice(device);
-        try {
-            socket = createBluetoothSocket(mDevice);
-        }
-        catch (IOException e){
-            Toast.makeText(getBaseContext(), "La creacción del Socket fallo", Toast.LENGTH_LONG).show();
-        }
-
-        try {
-           socket.connect();
-        }
-        catch (IOException e){
-
-              try{
-                  socket.close();
-              }
-              catch(IOException e2){
-                  Toast.makeText(getBaseContext(), "FATAL ERROR", Toast.LENGTH_LONG).show();
-              }
-        }
-
-        connectedThread = new ConnectedThread(socket);
-        connectedThread.start();
-        connectedThread.write("1");
-
-}
-
-    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-
-        return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
-        //creates secure outgoing connecetion with BT device using UUID
-    }
-
-    private void VerificarEstadoBt(){
-
-        mBtAdapter= BluetoothAdapter.getDefaultAdapter();
-        if(mBtAdapter==null){
-            Toast.makeText(this, "El dispositivo no soporta luetooth", Toast.LENGTH_SHORT).show();;
-        } else{
-            if(mBtAdapter.isEnabled()){
-                Log.d(TAG, "...Bluetooth activado");
-            } else{
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent,1);
-            }
-        }
-    }
-
 }

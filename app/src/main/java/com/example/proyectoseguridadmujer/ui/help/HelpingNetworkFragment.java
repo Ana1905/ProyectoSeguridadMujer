@@ -3,6 +3,7 @@ package com.example.proyectoseguridadmujer.ui.help;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -14,7 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.proyectoseguridadmujer.MapsActivity;
 import com.example.proyectoseguridadmujer.R;
+import com.example.proyectoseguridadmujer.RouteActivity;
+
+import org.jetbrains.annotations.NotNull;
 
 public class HelpingNetworkFragment extends Fragment {
     private String email="";
@@ -28,4 +33,10 @@ public class HelpingNetworkFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        Intent intent = new Intent(view.getContext(), RouteActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
 }

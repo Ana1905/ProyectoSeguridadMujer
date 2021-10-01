@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/Purple_Dark">
+
+    <Button
+        android:id="@+id/boton_cancelar_reporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/abc_vector_test" />
+
+    <Button
+        android:id="@+id/boton_cambiar_vista_reporte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sign_in_button_shape"
+        android:paddingHorizontal="10dp"
+        android:text="Crear reporte de acontecimiento"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edit_text_latitud"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:background="@drawable/edit_text_shape"
+        android:hint="Latitud"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:padding="10sp"
+        android:textColor="@color/Gray_highlight"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/Gray"
+        android:clickable="false"
+        android:focusable="false"
+        android:textIsSelectable="false"
+        android:layout_marginBottom="3dp"/>
+
+    <EditText
+        android:id="@+id/edit_text_longitud"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:background="@drawable/edit_text_shape"
+        android:hint="Longitud"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:padding="10sp"
+        android:textColor="@color/Gray_highlight"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/Gray"
+        android:clickable="false"
+        android:focusable="false"
+        android:textIsSelectable="false"
+        android:layout_marginBottom="3dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="3dp">
+
+        <TextView
+            android:id="@+id/categoriaLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categoría:"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <Spinner
+            android:id="@+id/spinner_categoria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edit_text_descripcion"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:inputType="text|textMultiLine"
+        android:gravity="top"
+        android:background="@drawable/edit_text_shape"
+        android:hint="Describa el acontecimiento o brinde alguna recomendación para otra usuaria (Máximo 200 caracteres)"
+        android:importantForAutofill="no"
+        android:padding="10sp"
+        android:textColor="@color/Gray_highlight"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/Gray"
+        android:layout_marginBottom="3dp"
+        android:maxLength="200"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="3dp">
+
+        <TextView
+            android:id="@+id/radioLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Radio del reporte:"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+
+        <Spinner
+            android:id="@+id/spinner_area_reporte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/boton_crear_reporte"
+        android:layout_width="266dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sign_in_button_shape"
+        android:paddingHorizontal="10dp"
+        android:text="Crear reporte"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"/>
+
+    <fragment
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MapsActivity" />
+</LinearLayout>

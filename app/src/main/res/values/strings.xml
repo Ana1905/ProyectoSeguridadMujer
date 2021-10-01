@@ -95,5 +95,38 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string-array name="array_categorias_reporte_acontecimiento">
+        <item> </item>
+        <item>Acoso verbal</item>
+        <item>Acoso visual</item>
+        <item>Discriminación por genero</item>
+        <item>Intento de agresión física</item>
+        <item>Intento de abuso sexual</item>
+        <item>Acorralamiento</item>
+        <item>Intento de asalto sexual</item>
+        <item>Amenaza</item>
+        <item>Persecución</item>
+        <item>Agresión física</item>
+        <item>Intento de secuestro</item>
+        <item>Abuso sexual</item>
+        <item>Asalto sexual</item>
+    </string-array>
+
+    <string-array name="array_area_reporte">
+        <item> </item>
+        <item>50m</item>
+        <item>65m</item>
+        <item>80m</item>
+        <item>95m</item>
+        <item>110m</item>
+        <item>125m</item>
+        <item>140m</item>
+        <item>155m</item>
+        <item>170m</item>
+        <item>185m</item>
+        <item>200m</item>
+    </string-array>
 
 </resources>

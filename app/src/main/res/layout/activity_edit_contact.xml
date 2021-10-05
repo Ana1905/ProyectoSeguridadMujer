@@ -65,10 +65,11 @@
         app:layout_constraintVertical_bias="0.464" />
 
     <Button
+        android:id="@+id/boton_eliminar_contacto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#E40000"
-        android:text="Eliminar "
+        android:text="Eliminar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.28"
@@ -77,6 +78,7 @@
         app:layout_constraintVertical_bias="0.587" />
 
     <Button
+        android:id="@+id/boton_editar_contacto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/quantum_googgreen"

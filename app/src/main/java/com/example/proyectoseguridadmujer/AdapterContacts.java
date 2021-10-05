@@ -1,9 +1,14 @@
 package com.example.proyectoseguridadmujer;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +38,24 @@ public class AdapterContacts extends RecyclerView.Adapter<AdapterContacts.ViewHo
     public void onBindViewHolder(@NonNull @NotNull ViewHolderContacts holder, int position) {
         holder.Nombre.setText(ListContacts.get(position).getNombre());
         holder.Num.setText(ListContacts.get(position).getNumero());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), holder.Nombre.getText(), Toast.LENGTH_SHORT).show();
+
+
+                Intent intent = new Intent(v.getContext(), EditContactActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("Nombre", ListContacts.get(position).Nombre);
+                bundle.putString("Numero", ListContacts.get(position).Numero);
+                intent.putExtras(bundle);
+                v.getContext().startActivity(intent);
+
+
+            }
+        });
     }
 
     @Override
@@ -40,7 +63,7 @@ public class AdapterContacts extends RecyclerView.Adapter<AdapterContacts.ViewHo
         return ListContacts.size();
     }
 
-    public class ViewHolderContacts extends RecyclerView.ViewHolder {
+    public class ViewHolderContacts extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView Nombre;
         TextView Num;
@@ -56,6 +79,11 @@ public class AdapterContacts extends RecyclerView.Adapter<AdapterContacts.ViewHo
         public void asignarDatos(String Name, String Number) {
             Nombre.setText(Name);
             Num.setText(Number);
+        }
+
+        @Override
+        public void onClick(View v) {
+
         }
     }
 }

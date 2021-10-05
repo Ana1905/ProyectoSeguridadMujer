@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoSeguridadMujer"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".EditContactActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -43,11 +43,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".CreateAccountActivity"
             android:parentActivityName=".LoginActivity" />
-
         <activity
             android:name=".ForgotPasswordActivity"
             android:parentActivityName=".LoginActivity">
@@ -55,33 +53,26 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.proyectoseguridadmujer.LoginActivity" />
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ProyectoSeguridadMujer.NoActionBar" />
-
         <activity
             android:name=".BodyDefenseActivity"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".BandVinculationActivity"
-            android:parentActivityName=".MainActivity"/>
-
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AddTrustedFriendsActivity"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".SendAlertTestingActivity"
-            android:parentActivityName=".MainActivity"/>
-
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

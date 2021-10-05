@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.proyectoseguridadmujer.AdapterContacts;
+import com.example.proyectoseguridadmujer.AddTrustedFriendsActivity;
 import com.example.proyectoseguridadmujer.BandVinculationActivity;
 import com.example.proyectoseguridadmujer.Contact;
 import com.example.proyectoseguridadmujer.MapsActivity;
@@ -40,11 +41,11 @@ RecyclerView recyclerView;
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_alert, container, false);
-
+        /*
         SharedPreferences preferences = this.getActivity().getSharedPreferences("Credencials", Context.MODE_PRIVATE);
         email = preferences.getString("email", "");
 
-        /*
+
         recyclerView= root.findViewById(R.id.recyclerViewContacts);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         ListContacts= new ArrayList<Contact>();
@@ -56,7 +57,7 @@ RecyclerView recyclerView;
 
         AdapterContacts adapter= new AdapterContacts(ListContacts);
         recyclerView.setAdapter(adapter);
-         */
+        */
 
         return root;
 
@@ -66,7 +67,7 @@ RecyclerView recyclerView;
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Intent intent = new Intent(view.getContext(), BandVinculationActivity.class);
+        Intent intent = new Intent(view.getContext(), AddTrustedFriendsActivity.class);
         startActivity(intent);
         getActivity().finish();
 

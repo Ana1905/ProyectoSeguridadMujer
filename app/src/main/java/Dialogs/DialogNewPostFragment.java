@@ -7,15 +7,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,20 +28,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.proyectoseguridadmujer.R;
-import com.example.proyectoseguridadmujer.TermsDialog;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+import java.util.Base64;
 
 import httpurlconnection.PutData;
 
@@ -47,18 +51,26 @@ public class DialogNewPostFragment extends DialogFragment {
     LinearLayout mLinearLayoutBarra;
     boolean categoryIsChosen;
     int ID_Category;
+    int Counter = 0;
     EditText mEditTextPostContent;
     Button mButtonClose;
+    Button mButtonImage;
+    Button mButtonDelete;
     Button mButtonPublish;
     Button mButtonChooseReport;
+    ImageView [] mImagePublication;
     Spinner mSpinnerCategory;
     TextView mTextiewName;
     Date currentDate;
+    Bitmap bitmap;
+    String [] imagesToStrings;
+    private static final int REQUEST_GALERIA = 1;
 
     String category;
     String post_content;
     String email = "";
     String name = "";
+    String contraseña = "";
     Activity actividad;
     private String[] reportes;
 
@@ -75,11 +87,27 @@ public class DialogNewPostFragment extends DialogFragment {
         View root = inflater.inflate(R.layout.fragment_dialog_new_post, container, false);
         mEditTextPostContent = root.findViewById(R.id.post_content_label_comunity);
         mButtonClose = root.findViewById(R.id.button_close);
+        mButtonImage = root.findViewById(R.id.Button_add_image);
+        mButtonDelete = root.findViewById(R.id.Button_delete_image);
+        mButtonDelete.setVisibility(View.INVISIBLE);
         mButtonPublish = root.findViewById(R.id.Button_publish);
         mButtonChooseReport = root.findViewById(R.id.button_show_reports);
         mTextiewName = root.findViewById(R.id.user_name_comunity);
         reportes = getResources().getStringArray(R.array.categories);
 
+        imagesToStrings = new String[10];
+
+        mImagePublication = new ImageView [10];
+        mImagePublication [0] = root.findViewById(R.id.New_publication_image_1);
+        mImagePublication [1] = root.findViewById(R.id.New_publication_image_2);
+        mImagePublication [2] = root.findViewById(R.id.New_publication_image_3);
+        mImagePublication [3] = root.findViewById(R.id.New_publication_image_4);
+        mImagePublication [4] = root.findViewById(R.id.New_publication_image_5);
+        mImagePublication [5] = root.findViewById(R.id.New_publication_image_6);
+        mImagePublication [6] = root.findViewById(R.id.New_publication_image_7);
+        mImagePublication [7] = root.findViewById(R.id.New_publication_image_8);
+        mImagePublication [8] = root.findViewById(R.id.New_publication_image_9);
+        mImagePublication [9] = root.findViewById(R.id.New_publication_image_10);
 
         mButtonClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,12 +162,10 @@ public class DialogNewPostFragment extends DialogFragment {
                         break;
 
                     case 4:
-                        // Toast.makeText(parent.getContext(), "Otro", Toast.LENGTH_SHORT).show();
-                        showDialog();
+                        categoryIsChosen = true;
                         mButtonChooseReport.setVisibility(View.INVISIBLE);
+                        category="otro";
                         ID_Category = 4;
-                        //  EditText txtApellidos = (EditText)root.findViewById(R.id.EditTextCategory);
-                        //  Toast.makeText(getActivity(), "Agregado cliente: " + txtApellidos.getText().toString(), Toast.LENGTH_SHORT).show();
                         break;
 
                 }
@@ -152,18 +178,56 @@ public class DialogNewPostFragment extends DialogFragment {
             }
         });
 
-        mButtonPublish.setOnClickListener(new View.OnClickListener() {
+        mButtonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Counter < 10)
+                {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/");
+                    startActivityForResult(intent.createChooser(intent, "Selecciona una imagen"), REQUEST_GALERIA);
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Por que no me estas besando", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        mButtonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Counter--;
+                mImagePublication[Counter].setVisibility(View.INVISIBLE);
+                if (Counter == 0)
+                {
+                    mButtonDelete.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        mButtonPublish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
                 post_content = mEditTextPostContent.getText().toString();
-                if (post_content.equals("") || categoryIsChosen == false) {
-                    if (categoryIsChosen == false) {
+                if (post_content.equals("") || categoryIsChosen == false)
+                {
+                    if (categoryIsChosen == false)
+                    {
                         Toast.makeText(getActivity(), "Debe elegir una categoria", Toast.LENGTH_SHORT).show();
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(getActivity(), "Debe incluir contenido a su publicación", Toast.LENGTH_SHORT).show();
                     }
-                } else {
+                }
+                else
+                {
+
                     Toast.makeText(getActivity(), "publicando", Toast.LENGTH_SHORT).show();
+                    SendImage();
                     savePost();
                     dismiss();
                 }
@@ -197,6 +261,34 @@ public class DialogNewPostFragment extends DialogFragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_GALERIA)
+        {
+            Uri uri = data.getData();
+            mImagePublication[Counter].setImageURI(uri);
+            mImagePublication[Counter].setVisibility(View.VISIBLE);
+            mButtonDelete.setVisibility(View.VISIBLE);
+
+            try
+            {
+                bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
+                ByteArrayOutputStream array = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
+                byte [] imageByte = array.toByteArray();
+                imagesToStrings[Counter] = Base64.getEncoder().encodeToString(imageByte);
+            }
+            catch (IOException e)
+            {
+
+            }
+
+            Counter++;
+        }
+        Toast.makeText(getActivity(), String.valueOf(requestCode), Toast.LENGTH_SHORT).show();
+    }
 
     @NonNull
     @NotNull
@@ -214,6 +306,88 @@ public class DialogNewPostFragment extends DialogFragment {
         SharedPreferences preferences = getActivity().getSharedPreferences("Credencials", Context.MODE_PRIVATE);
         email = preferences.getString("email", "");
         // getName();
+    }
+
+    public void SendImage ()
+    {
+        /*
+        //Creating array for parameters
+        String[] field = new String[1];
+        field[0] = "email";
+
+        //Creating array for data
+        String[] data = new String[1];
+        data[0] = email;
+
+        PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/verifyEmailVerification.php", "POST", field, data);
+        if(putData.startPut()){
+            if(putData.onComplete()){
+                String result = putData.getResult();
+                //Si se obtiene que el correo ha sido verificado, se hace login:
+                if(result.equals("Correo verificado")) {
+                    Toast.makeText(getActivity(), "El correo ha sido verificado", Toast.LENGTH_LONG).show();
+                    //Hace el login:
+                    if (!email.equals("") && !contraseña.equals("")) {
+                        //Start ProgressBar first (Set visibility VISIBLE)
+                        Handler handler = new Handler();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Starting Write and Read data with URL
+                                //Creating array for parameters
+                                String[] field = new String[3];
+                                field[0] = "email";
+                                field[1] = "contraseña";
+                                field[2] = "telefono";
+
+                                //Creating array for data
+                                String[] data = new String[3];
+                                data[0] = email;
+                                data[1] = contraseña;
+                                data[2] = mPhoneNumber;
+
+                                PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
+
+                                if (putData.startPut()) {
+                                    if (putData.onComplete()) {
+                                        String result = putData.getResult();
+                                        if (result.equals("Login Success")) {
+                                            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                                            guardarSesion(email, contraseña);
+                                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                        else{
+                                            if(result.equals("Missing email verification email or Password wrong")){
+                                                Toast.makeText(getActivity(), "La cuenta aún no ha sido creada pues no se ha verificado la dirección de correo", Toast.LENGTH_LONG).show();
+                                            }
+                                            else{
+                                                if(result.equals("phones not match email or Password wrong")){
+                                                    Toast.makeText(getActivity(), "Estás intentando acceder desde un dispositivo que no es el que tenemos registrado, por tu seguridad no te daremos acceso", Toast.LENGTH_LONG).show();
+                                                }
+                                                else{
+                                                    Toast.makeText(getActivity(), "Correo o contraseña erróneos", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                //End Write and Read data with URL
+                            }
+                        });
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getActivity(), "El correo no ha sido verificado aún, reintentando...", Toast.LENGTH_LONG).show();
+                    handler.postDelayed(this, 10000);
+                }
+            }
+        }
+        */
     }
 
     public void savePost() {

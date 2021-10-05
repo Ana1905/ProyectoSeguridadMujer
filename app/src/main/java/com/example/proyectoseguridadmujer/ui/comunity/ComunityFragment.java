@@ -81,13 +81,6 @@ public class ComunityFragment extends Fragment {
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.add(android.R.id.content, dialogNewPostFragment).addToBackStack(null).commit();
 
-
     }
-
-
-
-
-
-
 
 }

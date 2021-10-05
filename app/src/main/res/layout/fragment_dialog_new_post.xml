@@ -117,6 +117,7 @@
             app:layout_constraintVertical_bias="0.269" />
 
         <ImageView
+            android:id="@+id/New_publication_image_1"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:backgroundTint="@color/purple_200"
@@ -130,6 +131,7 @@
             app:layout_constraintVertical_bias="0.567" />
 
         <ImageView
+            android:id="@+id/New_publication_image_2"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:backgroundTint="@color/purple_200"
@@ -144,6 +146,7 @@
 
 
         <ImageView
+            android:id="@+id/New_publication_image_3"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:backgroundTint="@color/purple_200"
@@ -157,6 +160,7 @@
             app:layout_constraintVertical_bias="0.567" />
 
         <ImageView
+            android:id="@+id/New_publication_image_4"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:backgroundTint="@color/purple_200"
@@ -170,6 +174,7 @@
             app:layout_constraintVertical_bias="0.567" />
 
         <ImageView
+            android:id="@+id/New_publication_image_5"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:backgroundTint="@color/purple_200"
@@ -182,18 +187,103 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.567" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/New_publication_image_6"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:backgroundTint="@color/purple_200"
             android:src="@drawable/add_image_icon"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.049"
+            app:layout_constraintHorizontal_bias="0.023"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.677" />
+            app:layout_constraintVertical_bias="0.709" />
+
+        <ImageView
+            android:id="@+id/New_publication_image_7"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/purple_200"
+            android:src="@drawable/add_image_icon"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.258"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.709" />
+
+        <ImageView
+            android:id="@+id/New_publication_image_8"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/purple_200"
+            android:src="@drawable/add_image_icon"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.709" />
+
+        <ImageView
+            android:id="@+id/New_publication_image_9"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/purple_200"
+            android:src="@drawable/add_image_icon"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.736"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.709" />
+
+        <ImageView
+            android:id="@+id/New_publication_image_10"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:backgroundTint="@color/purple_200"
+            android:src="@drawable/add_image_icon"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.976"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.709" />
+
+        <Button
+            android:id="@+id/Button_delete_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:backgroundTint="@color/purple_200"
+            android:text="Borrar imagen anterior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.84" />
+
+        <Button
+            android:id="@+id/Button_add_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_shape"
+            android:backgroundTint="@color/purple_200"
+            android:text="Añadir imagen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.968"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.84" />
 
         <Button
             android:id="@+id/Button_publish"
@@ -207,7 +297,7 @@
             app:layout_constraintHorizontal_bias="0.947"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.741" />
+            app:layout_constraintVertical_bias="0.973" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

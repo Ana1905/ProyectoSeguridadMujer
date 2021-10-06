@@ -3,6 +3,7 @@ package Dialogs;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,12 +19,12 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Base64;
 
 import com.example.proyectoseguridadmujer.R;
 
@@ -40,15 +42,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.sql.Date;
-import java.util.Base64;
 
 import httpurlconnection.PutData;
 
 
 public class DialogNewPostFragment extends DialogFragment {
 
-    LinearLayout mLinearLayoutBarra;
     boolean categoryIsChosen;
     int ID_Category;
     int Counter = 0;
@@ -60,18 +59,18 @@ public class DialogNewPostFragment extends DialogFragment {
     Button mButtonChooseReport;
     ImageView [] mImagePublication;
     Spinner mSpinnerCategory;
-    TextView mTextiewName;
-    Date currentDate;
+    TextView mTextViewName;
     Bitmap bitmap;
     String [] imagesToStrings;
+    String [] imagesType;
     private static final int REQUEST_GALERIA = 1;
 
+    String ImageType = "";
     String category;
     String post_content;
     String email = "";
     String name = "";
     String contraseña = "";
-    Activity actividad;
     private String[] reportes;
 
     //IComunicaFragments iComunicaFragments;
@@ -92,10 +91,8 @@ public class DialogNewPostFragment extends DialogFragment {
         mButtonDelete.setVisibility(View.INVISIBLE);
         mButtonPublish = root.findViewById(R.id.Button_publish);
         mButtonChooseReport = root.findViewById(R.id.button_show_reports);
-        mTextiewName = root.findViewById(R.id.user_name_comunity);
+        mTextViewName = root.findViewById(R.id.user_name_comunity);
         reportes = getResources().getStringArray(R.array.categories);
-
-        imagesToStrings = new String[10];
 
         mImagePublication = new ImageView [10];
         mImagePublication [0] = root.findViewById(R.id.New_publication_image_1);
@@ -108,6 +105,30 @@ public class DialogNewPostFragment extends DialogFragment {
         mImagePublication [7] = root.findViewById(R.id.New_publication_image_8);
         mImagePublication [8] = root.findViewById(R.id.New_publication_image_9);
         mImagePublication [9] = root.findViewById(R.id.New_publication_image_10);
+
+        imagesToStrings = new String[10];
+        imagesToStrings [0] = "";
+        imagesToStrings [1] = "";
+        imagesToStrings [2] = "";
+        imagesToStrings [3] = "";
+        imagesToStrings [4] = "";
+        imagesToStrings [5] = "";
+        imagesToStrings [6] = "";
+        imagesToStrings [7] = "";
+        imagesToStrings [8] = "";
+        imagesToStrings [9] = "";
+
+        imagesType = new String[10];
+        imagesType [0] = "";
+        imagesType [1] = "";
+        imagesType [2] = "";
+        imagesType [3] = "";
+        imagesType [4] = "";
+        imagesType [5] = "";
+        imagesType [6] = "";
+        imagesType [7] = "";
+        imagesType [8] = "";
+        imagesType [9] = "";
 
         mButtonClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,10 +208,6 @@ public class DialogNewPostFragment extends DialogFragment {
                     intent.setType("image/");
                     startActivityForResult(intent.createChooser(intent, "Selecciona una imagen"), REQUEST_GALERIA);
                 }
-                else
-                {
-                    Toast.makeText(getActivity(), "Por que no me estas besando", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -198,7 +215,10 @@ public class DialogNewPostFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Counter--;
+                mButtonImage.setVisibility(View.VISIBLE);
                 mImagePublication[Counter].setVisibility(View.INVISIBLE);
+                imagesToStrings[Counter] = "";
+                imagesType[Counter] = "";
                 if (Counter == 0)
                 {
                     mButtonDelete.setVisibility(View.INVISIBLE);
@@ -228,7 +248,6 @@ public class DialogNewPostFragment extends DialogFragment {
 
                     Toast.makeText(getActivity(), "publicando", Toast.LENGTH_SHORT).show();
                     SendImage();
-                    savePost();
                     dismiss();
                 }
             }
@@ -236,7 +255,7 @@ public class DialogNewPostFragment extends DialogFragment {
 
 
         getName();
-        mTextiewName.setText(name);
+        mTextViewName.setText(name);
 
         //cargarDatos();
 
@@ -276,9 +295,28 @@ public class DialogNewPostFragment extends DialogFragment {
             {
                 bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
                 ByteArrayOutputStream array = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
+
+                ContentResolver contentResolver = getContext().getContentResolver();
+                MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+                imagesType[Counter] = mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+
+                if (imagesType[Counter] == "jpg")
+                {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
+                }
+                else if (imagesType[Counter] == "png")
+                {
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, array);
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Por favor introduce un archivo valido", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(getActivity(), imagesType[Counter], Toast.LENGTH_SHORT).show();
+
                 byte [] imageByte = array.toByteArray();
-                imagesToStrings[Counter] = Base64.getEncoder().encodeToString(imageByte);
+                imagesToStrings[Counter] = Base64.encodeToString(imageByte, Base64.DEFAULT);
+                Toast.makeText(getActivity(), String.valueOf(imagesToStrings[Counter]), Toast.LENGTH_SHORT).show();
             }
             catch (IOException e)
             {
@@ -286,8 +324,12 @@ public class DialogNewPostFragment extends DialogFragment {
             }
 
             Counter++;
+            if (Counter == 10)
+            {
+                mButtonImage.setVisibility(View.INVISIBLE);
+            }
         }
-        Toast.makeText(getActivity(), String.valueOf(requestCode), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), String.valueOf(Counter), Toast.LENGTH_SHORT).show();
     }
 
     @NonNull
@@ -296,8 +338,6 @@ public class DialogNewPostFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-
         return dialog;
     }
 
@@ -310,118 +350,71 @@ public class DialogNewPostFragment extends DialogFragment {
 
     public void SendImage ()
     {
-        /*
-        //Creating array for parameters
-        String[] field = new String[1];
-        field[0] = "email";
+        post_content = mEditTextPostContent.getText().toString();
 
-        //Creating array for data
-        String[] data = new String[1];
-        data[0] = email;
-
-        PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/verifyEmailVerification.php", "POST", field, data);
-        if(putData.startPut()){
-            if(putData.onComplete()){
-                String result = putData.getResult();
-                //Si se obtiene que el correo ha sido verificado, se hace login:
-                if(result.equals("Correo verificado")) {
-                    Toast.makeText(getActivity(), "El correo ha sido verificado", Toast.LENGTH_LONG).show();
-                    //Hace el login:
-                    if (!email.equals("") && !contraseña.equals("")) {
-                        //Start ProgressBar first (Set visibility VISIBLE)
-                        Handler handler = new Handler();
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Starting Write and Read data with URL
-                                //Creating array for parameters
-                                String[] field = new String[3];
-                                field[0] = "email";
-                                field[1] = "contraseña";
-                                field[2] = "telefono";
-
-                                //Creating array for data
-                                String[] data = new String[3];
-                                data[0] = email;
-                                data[1] = contraseña;
-                                data[2] = mPhoneNumber;
-
-                                PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
-
-                                if (putData.startPut()) {
-                                    if (putData.onComplete()) {
-                                        String result = putData.getResult();
-                                        if (result.equals("Login Success")) {
-                                            Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                                            guardarSesion(email, contraseña);
-                                            Intent intent = new Intent(getActivity(), MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                        else{
-                                            if(result.equals("Missing email verification email or Password wrong")){
-                                                Toast.makeText(getActivity(), "La cuenta aún no ha sido creada pues no se ha verificado la dirección de correo", Toast.LENGTH_LONG).show();
-                                            }
-                                            else{
-                                                if(result.equals("phones not match email or Password wrong")){
-                                                    Toast.makeText(getActivity(), "Estás intentando acceder desde un dispositivo que no es el que tenemos registrado, por tu seguridad no te daremos acceso", Toast.LENGTH_LONG).show();
-                                                }
-                                                else{
-                                                    Toast.makeText(getActivity(), "Correo o contraseña erróneos", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                //End Write and Read data with URL
-                            }
-                        });
-                    }
-                    else{
-                        Toast.makeText(getActivity(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    Toast.makeText(getActivity(), "El correo no ha sido verificado aún, reintentando...", Toast.LENGTH_LONG).show();
-                    handler.postDelayed(this, 10000);
-                }
-            }
-        }
-        */
-    }
-
-    public void savePost() {
-        Toast.makeText(getActivity(), "save Post method", Toast.LENGTH_SHORT).show();
-
-        //Starting Write and Read data with URL
-        //Creating array for parameters
-        String[] field = new String[3];
+        String[] field = new String[23];
         field[0] = "email";
         field[1] = "categoria";
         field[2] = "contenido";
+        field[3] = "Imagen1";
+        field[4] = "Imagen2";
+        field[5] = "Imagen3";
+        field[6] = "Imagen4";
+        field[7] = "Imagen5";
+        field[8] = "Imagen6";
+        field[9] = "Imagen7";
+        field[10] = "Imagen8";
+        field[11] = "Imagen9";
+        field[12] = "Imagen10";
+        field[13] = "TipoImagen1";
+        field[14] = "TipoImagen2";
+        field[15] = "TipoImagen3";
+        field[16] = "TipoImagen4";
+        field[17] = "TipoImagen5";
+        field[18] = "TipoImagen6";
+        field[19] = "TipoImagen7";
+        field[20] = "TipoImagen8";
+        field[21] = "TipoImagen9";
+        field[22] = "TipoImagen10";
 
-
-        //Creating array for data
-        String[] data = new String[3];
+        String[] data = new String[23];
         data[0] = email;
-        data[1] = category;
+        data[1] = String.valueOf(ID_Category);
         data[2] = post_content;
+        data[3] = imagesToStrings[0];
+        data[4] = imagesToStrings[1];
+        data[5] = imagesToStrings[2];
+        data[6] = imagesToStrings[3];
+        data[7] = imagesToStrings[4];
+        data[8] = imagesToStrings[5];
+        data[9] = imagesToStrings[6];
+        data[10] = imagesToStrings[7];
+        data[11] = imagesToStrings[8];
+        data[12] = imagesToStrings[9];
+        data[13] = imagesType[0];
+        data[14] = imagesType[1];
+        data[15] = imagesType[2];
+        data[16] = imagesType[3];
+        data[17] = imagesType[4];
+        data[18] = imagesType[5];
+        data[19] = imagesType[6];
+        data[20] = imagesType[7];
+        data[21] = imagesType[8];
+        data[22] = imagesType[9];
 
-
-        //PutData putData = new PutData("http://seguridadmujer.com/app_movil/Community/getName.php", "POST", field, data);
-        PutData putData = new PutData("https://seguridadmujer.com/app_movil/Community/savePost.php", "POST", field, data);
-        //  PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
-
-        if (putData.startPut()) {
-            if (putData.onComplete()) {
+        PutData putData = new PutData("https://seguridadmujer.com/app_movil/Community/GuardarReporteAcontecimiento.php", "POST", field, data);
+        if(putData.startPut()){
+            if(putData.onComplete()){
                 String result = putData.getResult();
-                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-
-                //Toast.makeText(getContext(), name, Toast.LENGTH_SHORT).show();
+                //INSERT exitoso:
+                if(result.equals("Success")) {
+                    Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getContext(), result + " Favor de intentarlo nuevamente.", Toast.LENGTH_LONG).show();
+                }
             }
         }
-        //End Write and Read data with URL
-
     }
 
     private void getName() {
@@ -438,7 +431,6 @@ public class DialogNewPostFragment extends DialogFragment {
         //Creating array for data
         String[] data = new String[1];
         data[0] = email;
-
 
         //PutData putData = new PutData("http://seguridadmujer.com/app_movil/Community/getName.php", "POST", field, data);
         PutData putData = new PutData("https://seguridadmujer.com/app_movil/Community/getName.php", "POST", field, data);

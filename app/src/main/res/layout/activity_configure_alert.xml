@@ -1,0 +1,124 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ConfigureAlertActivity"
+    android:background="@color/purple_Light">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="80dp"
+        android:layout_height="78dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/logo_shape"
+        android:src="@drawable/logo_app"
+        />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="10dp">
+
+    <TextView
+        android:id="@+id/TextViewChooseMessageOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Elija una opcion para el envio del mensaje: "
+        android:textSize="16dp"
+        android:textColor="@color/white"
+        android:layout_marginLeft="10dp"
+       />
+
+    <Spinner
+        android:id="@+id/SpinnerAlert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+
+        />
+</LinearLayout>
+
+    <ImageView
+        android:id="@+id/IconTypeAlert"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/logo_shape"
+        android:src="@drawable/logo_app"/>
+
+    <TextView
+        android:id="@+id/TextViewWriteMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Escriba el mensaje que desea enviar: "
+        android:gravity="center"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/edit_text_mensaje"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_shape"
+        android:hint="Mensaje"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:padding="10sp"
+        android:textColor="@color/Gray_highlight"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/Gray"
+
+        android:layout_marginBottom="3dp"/>
+
+
+    <TextView
+        android:id="@+id/TextViewAddImageAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Inserta una imágen: "
+        android:gravity="center"
+        android:textColor="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/imageAlert"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="25dp"
+            android:src="@drawable/instagram_profile_image"/>
+
+        <ImageView
+            android:id="@+id/ButtonAddImageAlert"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+        android:src="@drawable/add_image_icon"
+            android:layout_marginTop="20dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/saveAlertButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/quantum_googgreen"
+        android:gravity="center"
+        android:text="Guardar"
+        android:layout_marginLeft="250dp"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
+
+
+</LinearLayout>

@@ -46,9 +46,8 @@ import httpurlconnection.PutData;
 public class AddTrustedFriendsActivity extends AppCompatActivity {
 
     ImageView mImageViewIcon;
-    TextView mTextViewLabel;
-    Button mButtonAddFriend,mButtonAdd;
-    Button mButtonConfirm;
+    TextView mTextViewLabel, mLabelMessage, mLabelMessage2;
+    Button mButtonAddFriend, mButtonAdd, mButtonConfirm, mButtonPulsera, mButtonConfigurarAlerta;
     EditText mNombre;
     EditText mTel;
     RecyclerView recyclerView;
@@ -75,11 +74,19 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
         mButtonAdd = findViewById(R.id.alert_Add);
         recyclerView = findViewById(R.id.recyclerViewContacts);
         mButtonConfirm=findViewById(R.id.add_confirm_button);
+        mButtonPulsera = findViewById(R.id.button_pulsera);
+        mLabelMessage = findViewById(R.id.labelMessage);
+        mLabelMessage2 = findViewById(R.id.labelMessage2);
+        mButtonConfigurarAlerta = findViewById(R.id.button_configurar_alerta);
 
         getCredentialData();
         checkContacts();
         LoadView();
 
+        mButtonPulsera.setVisibility(View.INVISIBLE);
+        mButtonConfigurarAlerta.setVisibility(View.INVISIBLE);
+        mLabelMessage.setVisibility(View.INVISIBLE);
+        mLabelMessage2.setVisibility(View.INVISIBLE);
         //mButtonConfirm.findViewById(R.id.add_confirm_button);
 
         //ver si tiene amigos o no
@@ -108,6 +115,22 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
                 saveContact(nombre,number);
             }
         });
+
+        mButtonPulsera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), BandVinculationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mButtonConfigurarAlerta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ConfigureAlertActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void changeView() {
@@ -128,7 +151,18 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
             recyclerView.setVisibility(View.INVISIBLE);
         }
 
-
+        if(!ListContacts.isEmpty()){
+           mButtonPulsera.setVisibility(View.VISIBLE);
+            mButtonConfigurarAlerta.setVisibility(View.VISIBLE);
+            mLabelMessage.setVisibility(View.VISIBLE);
+            mLabelMessage2.setVisibility(View.VISIBLE);
+        }
+        else{
+            mButtonPulsera.setVisibility(View.INVISIBLE);
+            mButtonConfigurarAlerta.setVisibility(View.INVISIBLE);
+            mLabelMessage.setVisibility(View.INVISIBLE);
+            mLabelMessage2.setVisibility(View.INVISIBLE);
+        }
 
         /* */
     }

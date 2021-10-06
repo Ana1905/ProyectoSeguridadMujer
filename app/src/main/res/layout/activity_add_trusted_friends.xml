@@ -15,7 +15,7 @@
         android:src="@drawable/logo_app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.048"
+        app:layout_constraintHorizontal_bias="0.021"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.024" />
@@ -65,21 +65,53 @@
         app:layout_constraintVertical_bias="0.681" />
 
     <Button
-        android:id="@+id/alert_Add"
-        android:layout_width="217dp"
-        android:layout_height="45dp"
+        android:id="@+id/button_pulsera"
+        android:layout_width="266dp"
+        android:layout_height="44dp"
         android:background="@drawable/sign_in_button_shape"
         android:paddingHorizontal="10dp"
-        android:text="Añadir contacto"
-        android:visibility="gone"
+        android:text="Escuchar alerta"
         android:textColor="@android:color/white"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.976" />
+
+    <Button
+        android:id="@+id/button_configurar_alerta"
+        android:layout_width="133dp"
+        android:layout_height="63dp"
+        android:background="@drawable/sign_in_button_shape"
+        android:paddingHorizontal="10dp"
+        android:text="Configurar alerta"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.312"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.023" />
+
+    <Button
+        android:id="@+id/alert_Add"
+        android:layout_width="181dp"
+        android:layout_height="44dp"
+        android:background="@drawable/sign_in_button_shape"
+        android:paddingHorizontal="10dp"
+        android:text="Añadir contacto"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.036" />
 
     <Button
         android:id="@+id/add_confirm_button"
@@ -153,7 +185,7 @@
         android:inputType="textEmailAddress"
         android:padding="10sp"
 
-        android:text="Para que tus contactos recivan la alerta pídeles que envíen"
+        android:text="Para que tus contactos reciban la alerta pídeles que envíen"
         android:textColor="@color/white"
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/Gray"
@@ -166,10 +198,11 @@
         app:layout_constraintVertical_bias="0.138" />
 
     <TextView
+        android:id="@+id/labelMessage2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="el código join government-note al número +1 415 523 8886"
+        android:text="por whatssap el código join government-note al número +1 415 523 8886"
         android:textColor="@color/white"
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/Gray"

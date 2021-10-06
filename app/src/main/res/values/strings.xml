@@ -132,6 +132,14 @@
         <item>200m</item>
     </string-array>
 
+    <string-array name="options_alert_message">
+        <item> </item>
+        <item>Whatssap</item>
+        <item>SMS</item>
+        <item>Llamada</item>
+    </string-array>
+
+
     <string-array name="array_medios_transporte">
         <item>Automóvil</item>
         <item>A pie</item>

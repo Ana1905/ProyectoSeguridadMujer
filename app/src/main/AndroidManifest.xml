@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoSeguridadMujer"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EditContactActivity"></activity>
+        <activity android:name=".ConfigureAlertActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -65,11 +65,14 @@
             android:label="@string/title_activity_maps"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".BandVinculationActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
             android:name=".AddTrustedFriendsActivity"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".BandVinculationActivity"
+            android:parentActivityName=".AddTrustedFriendsActivity" />
+        <activity
+            android:name=".EditContactActivity"
+            android:parentActivityName=".AddTrustedFriendsActivity" />
         <activity
             android:name=".SendAlertTestingActivity"
             android:parentActivityName=".MainActivity" />

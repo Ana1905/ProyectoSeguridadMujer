@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/quantum_pink"
+    android:padding="15dp"
+    tools:context=".DangerRouteAlert">
+
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:src="@drawable/prohibicion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:text="Actualmente existe una gran cantidad de reportes en esta zona, por lo que en este momento no se permite la creación de más reportes en esta area."
+        />
+
+</LinearLayout>

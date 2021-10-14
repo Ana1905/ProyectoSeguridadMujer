@@ -2,17 +2,23 @@ package com.example.proyectoseguridadmujer;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NavUtils;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.VoiceInteractor;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -41,9 +47,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.libraries.places.api.Places;
@@ -99,6 +108,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     List<ReporteAcontecimiento> mReportesAcontecimiento = new ArrayList<>();
     List<LatLng> mPuntosIntermedios = new ArrayList<>();
+    List<Sancion> mSanciones = new ArrayList<>();
+    List<Integer> mSancionesActuales = new ArrayList<>();
 
     private static final int FROM_REQUEST_CODE = 1;
     private static final int TO_REQUEST_CODE = 2;
@@ -256,7 +267,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             if (positionCategoria != 0) {
                                 //Valida los comentarios y recomendaciones:
                                 if (!mETDescripcion.getText().toString().isEmpty()) {
-                                    insertReporteAcontecimiento();
+
+                                    //Verifica si la usuaria tiene una sancion:
+                                    obtenerSancionesActuales("https://seguridadmujer.com/app_movil/Route/ObtenerSancionActual.php?email="+email);
+
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Favor de redactar una descripción o comentario acerca del reporte.", Toast.LENGTH_LONG).show();
                                 }
@@ -358,6 +372,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Se obtienen los reportes de acontecimiento en su tiempo de vida:
         obtenerReportesDeAcontecimiento("https://seguridadmujer.com/app_movil/Route/ObtenerReportes.php");
 
+        obtenerSanciones("https://seguridadmujer.com/app_movil/Route/ObtenerSanciones.php?email="+email);
+
         // Initialize the SDK
         Places.initialize(getApplicationContext(), "AIzaSyCqzgEMgg81wGjRnOJ7WzJjj79T3LUUVrA");
 
@@ -413,7 +429,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         posicionActual = false;
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(mMiUbicacion));
 
-                        colocarOrigenRutaEnUbicacionActual();
+                        if(!creandoReporteAcontecimiento){
+                            colocarOrigenRutaEnUbicacionActual();
+                        }
                     }
                 }
             });
@@ -426,6 +444,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     //Se elimina el marcador previamente creado:
                     mMap.clear();
                     circuloReporteAcontecimientoDibujado = false;
+
+                    mostrarZonasProhibidas();
 
                     //Se guarda el valor de la longitud y de la latitud en EditText para almacenarlo en la bd posteriormente:
                     mETLatitud.setText(String.valueOf(latLng.latitude));
@@ -460,18 +480,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
         });
-    }
 
-    //Metodo para obtener el email de la usuaria:
-    public void getCredentialData(){
-        SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
-        email = preferences.getString("email", "");
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(@NonNull @NotNull Marker marker) {
+                if(marker.getTag() != null){
+                    if(marker.getTitle().equals("Zona Prohibida")){
+                        Intent intent = new Intent(MapsActivity.this, RestrictedAreaAlert.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Intent intent = new Intent(MapsActivity.this, ShowRouteReportInfoAlert.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("ID", marker.getTitle());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     //Metodo para dibujar un circulo en el mapa:
     public void dibujarCirculo(LatLng latLng, int radio){
         if(circuloReporteAcontecimientoDibujado){
             mMap.clear();
+            mostrarZonasProhibidas();
             circuloReporteAcontecimientoDibujado = false;
             mMap.addMarker(new MarkerOptions().position(latLng).title("Centro del area para el reporte de acontecimiento"));
         }
@@ -491,11 +526,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             circulo.setFillColor(Color.TRANSPARENT);
         }
         else{
-            if(categoria >= 1 && categoria <= 4){
+            if(categoria >= 1 && categoria <= 3){
                 circulo.setFillColor(Color.parseColor("#80FFFF00"));
             }
             else{
-                if(categoria >= 5 && categoria <= 8){
+                if(categoria >= 4 && categoria <= 8){
                     circulo.setFillColor(Color.parseColor("#80FFA500"));
                 }
                 else{
@@ -505,7 +540,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    //Metodo para hacer un INSERT de un reporte de acontecimiento en la base de datos:;
+    //Metodo para hacer un INSERT de un reporte de acontecimiento en la base de datos:
     public void insertReporteAcontecimiento(){
         //Creating array for parameters
         String[] field = new String[6];
@@ -545,6 +580,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void visualizarCrearRuta(){
         creandoReporteAcontecimiento = false;
         rutaTrazada = false;
+        posicionActual = true;
         mMap.clear();
 
         mBotonRutaOrigen.setText(R.string.origen_de_la_ruta);
@@ -562,6 +598,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         mPuntosIntermedios.clear();
+        eliminarReportesMostrados();
         indicacionPuntosIntermedios = "";
 
         mBotonCambiarVista.setVisibility(View.VISIBLE);
@@ -583,6 +620,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mBotonCrearReporte.setVisibility(View.GONE);
 
         obtenerReportesDeAcontecimiento("https://seguridadmujer.com/app_movil/Route/ObtenerReportes.php");
+        obtenerSanciones("https://seguridadmujer.com/app_movil/Route/ObtenerSanciones.php?email="+email);
+
         moverCamara();
     }
 
@@ -590,6 +629,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void visualizarCrearReporte(){
         creandoReporteAcontecimiento = true;
         circuloReporteAcontecimientoDibujado = false;
+        posicionActual = true;
         mMap.clear();
 
         mETLatitud.setText("");
@@ -616,6 +656,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mTVCategoria.setVisibility(View.VISIBLE);
         mSpinnerCategoria.setVisibility(View.VISIBLE);
         mBotonCrearReporte.setVisibility(View.VISIBLE);
+
+        obtenerReportesDeAcontecimiento("https://seguridadmujer.com/app_movil/Route/ObtenerZonasProhibidas.php");
 
         moverCamara();
     }
@@ -675,6 +717,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         jsonObject = jsonArray.getJSONObject(i);
 
                         ReporteAcontecimiento reporteAcontecimiento = new ReporteAcontecimiento();
+                        reporteAcontecimiento.setID(jsonObject.getInt("ID_ReporteAcontecimiento"));
                         reporteAcontecimiento.setNombreUsuaria(jsonObject.getString("Nombre"));
                         reporteAcontecimiento.setApellidoPaternoUsuaria(jsonObject.getString("ApellidoPaterno"));
                         reporteAcontecimiento.setApellidoPaternoUsuaria(jsonObject.getString("ApellidoMaterno"));
@@ -684,6 +727,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         reporteAcontecimiento.setRadio(Integer.parseInt(jsonObject.getString("Radio")));
                         reporteAcontecimiento.setDescripcion(jsonObject.getString("ComentariosRecomendaciones"));
                         reporteAcontecimiento.setFechaPublicacion(jsonObject.getString("FechaInicio"));
+                        reporteAcontecimiento.setMostrandoEnMapa(false);
 
                         mReportesAcontecimiento.add(reporteAcontecimiento);
                         //Toast.makeText(getApplicationContext(), mReportesAcontecimiento.get(i).Descripcion, Toast.LENGTH_SHORT).show();
@@ -691,6 +735,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
+                }
+                if(creandoReporteAcontecimiento){
+                    mostrarZonasProhibidas();
                 }
             }
         }, new Response.ErrorListener() {
@@ -702,35 +749,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         );
         requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
-    }
-
-    //onBackPressed:
-    @Override
-    public void onBackPressed() {
-        Intent intent = NavUtils.getParentActivityIntent(MapsActivity.this);
-        startActivity(intent);
-        finish();
-    }
-
-    //Dibula los reportes de acontecimiento aun en su tiempo de vida;
-    public void dibujarReportesObtenidos(){
-
-        //Toast.makeText(getApplicationContext(), String.valueOf(mReportesAcontecimiento.size()), Toast.LENGTH_LONG).show();
-
-        for(int i=0; i<mReportesAcontecimiento.size(); i++){
-
-            LatLng latLng = new LatLng(mReportesAcontecimiento.get(i).Latitud, mReportesAcontecimiento.get(i).Longitud);
-
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Centro del area para el reporte de acontecimiento"));
-
-            CircleOptions circleOptions = new CircleOptions()
-                    .center(latLng)
-                    .radius(mReportesAcontecimiento.get(i).Radio);
-
-            mMap.addCircle(circleOptions);
-
-            //Toast.makeText(getApplicationContext(), "Reporte dibujado", Toast.LENGTH_LONG).show();
-        }
     }
 
     //Metodo que muestra la lista para seleccionar una ubicacion proporcionada por la Places SDK de Google:
@@ -826,6 +844,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    //Metodo que borra del mapa la ruta actual y manda a llamar la API de Google para calcular la ruta:
     void definirRuta(){
         //Se borran rutas actuales:
         mMap.clear();
@@ -840,6 +859,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(new MarkerOptions().position(mPuntosIntermedios.get(i)).title("Punto intermedio de la ruta "+ (i+1)));
             }
         }
+        eliminarReportesMostrados();
+        verificarColisionDestino();
 
         String url = "https://maps.googleapis.com/maps/api/directions/json?origin="+mOrigenRuta.latitude+","+mOrigenRuta.longitude+"&destination="+mDestinoRuta.latitude+","+mDestinoRuta.longitude+indicacionPuntosIntermedios+"&mode="+medioTransporte+"&key=AIzaSyA4dRIX9BwyRP2WF_WAG4aYwDIMerFM2xc";
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -848,7 +869,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onResponse(String response) {
                 try {
                     JSONObject json = new JSONObject(response);
-                    //Toast.makeText(getApplicationContext(), String.valueOf(json), Toast.LENGTH_LONG).show();
                     trazarRuta(json);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -864,11 +884,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         queue.add(stringRequest);
     }
 
+    //Metodo para trazar la ruta en el mapa y para mostrar la estimacion de distancia y tiempo:
     public void trazarRuta(JSONObject json){
         JSONArray jRoutes;
         JSONArray jLegs;
         JSONArray jSteps;
 
+        //Try-Catch para el trazado de la ruta en el mapa:
         try {
             jRoutes = json.getJSONArray("routes");
             for (int i=0; i<jRoutes.length();i++){
@@ -885,6 +907,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         //Log.i("end",""+polyline);
                         List<LatLng> list = PolyUtil.decode(polyline);
                         mMap.addPolyline(new PolylineOptions().addAll(list).color(Color.GRAY).width(5));
+
+                        for(int l=0; l<list.size(); l++){
+                            verificarColisionConReporte(list.get(l));
+                        }
                     }
                 }
             }
@@ -893,6 +919,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
 
+        //Se muestran los TextView para la distancia y el tiempo:
         rutaTrazada = true;
         mTVTiempoEstimado.setVisibility(View.VISIBLE);
         mTVDistancia.setVisibility(View.VISIBLE);
@@ -900,6 +927,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         int duracionEnSegundos = 0;
         int distanciaEnMetros = 0;
 
+        //Try-Catch para el calculo del tiempo y la distancia:
         try {
             jRoutes = json.getJSONArray("routes");
 
@@ -930,4 +958,313 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
     }
+
+    //Metodo para mostrar en el mapa aquellos reportes de acontecimiento que colinden con la ruta recien creada:
+    void verificarColisionConReporte(LatLng punto){
+
+        float [] distancia = new float[1];
+        //Se itera a traves de todos los reportes de acontecimiendo:
+        for(int i=0; i<mReportesAcontecimiento.size(); i++){
+            //Se obtiene la distancia entre el punto central del reporte de acontecimiento y el punto de la ruta:
+            Location.distanceBetween(punto.latitude, punto.longitude, mReportesAcontecimiento.get(i).getLatitud(), mReportesAcontecimiento.get(i).getLongitud(), distancia);
+
+            /*
+            Si la distancia obtenida es menor o igual al radio significa que la ruta efectivamente colisiona con el reporte.
+            Se valida esto al igual que se valida si el reporte se ha dibujado en el mapa ya o no (por medio de la propiedad
+            MostrandoEnMapa).
+             */
+            if( (distancia[0] <= mReportesAcontecimiento.get(i).getRadio()) && (!mReportesAcontecimiento.get(i).isMostrandoEnMapa()) ){
+                LatLng latLng = new LatLng(mReportesAcontecimiento.get(i).getLatitud(), mReportesAcontecimiento.get(i).getLongitud());
+
+                //Se dibuja el circulo en el mapa:
+                CircleOptions circleOptions = new CircleOptions()
+                        .center(latLng)
+                        .radius(mReportesAcontecimiento.get(i).getRadio());
+                Circle circulo = mMap.addCircle(circleOptions);
+
+                Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
+                        .title(String.valueOf(mReportesAcontecimiento.get(i).getID()))
+                        .icon(bitmapDescriptor(getApplicationContext(), R.drawable.ic_baseline_new_releases_24)));
+
+                marker.setTag(true);
+
+
+                //Se colorea el circulo:
+                colorearCirculo(circulo, mReportesAcontecimiento.get(i).getCategoriaReporte());
+
+                //Se actualiza el estado del reporte de acontecimiento para indicar que ya se ha dibujado en el mapa:
+                mReportesAcontecimiento.get(i).setMostrandoEnMapa(true);
+            }
+        }
+    }
+
+    //Metodo para mostrar los reportes de acontecimiento creados por el sistema al cargar la visualizacion de reporte de acontecimiento:
+    private void mostrarZonasProhibidas(){
+
+        for(int i=0; i<mReportesAcontecimiento.size(); i++){
+            LatLng latLng = new LatLng(mReportesAcontecimiento.get(i).getLatitud(), mReportesAcontecimiento.get(i).getLongitud());
+
+            //Se dibuja el circulo en el mapa:
+            CircleOptions circleOptions = new CircleOptions()
+                    .center(latLng)
+                    .radius(mReportesAcontecimiento.get(i).getRadio());
+            Circle circulo = mMap.addCircle(circleOptions);
+
+            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
+                    .title("Zona Prohibida")
+                    .icon(bitmapDescriptor(getApplicationContext(), R.drawable.ic_baseline_new_releases_24)));
+
+            marker.setTag(true);
+
+            //Se colorea el circulo:
+            colorearCirculo(circulo, mReportesAcontecimiento.get(i).getCategoriaReporte());
+
+            //Se actualiza el estado del reporte de acontecimiento para indicar que ya se ha dibujado en el mapa:
+            mReportesAcontecimiento.get(i).setMostrandoEnMapa(true);
+        }
+    }
+
+    //Metodo para preparar un disenio de marcador personalizado:
+    private BitmapDescriptor bitmapDescriptor(Context context, int resource){
+        Drawable drawable = ContextCompat.getDrawable(context, resource);
+        drawable.setBounds(0,0,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    //Metodo para establecer en false el valor de mostrado en el mapa de todos los reportes de acontecimiento:
+    void eliminarReportesMostrados(){
+        for(int i=0; i<mReportesAcontecimiento.size(); i++){
+            mReportesAcontecimiento.get(i).setMostrandoEnMapa(false);
+        }
+    }
+
+    //Metodo para verificar si el destino de la ruta se ubica en una zona de peligro:
+    private void verificarColisionDestino(){
+
+        float [] distancia = new float[1];
+        //Se itera a traves de todos los reportes de acontecimiendo:
+        for(int i=0; i<mReportesAcontecimiento.size(); i++){
+            //Se obtiene la distancia entre el punto central del reporte de acontecimiento y el destino:
+            Location.distanceBetween(mDestinoRuta.latitude, mDestinoRuta.longitude, mReportesAcontecimiento.get(i).getLatitud(), mReportesAcontecimiento.get(i).getLongitud(), distancia);
+
+            /*
+            Si la distancia obtenida es menor o igual al radio significa que el destino efectivamente colisiona con el reporte.
+             */
+            if( (distancia[0] <= mReportesAcontecimiento.get(i).getRadio())){
+
+                startActivity(new Intent(MapsActivity.this, DangerRouteAlert.class));
+
+                break;
+            }
+        }
+    }
+
+    //Metodo para obtener las sanciones de la base de datos:
+    private void obtenerSanciones(String URL){
+
+        //Vacia la lista:
+        if(!mSanciones.isEmpty()){
+            mSanciones.clear();
+        }
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                JSONObject jsonObject = null;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        jsonObject = jsonArray.getJSONObject(i);
+
+                        Sancion sancion = new Sancion();
+                        sancion.setID(jsonObject.getInt("ID_SancionBot"));
+                        sancion.setID_Usuaria(jsonObject.getInt("ID_Usuaria"));
+                        sancion.setDuracion(jsonObject.getInt("Duracion"));
+                        sancion.setFechaInicio(jsonObject.getString("FechaInicio"));
+                        sancion.setFechaFin(jsonObject.getString("FechaFin"));
+                        sancion.setID_TipoSancion(jsonObject.getInt("TipoSancion"));
+                        sancion.setTipoSancion(jsonObject.getString("NombreCategoria"));
+                        sancion.setEstado(jsonObject.getInt("Mostrada"));
+                        sancion.setMensajeSancion(jsonObject.getString("Mensaje"));
+
+                        mSanciones.add(sancion);
+
+                    }
+                    catch (JSONException e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                mostrarSanciones();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }
+        );
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    //Metodo para mostrar las sanciones pendientes:
+    private void mostrarSanciones(){
+
+        for(int i=(mSanciones.size()-1); i>=0; i--){
+            dialogopeticion(i);
+            actualizarEstadoMostradoSancion(i);
+        }
+    }
+
+    //Metodo para mostrar el AlertDialog de la sancion:
+    public void dialogopeticion(int indiceSancion){
+        AlertDialog.Builder dialogSancion = new AlertDialog.Builder(MapsActivity.this);
+
+        if(mSanciones.get(indiceSancion).getID_TipoSancion() != 1){
+            dialogSancion.setTitle("Ha recibido una sanción");
+        }
+        else{
+            dialogSancion.setTitle("Advertencia");
+        }
+
+        if(mSanciones.get(indiceSancion).getID_TipoSancion() == 1 || mSanciones.get(indiceSancion).getDuracion() == 876000){
+            dialogSancion.setMessage(mSanciones.get(indiceSancion).getMensajeSancion());
+        }
+        else{
+            dialogSancion.setMessage(mSanciones.get(indiceSancion).getMensajeSancion() + mSanciones.get(indiceSancion).getFechaFin());
+        }
+
+        dialogSancion.setCancelable(false);
+
+        dialogSancion.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                //Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        AlertDialog dialogo = dialogSancion.create();
+        dialogo.show();
+
+    }
+
+    //Metodo para hacer el update de la sancion en la base de datos para indicar que ya se ha mostrado:
+    private void actualizarEstadoMostradoSancion(int indiceSancion){
+        //Creating array for parameters
+        String[] field = new String[1];
+        field[0] = "ID_Sancion";
+
+        //Creating array for data
+        String[] data = new String[1];
+        data[0] = String.valueOf(mSanciones.get(indiceSancion).getID());
+
+        PutData putData = new PutData("https://seguridadmujer.com/app_movil/Route/ActualizarSancion.php", "POST", field, data);
+        if(putData.startPut()){
+            if(putData.onComplete()){
+                String result = putData.getResult();
+                //INSERT exitoso:
+                if(result.equals("Sancion actualizada")) {
+                    //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                    //SI
+                }
+                else{
+                    //Toast.makeText(getApplicationContext(), result + " Favor de intentarlo nuevamente.", Toast.LENGTH_LONG).show();
+                    //NO
+                }
+            }
+        }
+    }
+
+    //Metodo para obtener los tipos de sanciones que actualmente tiene la usuaria:
+    private void obtenerSancionesActuales(String URL){
+
+        //Vacia la lista:
+        if(!mSancionesActuales.isEmpty()){
+            mSancionesActuales.clear();
+        }
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                JSONObject jsonObject = null;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        jsonObject = jsonArray.getJSONObject(i);
+
+                        mSancionesActuales.add(jsonObject.getInt("TipoSancion"));
+                    }
+                    catch (JSONException e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+                validarSancionActiva();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }
+        );
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    private void validarSancionActiva(){
+        boolean sancionActiva = false;
+        String mensajeSancion = "";
+
+        for(int i=0; i<mSancionesActuales.size(); i++){
+
+            //Validacion para una sancion de bloqueo de creacion de reportes general:
+            if(mSancionesActuales.get(i) == 2){
+                sancionActiva = true;
+                mensajeSancion = "La función para crear reportes de acontecimiento se encuentra bloqueada actualmente.";
+                break;
+            }
+            if((mSancionesActuales.get(i) == 3) && (positionCategoria >= 1 && positionCategoria <= 3)){
+                sancionActiva = true;
+                mensajeSancion = "La función para crear reportes de acontecimiento de nivel amarillo se encuentra bloqueada actualmente.";
+                break;
+            }
+            if((mSancionesActuales.get(i) == 4) && (positionCategoria >= 4 && positionCategoria <= 8)){
+                sancionActiva = true;
+                mensajeSancion = "La función para crear reportes de acontecimiento de nivel naranja se encuentra bloqueada actualmente.";
+                break;
+            }
+            if((mSancionesActuales.get(i) == 5) && (positionCategoria >= 9 && positionCategoria <= 13)){
+                sancionActiva = true;
+                mensajeSancion = "La función para crear reportes de acontecimiento de nivel rojo se encuentra bloqueada actualmente.";
+                break;
+            }
+        }
+
+        if(!sancionActiva){
+            insertReporteAcontecimiento();
+        }
+        else{
+            Intent intent = new Intent(MapsActivity.this, SanctionAlert.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("mensaje", mensajeSancion);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
+
+    //Metodo para obtener el email de la usuaria:
+    public void getCredentialData(){
+        SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
+        email = preferences.getString("email", "");
+    }
+
+    //onBackPressed:
+    @Override
+    public void onBackPressed() {
+        Intent intent = NavUtils.getParentActivityIntent(MapsActivity.this);
+        startActivity(intent);
+        finish();
+    }
+
+
 }

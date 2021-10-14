@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoSeguridadMujer"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ConfigureAlertActivity"></activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -65,6 +65,18 @@
             android:label="@string/title_activity_maps"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".DangerRouteAlert"
+            android:theme="@style/AppThene.AlertTheme" />
+        <activity
+            android:name=".ShowRouteReportInfoAlert"
+            android:theme="@style/AppThene.AlertTheme" />
+        <activity
+            android:name=".SanctionAlert"
+            android:theme="@style/AppThene.AlertTheme" />
+        <activity
+            android:name=".RestrictedAreaAlert"
+            android:theme="@style/AppThene.AlertTheme" />
+        <activity
             android:name=".AddTrustedFriendsActivity"
             android:parentActivityName=".MainActivity" />
         <activity
@@ -73,6 +85,7 @@
         <activity
             android:name=".EditContactActivity"
             android:parentActivityName=".AddTrustedFriendsActivity" />
+        <activity android:name=".ConfigureAlertActivity" />
         <activity
             android:name=".SendAlertTestingActivity"
             android:parentActivityName=".MainActivity" />

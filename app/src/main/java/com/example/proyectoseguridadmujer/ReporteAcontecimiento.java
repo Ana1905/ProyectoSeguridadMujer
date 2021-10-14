@@ -1,21 +1,31 @@
 package com.example.proyectoseguridadmujer;
 
 public class ReporteAcontecimiento {
-    public String NombreUsuaria;
-    public String ApellidoPaternoUsuaria;
-    public String ApellidoMaternoUsuaria;
-    public int CategoriaReporte;
-    public double Latitud;
-    public double Longitud;
-    public int Radio;
-    public String Descripcion;
-    public String FechaPublicacion;
+    private int ID;
+    private String NombreUsuaria;
+    private String ApellidoPaternoUsuaria;
+    private String ApellidoMaternoUsuaria;
+    private int CategoriaReporte;
+    private double Latitud;
+    private double Longitud;
+    private int Radio;
+    private String Descripcion;
+    private String FechaPublicacion;
+    private boolean MostrandoEnMapa;
 
     //Constructor vacio:
     public ReporteAcontecimiento(){
     }
 
     //Getters y Setters:
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     public String getNombreUsuaria() {
         return NombreUsuaria;
     }
@@ -86,5 +96,13 @@ public class ReporteAcontecimiento {
 
     public void setFechaPublicacion(String fechaPublicacion) {
         FechaPublicacion = fechaPublicacion;
+    }
+
+    public boolean isMostrandoEnMapa() {
+        return MostrandoEnMapa;
+    }
+
+    public void setMostrandoEnMapa(boolean mostrandoEnMapa) {
+        MostrandoEnMapa = mostrandoEnMapa;
     }
 }

@@ -20,15 +20,6 @@
         />
 
     <Button
-        android:id="@+id/boton_mostrar_dispositivos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/sign_in_button_shape"
-        android:text="Mostrar dispositivos vinculados"
-        android:layout_marginTop="5dp"/>
-
-    <Button
         android:id="@+id/boton_cerrar_conexion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,6 +27,15 @@
         android:background="@drawable/sign_in_button_shape"
         android:layout_marginTop="5dp"
         android:text="Desconectar pulsera"/>
+
+    <Button
+        android:id="@+id/boton_mostrar_dispositivos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/sign_in_button_shape"
+        android:text="Mostrar dispositivos vinculados"
+        android:layout_marginTop="5dp"/>
 
     <ListView
         android:id="@+id/list_bluetooth"

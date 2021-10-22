@@ -1,6 +1,7 @@
 package com.example.proyectoseguridadmujer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,7 +18,7 @@ public class EditContactActivity extends AppCompatActivity {
     EditText mEditTextNombre, mEditTextNumero;
     Button mBotonEliminar, mBotonActualizar;
 
-    String mNombre, mTelefono;
+    String mID, mNombre, mTelefono;
     String email;
 
     @Override
@@ -53,7 +54,35 @@ public class EditContactActivity extends AppCompatActivity {
         mBotonActualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateContact();
+                if(mEditTextNumero.getText().toString().startsWith("+52")){
+                    if(mEditTextNumero.getText().toString().length()<13){
+                        Toast.makeText(getApplicationContext(), "El numero introducido es demasiado corto", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        updateContact();
+                    }
+                }
+                else{
+                    if(mEditTextNumero.getText().toString().length()<10){
+                        Toast.makeText(getApplicationContext(), "El numero introducido es demasiado corto", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        if(mEditTextNumero.getText().toString().startsWith("+521")){
+                            //Toast.makeText(getApplicationContext(), "simon", Toast.LENGTH_SHORT).show();
+                            mEditTextNumero.setText(mEditTextNumero.getText().toString().substring(0, 3) + mEditTextNumero.getText().toString().substring(4));
+                        }
+                        else{
+                            if(!mEditTextNumero.getText().toString().startsWith("+52")){
+                                mEditTextNumero.setText("+52"+mEditTextNumero.getText().toString());
+                            }
+                        }
+
+                        if(mEditTextNumero.getText().toString().length()>13){
+                            mEditTextNumero.setText(mEditTextNumero.getText().toString().substring(0, 13));
+                        }
+                        updateContact();
+                    }
+                }
             }
         });
     }
@@ -61,14 +90,12 @@ public class EditContactActivity extends AppCompatActivity {
     //Metodo para hacer el delete:
     void deleteContact(){
 
-        String[] field = new String[2];
-        field[0] = "telefono";
-        field[1] = "email";
+        String[] field = new String[1];
+        field[0] = "ID_Contacto";
 
         //Creating array for data
-        String[] data = new String[3];
-        data[0] = mTelefono;
-        data[1] = email;
+        String[] data = new String[1];
+        data[0] = mID;
 
         PutData putData = new PutData("https://seguridadmujer.com/app_movil/Alert/deleteContact.php", "POST", field, data);
         if (putData.startPut()) {
@@ -88,18 +115,24 @@ public class EditContactActivity extends AppCompatActivity {
 
     //Metodo para hacer el update del contacto:
     void updateContact(){
-        String[] field = new String[4];
+        String[] field = new String[6];
         field[0] = "email";
-        field[1] = "nombre";
+        field[1] = "newnombre";
         field[2] = "newtelefono";
-        field[3] = "telefono";
+        field[3] = "nombre";
+        field[4] = "telefono";
+        field[5] = "id";
 
         //Creating array for data
-        String[] data = new String[4];
+        String[] data = new String[6];
         data[0] = email;
         data[1] = mEditTextNombre.getText().toString();
         data[2] = mEditTextNumero.getText().toString();
-        data[3] = mTelefono;
+        data[3] = mNombre;
+        data[4] = mTelefono;
+        data[5] = mID;
+
+        //Toast.makeText(getApplicationContext(), mNombre, Toast.LENGTH_SHORT).show();
 
         PutData putData = new PutData("https://seguridadmujer.com/app_movil/Alert/updateContact.php", "POST", field, data);
         if (putData.startPut()) {
@@ -119,13 +152,24 @@ public class EditContactActivity extends AppCompatActivity {
 
     //Metodo para obtener la informacion del bundle enviado desde AddTrustedFriendsActivity.
     void getBundle(){
+        mID = String.valueOf(getIntent().getExtras().getInt("ID"));
         mNombre = getIntent().getExtras().getString("Nombre");
         mTelefono = getIntent().getExtras().getString("Numero");
+        //Toast.makeText(getApplicationContext(), mID, Toast.LENGTH_SHORT).show();
     }
 
     //Metodo para obtener el correo de la usuaria:
     public void getCredentialData(){
         SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
         email = preferences.getString("email", "");
+        //email = "paulinitax3@gmail.com";
+    }
+
+    //onBackPressed:
+    @Override
+    public void onBackPressed() {
+        Intent intent = NavUtils.getParentActivityIntent(EditContactActivity.this);
+        startActivity(intent);
+        finish();
     }
 }

@@ -43,11 +43,12 @@ public class AdapterContacts extends RecyclerView.Adapter<AdapterContacts.ViewHo
         {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), holder.Nombre.getText(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), holder.Nombre.getText(), Toast.LENGTH_SHORT).show();
 
 
                 Intent intent = new Intent(v.getContext(), EditContactActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putInt("ID", ListContacts.get(position).ID_Contacto);
                 bundle.putString("Nombre", ListContacts.get(position).Nombre);
                 bundle.putString("Numero", ListContacts.get(position).Numero);
                 intent.putExtras(bundle);

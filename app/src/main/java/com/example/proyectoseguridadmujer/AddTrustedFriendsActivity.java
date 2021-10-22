@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +47,7 @@ import httpurlconnection.PutData;
 public class AddTrustedFriendsActivity extends AppCompatActivity {
 
     ImageView mImageViewIcon;
-    TextView mTextViewLabel, mLabelMessage, mLabelMessage2;
+    TextView mTextViewLabel, mLabelMessage;
     Button mButtonAddFriend, mButtonAdd, mButtonConfirm, mButtonPulsera, mButtonConfigurarAlerta;
     EditText mNombre;
     EditText mTel;
@@ -76,17 +77,20 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
         mButtonConfirm=findViewById(R.id.add_confirm_button);
         mButtonPulsera = findViewById(R.id.button_pulsera);
         mLabelMessage = findViewById(R.id.labelMessage);
-        mLabelMessage2 = findViewById(R.id.labelMessage2);
         mButtonConfigurarAlerta = findViewById(R.id.button_configurar_alerta);
 
+        //Obtiene el email de la usuaria:
         getCredentialData();
+
+        //Obtiene los contactos de confianza:
         checkContacts();
+
+        //
         LoadView();
 
-        mButtonPulsera.setVisibility(View.INVISIBLE);
-        mButtonConfigurarAlerta.setVisibility(View.INVISIBLE);
-        mLabelMessage.setVisibility(View.INVISIBLE);
-        mLabelMessage2.setVisibility(View.INVISIBLE);
+        //mButtonPulsera.setVisibility(View.INVISIBLE);
+        //mButtonConfigurarAlerta.setVisibility(View.INVISIBLE);
+        //mLabelMessage.setVisibility(View.INVISIBLE);
         //mButtonConfirm.findViewById(R.id.add_confirm_button);
 
         //ver si tiene amigos o no
@@ -103,8 +107,14 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
         mButtonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.setVisibility(View.INVISIBLE);
-                selectContact();
+
+                if(ListContacts.size()<10){
+                    selectContact();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Ha excedido el total de usuarios de confianza.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -135,46 +145,45 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
 
     public void changeView() {
       //  Toast.makeText(getApplicationContext(),"changeView",Toast.LENGTH_SHORT).show();
-        if(showList){
-            showListofContacts();
-            mImageViewIcon.setVisibility(View.INVISIBLE);
-            mButtonAddFriend.setVisibility(View.INVISIBLE);
-            mButtonAdd.setVisibility(View.VISIBLE);
-            mTextViewLabel.setVisibility(View.INVISIBLE);
-            recyclerView.setVisibility(View.VISIBLE);
-        }
-        else{
+
+        if(ListContacts.isEmpty()){
+            mButtonConfigurarAlerta.setVisibility(View.INVISIBLE);
+            mButtonAdd.setVisibility(View.INVISIBLE);
+
+            mLabelMessage.setVisibility(View.INVISIBLE);
+            mButtonPulsera.setVisibility(View.INVISIBLE);
+            recyclerView.setVisibility(View.INVISIBLE);
+
+            mTextViewLabel.setVisibility(View.VISIBLE);
             mImageViewIcon.setVisibility(View.VISIBLE);
             mButtonAddFriend.setVisibility(View.VISIBLE);
-            mButtonAdd.setVisibility(View.INVISIBLE);
-            mTextViewLabel.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.INVISIBLE);
-        }
 
-        if(!ListContacts.isEmpty()){
-           mButtonPulsera.setVisibility(View.VISIBLE);
-            mButtonConfigurarAlerta.setVisibility(View.VISIBLE);
-            mLabelMessage.setVisibility(View.VISIBLE);
-            mLabelMessage2.setVisibility(View.VISIBLE);
+            mNombre.setVisibility(View.INVISIBLE);
+            mTel.setVisibility(View.INVISIBLE);
+            mButtonConfirm.setVisibility(View.INVISIBLE);
         }
         else{
-            mButtonPulsera.setVisibility(View.INVISIBLE);
-            mButtonConfigurarAlerta.setVisibility(View.INVISIBLE);
-            mLabelMessage.setVisibility(View.INVISIBLE);
-            mLabelMessage2.setVisibility(View.INVISIBLE);
-        }
+            mButtonConfigurarAlerta.setVisibility(View.VISIBLE);
+            mButtonAdd.setVisibility(View.VISIBLE);
 
-        /* */
+            mLabelMessage.setVisibility(View.VISIBLE);
+            mButtonPulsera.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
+
+            mTextViewLabel.setVisibility(View.INVISIBLE);
+            mImageViewIcon.setVisibility(View.INVISIBLE);
+            mButtonAddFriend.setVisibility(View.INVISIBLE);
+
+            mNombre.setVisibility(View.INVISIBLE);
+            mTel.setVisibility(View.INVISIBLE);
+            mButtonConfirm.setVisibility(View.INVISIBLE);
+
+            showListofContacts();
+        }
     }
 
     public void checkContacts() {
-
         obtenerContactos("https://seguridadmujer.com/app_movil/Consultas/obtenerContactosDeConfianza.php?email=" + email);
-
-
-
-
-        /* */
     }
 
     public void obtenerContactos(String URL){
@@ -188,12 +197,13 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
 
                         try {
                             jsonObject = jsonArray.getJSONObject(i);
-                            String NombreContacto = jsonObject.getString("NombreContacto");
-                            String Telefono = jsonObject.getString("Telefono");
 
+                            Contact contact = new Contact();
 
+                            contact.setID_Contacto(jsonObject.getInt("ID_Contacto"));
+                            contact.setNombre(jsonObject.getString("NombreContacto"));
+                            contact.setNumero(jsonObject.getString("Telefono"));
 
-                            Contact contact = new Contact(NombreContacto , Telefono);
                             ListContacts.add(contact);
 
                         } catch (JSONException e) {
@@ -276,22 +286,36 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
                    nombre = cursor.getString(columnaNombre);
                    number = cursor.getString(columnaNumber);
                    number = number.replaceAll("\\s+","");
-                   number = "+52" + number;
 
-                    mImageViewIcon.setVisibility(View.INVISIBLE);
-                    mTextViewLabel.setVisibility(View.INVISIBLE);
-                    mButtonAddFriend.setVisibility(View.INVISIBLE);
-                    mNombre.setEnabled(true);
-                    mButtonConfirm.setVisibility(View.VISIBLE);
-                    mNombre.setVisibility(View.VISIBLE);
-                    mTel.setVisibility(View.VISIBLE);
+                    if(number.startsWith("+521")){
+                        //Toast.makeText(getApplicationContext(), "simon", Toast.LENGTH_SHORT).show();
+                        number = number.substring(0,3) + number.substring(4);
+                    }
+                    else{
+                        if(!number.startsWith("+52")){
+                            number = "+52" + number;
+                        }
+                    }
 
+                    if(number.length()>13){
+                        //number = number.substring(0, 13);
 
+                        Intent intent = new Intent(AddTrustedFriendsActivity.this, WrongNumberFormatAlert.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        mImageViewIcon.setVisibility(View.INVISIBLE);
+                        mTextViewLabel.setVisibility(View.INVISIBLE);
+                        mButtonAddFriend.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.INVISIBLE);
+                        mNombre.setEnabled(true);
+                        mButtonConfirm.setVisibility(View.VISIBLE);
+                        mNombre.setVisibility(View.VISIBLE);
+                        mTel.setVisibility(View.VISIBLE);
 
-                    mNombre.setText(nombre);
-                    mTel.setText(number);
-
-
+                        mNombre.setText(nombre);
+                        mTel.setText(number);
+                    }
                 }
             }
         }
@@ -345,6 +369,15 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
     public void getCredentialData(){
         SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
         email = preferences.getString("email", "");
+        //email = "paulinitax3@gmail.com";
+    }
+
+    //onBackPressed:
+    @Override
+    public void onBackPressed() {
+        Intent intent = NavUtils.getParentActivityIntent(AddTrustedFriendsActivity.this);
+        startActivity(intent);
+        finish();
     }
 
 }

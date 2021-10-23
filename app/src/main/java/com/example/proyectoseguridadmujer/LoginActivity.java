@@ -54,9 +54,12 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         mPhoneNumber = tMgr.getLine1Number();
+
+        if(mPhoneNumber == null){
+            mPhoneNumber = "0123456789";
+        }
+
         Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_LONG).show();
-
-
 
         //Wiring up
         mEditTextSignInEmail = findViewById(R.id.sign_in_email_input);
@@ -102,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+
                             //Starting Write and Read data with URL
                             //Creating array for parameters
                             String[] field = new String[3];
@@ -183,43 +187,39 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void cargarSesion(){
-        SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
+    public void cargarSesion() {
+        SharedPreferences preferences = getSharedPreferences("Credencials", MODE_PRIVATE);
         email = preferences.getString("email", "");
         contraseña = preferences.getString("password", "");
 
-        String[] field = new String[3];
-        field[0] = "email";
-        field[1] = "contraseña";
-        field[2] = "telefono";
+        if (!email.isEmpty() && !contraseña.isEmpty()) {
+            String[] field = new String[3];
+            field[0] = "email";
+            field[1] = "contraseña";
+            field[2] = "telefono";
 
-        //Creating array for data
-        String[] data = new String[3];
-        data[0] = email;
-        data[1] = contraseña;
-        data[2] = mPhoneNumber;
-        //Change ip and port of your computer and xampp
-        PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
+            //Creating array for data
+            String[] data = new String[3];
+            data[0] = email;
+            data[1] = contraseña;
+            data[2] = mPhoneNumber;
+            //Change ip and port of your computer and xampp
+            PutData putData = new PutData("https://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
 
-        if (putData.startPut()) {
-            if (putData.onComplete()) {
-                String result = putData.getResult();
+            if (putData.startPut()) {
+                if (putData.onComplete()) {
+                    String result = putData.getResult();
 
-                if (result.equals("Login Success")) {
-                   // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                    //guardarSession();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if (result.equals("Login Success")) {
+                        // Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                        //guardarSession();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        finish();
 
+                    }
                 }
             }
         }
-
-
-
     }
-
-
-
-    }
+}

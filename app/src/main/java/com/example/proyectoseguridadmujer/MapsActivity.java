@@ -440,6 +440,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             colocarOrigenRutaEnUbicacionActual();
                         }
                     }
+
+                    if(rutaTrazada){
+                        mMiUbicacion = new LatLng(location.getLatitude(), location.getLongitude());
+                        verificarDestino(mMiUbicacion);
+                    }
                 }
             });
         }
@@ -961,8 +966,83 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             mTVTiempoEstimado.setText(duracion);
             mTVDistancia.setText(distancia);
+
+            notificarRutaUsuariosWeb();
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void notificarRutaUsuariosWeb(){
+        //Creating array for parameters
+        String[] field = new String[3];
+        field[0] = "email";
+        field[1] = "origen";
+        field[2] = "destino";
+
+        //Creating array for data
+        String[] data = new String[3];
+        data[0] = email;
+        data[1] = mBotonRutaOrigen.getText().toString();
+        data[2] = mBotonRutaDestino.getText().toString();
+
+        PutData putData = new PutData("https://seguridadmujer.com/app_movil/Route/NotificarRuta.php", "POST", field, data);
+        if(putData.startPut()){
+            if(putData.onComplete()){
+                String result = putData.getResult();
+                //INSERT exitoso:
+                if(result.equals("Success")) {
+                    Toast.makeText(getApplicationContext(), "Se ha notificado de la ruta a los usuarios web", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), result + " Favor de intentarlo nuevamente.", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    private void verificarDestino(LatLng mMiUbicacion){
+        float [] distancia = new float[1];
+        //Se itera a traves de todos los reportes de acontecimiendo:
+
+        //Se obtiene la distancia entre el punto central del reporte de acontecimiento y el destino:
+        Location.distanceBetween(mDestinoRuta.latitude, mDestinoRuta.longitude, mMiUbicacion.latitude, mMiUbicacion.longitude, distancia);
+
+            /*
+            Si la distancia obtenida es menor o igual al radio significa que el destino efectivamente colisiona con el reporte.
+             */
+        if( (distancia[0] <= 70)){
+
+            visualizarCrearRuta();
+            notificarFinRuta();
+        }
+    }
+
+    private void notificarFinRuta(){
+        //Creating array for parameters
+        String[] field = new String[3];
+        field[0] = "email";
+        field[1] = "origen";
+        field[2] = "destino";
+
+        //Creating array for data
+        String[] data = new String[3];
+        data[0] = email;
+        data[1] = mBotonRutaOrigen.getText().toString();
+        data[2] = mBotonRutaDestino.getText().toString();
+
+        PutData putData = new PutData("https://seguridadmujer.com/app_movil/Route/NotificarFinRuta.php", "POST", field, data);
+        if(putData.startPut()){
+            if(putData.onComplete()){
+                String result = putData.getResult();
+                //INSERT exitoso:
+                if(result.equals("Success")) {
+                    Toast.makeText(getApplicationContext(), "Se ha notificado a los usuarios web que ha llegado al fin de su ruta", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), result + " Favor de intentarlo nuevamente.", Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 

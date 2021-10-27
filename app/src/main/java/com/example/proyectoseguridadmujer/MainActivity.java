@@ -50,30 +50,34 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     MenuItem item;
-    //String email = getIntent().getStringExtra("email");
+
     RequestQueue requestQueue;
+
     String email = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Se obtiene el id de la usuaria:
         getCredentialData();
-        //dialogopeticion();
 
+        //Se verifica si existen peticiones de usuario web pendientes:
+        obtenerPeticiones("https://seguridadmujer.com/app_movil/PeticionesRecibidas/obtener_solicitudes.php?email=" + email);
 
-        checkPetitions();
-
+        //Configuracion de la Toolbar:
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
+
+        //Configuracion de la Navbar:
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -88,50 +92,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
         getMenuInflater().inflate(R.menu.main, menu);
-
         return true;
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
-
+    //Meotodo para el botón destinado para el cierre de sesión:
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-
-                CloseSession(email);
+                CloseSession();
                 return true;
-
-
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void checkPetitions() {
-
-        obtenerPeticiones("https://seguridadmujer.com/app_movil/PeticionesRecibidas/obtener_solicitudes.php?email=" + email);
-
-
-
-
-       /* */
-    }
-
+    //Metodo para obtener las peticiones de usuario web desde la base de datos:
     public void obtenerPeticiones(String URL){
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
             @Override
@@ -143,68 +128,30 @@ public class MainActivity extends AppCompatActivity {
                         String NombreUsuarioWeb= jsonObject.getString("Nombre");
                         String CorreoUsuarioWeb= jsonObject.getString("Correo");
                         String IDUsuarioWeb= jsonObject.getString("ID_UsuarioWeb");
-                        Toast.makeText(getApplicationContext(), NombreUsuarioWeb, Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(), CorreoUsuarioWeb, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), NombreUsuarioWeb, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), CorreoUsuarioWeb, Toast.LENGTH_LONG).show();
                         int count=0;
                         dialogopeticion(NombreUsuarioWeb,CorreoUsuarioWeb,IDUsuarioWeb);
 
-                    } catch (JSONException e) {
+                    }
+                    catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
-            }
 
+            }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
-
+            }
         }
-    }
         );
         requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
 
-    public void updatepetitionstatus(String IDUsuarioWeb, String status){
-        Handler handler = new Handler();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                //Starting Write and Read data with URL
-                //Creating array for parameters
-                String[] field = new String[2];
-                field[0] = "ID_UsuarioWeb";
-                field[1] = "estatus";
-
-
-
-                //Creating array for data
-                String[] data = new String[2];
-                data[0] = IDUsuarioWeb;
-                data[1] = status;
-
-
-                PutData putData = new PutData("https://seguridadmujer.com/app_movil/PeticionesRecibidas/updatePetitions.php", "POST", field, data);
-
-                if (putData.startPut()) {
-                    if (putData.onComplete()) {
-                        String result = putData.getResult();
-
-                        if (result.equals("Update Success")) {
-                            Toast.makeText(getApplicationContext(), "Le notificaremos al usuario web tu decisión ¡Gracias!", Toast.LENGTH_SHORT).show();
-
-
-                        }
-
-
-                    }
-                }
-                //End Write and Read data with URL
-            }
-        });
-    }
-
+    //Metodo para mostrar el AlertDialog de peticion de usuario web:
     public void dialogopeticion(String nombre, String correo,String IDUsuarioWeb){
         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MainActivity.this);
         dialogo1.setTitle("Tiene nuevas peticiones de enlace");
@@ -214,39 +161,68 @@ public class MainActivity extends AppCompatActivity {
 
         dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-                Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
                 updatepetitionstatus(IDUsuarioWeb,"1");
+
             }
         });
         dialogo1.setNegativeButton("Rechazar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-                Toast.makeText(getApplicationContext(), "Declinar", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Declinar", Toast.LENGTH_LONG).show();
                 updatepetitionstatus(IDUsuarioWeb,"0");
             }
         });
         AlertDialog dialogo = dialogo1.create();
         dialogo.show();
-
     }
 
+    //Metodo para actualizar la peticion del usuario web en la base de datos:
+    public void updatepetitionstatus(String IDUsuarioWeb, String status){
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                String[] field = new String[2];
+                field[0] = "ID_UsuarioWeb";
+                field[1] = "estatus";
+
+                //Creating array for data
+                String[] data = new String[2];
+                data[0] = IDUsuarioWeb;
+                data[1] = status;
+
+                PutData putData = new PutData("https://seguridadmujer.com/app_movil/PeticionesRecibidas/updatePetitions.php", "POST", field, data);
+                if (putData.startPut()) {
+                    if (putData.onComplete()) {
+                        String result = putData.getResult();
+                        if (result.equals("Update Success")) {
+                            Toast.makeText(getApplicationContext(), "Le notificaremos al usuario web tu decisión ¡Gracias!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    //Metodo para obtener el email de la usuaria:
     public void getCredentialData(){
         SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
         email = preferences.getString("email", "");
     }
 
+    //Metodo para cerrar la sesion:
+    public boolean CloseSession(){
+        SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("email", "");
+        editor.putString("password", "");
+        editor.commit();
 
-    public boolean CloseSession(String email){
-
-            SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("email", "");
-            editor.putString("password", "");
-            editor.commit();
-
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-            finish();
-
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+        finish();
         return true;
     }
 

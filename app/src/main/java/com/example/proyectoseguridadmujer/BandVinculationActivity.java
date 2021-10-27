@@ -113,8 +113,6 @@ public class BandVinculationActivity extends AppCompatActivity {
         mBotonTerminarConexion.setVisibility(View.VISIBLE);
         mBotonTerminarConexion.setVisibility(View.GONE);
 
-        activarNotificaciones();
-
         //Se obtiene el email de la usuaria:
         getCredentialData();
 
@@ -883,13 +881,6 @@ public class BandVinculationActivity extends AppCompatActivity {
         SharedPreferences notificaciones = getSharedPreferences("Notificaciones", MODE_PRIVATE);
         estadoNotificaciones = notificaciones.getString("estado", "");
         Toast.makeText(getApplicationContext(), estadoNotificaciones, Toast.LENGTH_SHORT).show();
-    }
-
-    public void activarNotificaciones(){
-        SharedPreferences preferences = getSharedPreferences("Notificaciones",MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("estado", "si");
-        editor.commit();
     }
 
     @Override

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".TestResultsActivity" >
+
+        <TextView
+            android:id="@+id/ResultsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/Test_results_label"
+            android:textColor="#CDA4CA"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/TestTakenLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test realizado: "
+            android:textColor="#CDA4CA"
+            android:textSize="18sp"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/ResultsTextView" />
+
+        <TextView
+            android:id="@+id/TestTaken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Si"
+            android:textSize="15sp"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/TestTakenLabel" />
+
+        <TextView
+            android:id="@+id/ViolenceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vives en violencia?"
+            android:textColor="#CDA4CA"
+            android:textSize="18sp"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/TestTaken" />
+
+        <TextView
+            android:id="@+id/ViolenceResult"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="Si"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ViolenceLabel" />
+
+        <TextView
+            android:id="@+id/ViolenceTypeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo de violencia sufrida: "
+            android:textColor="#CDA4CA"
+            android:textSize="18sp"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/ViolenceResult" />
+
+        <TextView
+            android:id="@+id/ViolenceType"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:text="Si"
+            android:textSize="15sp"
+            android:layout_marginLeft="30dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/ViolenceTypeLabel" />
+
+        <TextView
+            android:id="@+id/RecommendedInstitution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instituciones recomendadas: "
+            android:textColor="#CDA4CA"
+            android:textSize="18sp"
+            android:layout_marginLeft="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toBottomOf="@+id/ViolenceType" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

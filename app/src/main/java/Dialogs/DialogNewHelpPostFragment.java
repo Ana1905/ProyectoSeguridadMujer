@@ -1,6 +1,5 @@
 package Dialogs;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
@@ -12,14 +11,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +23,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Base64;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.proyectoseguridadmujer.R;
 
@@ -45,8 +41,7 @@ import java.io.IOException;
 
 import httpurlconnection.PutData;
 
-
-public class DialogNewPostFragment extends DialogFragment {
+public class DialogNewHelpPostFragment extends DialogFragment {
 
     boolean categoryIsChosen;
     int ID_Category;
@@ -57,7 +52,7 @@ public class DialogNewPostFragment extends DialogFragment {
     Button mButtonDelete;
     Button mButtonPublish;
     Button mButtonChooseReport;
-    ImageView [] mImagePublication;
+    ImageView[] mImagePublication;
     Spinner mSpinnerCategory;
     TextView mTextViewName;
     Bitmap bitmap;
@@ -72,39 +67,38 @@ public class DialogNewPostFragment extends DialogFragment {
     String contraseña = "";
     private String[] reportes;
 
-    //IComunicaFragments iComunicaFragments;
-
-    public DialogNewPostFragment() {
+    public DialogNewHelpPostFragment () {
         // Required empty public constructor
     }
 
-
+    @Nullable
+    @org.jetbrains.annotations.Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
 
         //WiringUp
-        View root = inflater.inflate(R.layout.fragment_dialog_new_post, container, false);
-        mEditTextPostContent = root.findViewById(R.id.post_content_label_comunity);
-        mButtonClose = root.findViewById(R.id.button_close);
-        mButtonImage = root.findViewById(R.id.Button_add_image);
-        mButtonDelete = root.findViewById(R.id.Button_delete_image);
+        View root = inflater.inflate(R.layout.fragment_dialog_new_help_post, container, false);
+        mEditTextPostContent = root.findViewById(R.id.Post_Content_New_Helping_Network_Post);
+        mButtonClose = root.findViewById(R.id.button_close_HN);
+        mButtonImage = root.findViewById(R.id.Button_Add_Image_HN);
+        mButtonDelete = root.findViewById(R.id.Button_Delete_Image_HN);
         mButtonDelete.setVisibility(View.INVISIBLE);
-        mButtonPublish = root.findViewById(R.id.Button_publish);
-        mButtonChooseReport = root.findViewById(R.id.button_show_reports);
-        mTextViewName = root.findViewById(R.id.user_name_comunity);
-        reportes = getResources().getStringArray(R.array.categories);
+        mButtonPublish = root.findViewById(R.id.Button_Publish_HN);
+        mButtonChooseReport = root.findViewById(R.id.Button_Show_Reports_HN);
+        mTextViewName = root.findViewById(R.id.User_Name_New_Helping_Network_Post);
+        reportes = getResources().getStringArray(R.array.Helping_Network_Categories);
 
         mImagePublication = new ImageView [10];
-        mImagePublication [0] = root.findViewById(R.id.New_publication_image_1);
-        mImagePublication [1] = root.findViewById(R.id.New_publication_image_2);
-        mImagePublication [2] = root.findViewById(R.id.New_publication_image_3);
-        mImagePublication [3] = root.findViewById(R.id.New_publication_image_4);
-        mImagePublication [4] = root.findViewById(R.id.New_publication_image_5);
-        mImagePublication [5] = root.findViewById(R.id.New_publication_image_6);
-        mImagePublication [6] = root.findViewById(R.id.New_publication_image_7);
-        mImagePublication [7] = root.findViewById(R.id.New_publication_image_8);
-        mImagePublication [8] = root.findViewById(R.id.New_publication_image_9);
-        mImagePublication [9] = root.findViewById(R.id.New_publication_image_10);
+        mImagePublication [0] = root.findViewById(R.id.New_Helping_Publication_Image_1);
+        mImagePublication [1] = root.findViewById(R.id.New_Helping_Publication_Image_2);
+        mImagePublication [2] = root.findViewById(R.id.New_Helping_Publication_Image_3);
+        mImagePublication [3] = root.findViewById(R.id.New_Helping_Publication_Image_4);
+        mImagePublication [4] = root.findViewById(R.id.New_Helping_Publication_Image_5);
+        mImagePublication [5] = root.findViewById(R.id.New_Helping_Publication_Image_6);
+        mImagePublication [6] = root.findViewById(R.id.New_Helping_Publication_Image_7);
+        mImagePublication [7] = root.findViewById(R.id.New_Helping_Publication_Image_8);
+        mImagePublication [8] = root.findViewById(R.id.New_Helping_Publication_Image_9);
+        mImagePublication [9] = root.findViewById(R.id.New_Helping_Publication_Image_10);
 
         imagesToStrings = new String[10];
         imagesToStrings [0] = "";
@@ -138,10 +132,9 @@ public class DialogNewPostFragment extends DialogFragment {
             }
         });
 
-        mSpinnerCategory = root.findViewById(R.id.spinner_category);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.categories, android.R.layout.simple_spinner_item);
+        mSpinnerCategory = root.findViewById(R.id.spinner_category_New_Helping_Network_Post);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.Helping_Network_Categories, android.R.layout.simple_spinner_item);
         mSpinnerCategory.setAdapter(adapter);
-
 
         mSpinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -154,22 +147,23 @@ public class DialogNewPostFragment extends DialogFragment {
                         mButtonChooseReport.setVisibility(View.INVISIBLE);
                         break;
                     case 1:
-                        //Toast.makeText(parent.getContext(), "Contar una experiencia sobre violencia", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(parent.getContext(), "Apoyo sobre violencia doméstica", Toast.LENGTH_SHORT).show();
                         categoryIsChosen = true;
                         mButtonChooseReport.setVisibility(View.INVISIBLE);
-                        category="Contar una experiencia sobre violencia";
+                        category="Apoyo sobre violencia doméstica";
                         ID_Category = 1;
                         break;
                     case 2:
-                        //Toast.makeText(parent.getContext(), "Anuncio importante sobre la seguridad", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(parent.getContext(), "Apoyo sobre discriminación", Toast.LENGTH_SHORT).show();
                         categoryIsChosen = true;
                         mButtonChooseReport.setVisibility(View.INVISIBLE);
-                        category="Anuncio importante sobre la seguridad";
+                        category="Apoyo sobre discriminación";
                         ID_Category = 2;
                         break;
                     case 3:
-                        //Toast.makeText(parent.getContext(), "Reporte de acontecimiento", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(parent.getContext(), "Apoyo sobre abuso sexual", Toast.LENGTH_SHORT).show();
                         categoryIsChosen = true;
+                        /*
                         mButtonChooseReport.setVisibility(View.VISIBLE);
                         mButtonChooseReport.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -178,17 +172,32 @@ public class DialogNewPostFragment extends DialogFragment {
                                 open_reports();
                             }
                         });
-                        category="Reporte de acontecimiento";
+                        */
+                        category="Apoyo sobre abuso sexual";
                         ID_Category = 3;
                         break;
 
                     case 4:
+                        //Toast.makeText(parent.getContext(), "Apoyo sobre un suceso de acoso", Toast.LENGTH_SHORT).show();
                         categoryIsChosen = true;
                         mButtonChooseReport.setVisibility(View.INVISIBLE);
-                        category="otro";
+                        category="Apoyo sobre un suceso de acoso";
                         ID_Category = 4;
                         break;
-
+                    case 5:
+                        //Toast.makeText(parent.getContext(), "Apoyo sobre un acontecimiento de abuso infantil", Toast.LENGTH_SHORT).show();
+                        categoryIsChosen = true;
+                        mButtonChooseReport.setVisibility(View.INVISIBLE);
+                        category="Apoyo sobre un acontecimiento de abuso infantil";
+                        ID_Category = 5;
+                        break;
+                    case 6:
+                        //Toast.makeText(parent.getContext(), "Apoyo sobre violencia de pareja", Toast.LENGTH_SHORT).show();
+                        categoryIsChosen = true;
+                        mButtonChooseReport.setVisibility(View.INVISIBLE);
+                        category="Apoyo sobre violencia de pareja";
+                        ID_Category = 6;
+                        break;
                 }
             }
 
@@ -253,31 +262,10 @@ public class DialogNewPostFragment extends DialogFragment {
             }
         });
 
-
         getName();
         mTextViewName.setText(name);
 
-        //cargarDatos();
-
-
         return root;
-    }
-
-    private void showDialog() {
-        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        // Create and show the dialog.
-        DialogOtherCategory dialogOtherCategory = new DialogOtherCategory();
-        // con este tema personalizado evitamos los bordes por defecto
-        //DialogOtherCategory dialogOtherCategory = new Dialog(this,R.style.Theme_Dialog_Translucent);
-        //deshabilitamos el título por defecto
-        //dialogOtherCategory.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //obligamos al usuario a pulsar los botones para cerrarlo
-        dialogOtherCategory.setCancelable(false);
-
-        dialogOtherCategory.show(ft, "dialog");
-        categoryIsChosen = false;
-
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -341,7 +329,6 @@ public class DialogNewPostFragment extends DialogFragment {
         return dialog;
     }
 
-
     public void getCredentialData() {
         SharedPreferences preferences = getActivity().getSharedPreferences("Credencials", Context.MODE_PRIVATE);
         email = preferences.getString("email", "");
@@ -402,7 +389,7 @@ public class DialogNewPostFragment extends DialogFragment {
         data[21] = imagesType[8];
         data[22] = imagesType[9];
 
-        PutData putData = new PutData("https://seguridadmujer.com/app_movil/Community/GuardarReporteAcontecimiento.php", "POST", field, data);
+        PutData putData = new PutData("https://seguridadmujer.com/app_movil/HelpingNetwork/GuardarPublicacionRedDeApoyo.php", "POST", field, data);
         if(putData.startPut()){
             if(putData.onComplete()){
                 String result = putData.getResult();
@@ -433,7 +420,7 @@ public class DialogNewPostFragment extends DialogFragment {
         data[0] = email;
 
         //PutData putData = new PutData("http://seguridadmujer.com/app_movil/Community/getName.php", "POST", field, data);
-        PutData putData = new PutData("https://seguridadmujer.com/app_movil/Community/getName.php", "POST", field, data);
+        PutData putData = new PutData("https://seguridadmujer.com/app_movil/HelpingNetwork/getName.php", "POST", field, data);
         //  PutData putData = new PutData("http://seguridadmujer.com/app_movil/LoginRegister/login.php", "POST", field, data);
 
         if (putData.startPut()) {
@@ -445,14 +432,12 @@ public class DialogNewPostFragment extends DialogFragment {
             }
         }
         //End Write and Read data with URL
-    
-
     }
 
     public void open_reports(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Reportes");
-        builder.setItems(R.array.categories, new DialogInterface.OnClickListener() {
+        builder.setItems(R.array.Helping_Network_Categories, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getContext(), reportes[which], Toast.LENGTH_SHORT).show();
@@ -461,6 +446,4 @@ public class DialogNewPostFragment extends DialogFragment {
         Dialog dialog = builder.create();
         dialog.show();
     }
-
-
 }

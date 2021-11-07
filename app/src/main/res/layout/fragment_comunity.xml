@@ -45,7 +45,7 @@
         android:layout_height="30dp"
 
         android:background="@drawable/search_icon"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/PublicationRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.921"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
         app:layout_constraintVertical_bias="0.752" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/PublicationRecyclerView"
         android:background="@color/purple_200"
         android:layout_marginTop="200dp"
         android:layout_marginBottom="50dp"

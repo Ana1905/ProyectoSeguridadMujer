@@ -14,6 +14,7 @@ public class Institutions implements Parcelable {
     String PaginaWeb;
     double Latitud;
     double Longitud;
+    int CategoriaInstitucion;
 
     protected Institutions(Parcel in) {
         ID_Institucion = in.readInt();
@@ -25,6 +26,7 @@ public class Institutions implements Parcelable {
         PaginaWeb = in.readString();
         Latitud = in.readDouble();
         Longitud = in.readDouble();
+        CategoriaInstitucion = in.readInt();
     }
 
     public static final Creator<Institutions> CREATOR = new Creator<Institutions>() {
@@ -111,6 +113,14 @@ public class Institutions implements Parcelable {
         Longitud = longitud;
     }
 
+    public int getCategoriaInstitucion() {
+        return CategoriaInstitucion;
+    }
+
+    public void setCategoriaInstitucion(int categoriaInstitucion) {
+        CategoriaInstitucion = categoriaInstitucion;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -127,5 +137,6 @@ public class Institutions implements Parcelable {
         dest.writeString(PaginaWeb);
         dest.writeDouble(Latitud);
         dest.writeDouble(Longitud);
+        dest.writeInt(CategoriaInstitucion);
     }
 }

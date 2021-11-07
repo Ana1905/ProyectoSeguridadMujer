@@ -16,9 +16,10 @@ public class QuestionsActivity extends AppCompatActivity
 {
     int Type [], Variables [], Counter = 0, ControlCounter = 0, Response, Quiz, ControlQuiz;
     TextView Question, QuestionNumber;
-    Button TrueAnswer, SometimesAnswer, SeldomAnswer, NeverAnswer, PreviousQuestion, NextQuestion, ResultsButton;
+    Button TrueAnswer, SometimesAnswer, SeldomAnswer, NeverAnswer, ResultsButton;
     String [] Questions, Values, ControlQuestions;
     boolean isControlQuestion = false;
+    boolean [] isTestTaken;
     Resources resources;
 
     @Override
@@ -41,6 +42,11 @@ public class QuestionsActivity extends AppCompatActivity
 
         Type = new int[4];
         Variables = new int[5];
+        isTestTaken = new boolean[4];
+        for (int i = 0; i < 4; i++)
+        {
+            isTestTaken [i] = false;
+        }
 
         TrueAnswer.setOnClickListener(new View.OnClickListener()
         {
@@ -101,6 +107,14 @@ public class QuestionsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                Intent intent = new Intent(getApplicationContext(), TestResultsActivity.class);
+                intent.putExtra("Test", Type);
+                intent.putExtra("TipoViolencia", Variables);
+                intent.putExtra("Quiz", Quiz);
+                intent.putExtra("TestContestado", isTestTaken);
+                startActivity(intent);
+                finish();
+
                 if (Quiz == 0)
                 {
                     Toast.makeText(getApplicationContext(),  Type [0] + " " + Type [1] + " " + Type [2] + " " + Type [3] + " " + Variables [0]
@@ -243,6 +257,7 @@ public class QuestionsActivity extends AppCompatActivity
     {
         if (Response == 3)
         {
+            isTestTaken[ControlCounter] = true;
             isControlQuestion = false;
             Counter = 0;
             switch (ControlCounter)

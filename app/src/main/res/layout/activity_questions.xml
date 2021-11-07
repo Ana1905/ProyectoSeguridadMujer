@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:layout_marginBottom="300dp"
         android:orientation="vertical">
 
         <TextView
@@ -23,53 +24,61 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_margin="5dp"
-            android:textColor="#C20648"
+            android:textColor="#CDA4CA"
             android:textSize="25sp"
             android:textStyle="bold|italic" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="300dp"
+        android:layout_marginTop="100dp">
+
+        <Button
+            android:id="@+id/TrueAnswer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:backgroundTint="#9C27B0"
+            android:layout_weight="1"
+            android:text="@string/TrueAnswer" />
 
-            <Button
-                android:id="@+id/TrueAnswer"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/TrueAnswer" />
-
-            <Button
-                android:id="@+id/SometimesAnswer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/SometimesAnswer" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/SometimesAnswer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:backgroundTint="#9C27B0"
+            android:layout_weight="1"
+            android:text="@string/SometimesAnswer" />
 
-            <Button
-                android:id="@+id/SeldomAnswer"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/SeldomAnswer" />
+    </LinearLayout>
 
-            <Button
-                android:id="@+id/NeverAnswer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/NeverAnswer" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="200dp"
+        android:layout_marginTop="30dp">
 
-        </LinearLayout>
+        <Button
+            android:id="@+id/SeldomAnswer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#9C27B0"
+            android:layout_weight="1"
+            android:text="@string/SeldomAnswer" />
+
+        <Button
+            android:id="@+id/NeverAnswer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#9C27B0"
+            android:layout_weight="1"
+            android:text="@string/NeverAnswer" />
 
     </LinearLayout>
 
@@ -79,7 +88,7 @@
         android:layout_marginBottom="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#9C27B0"
+        android:backgroundTint="#9C27B0"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="@string/ResultsButton" />

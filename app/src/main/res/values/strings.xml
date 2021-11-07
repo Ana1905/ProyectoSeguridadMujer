@@ -66,12 +66,18 @@
     <string name="test_selection_label">¿Sabes si vives en violencia?</string>
     <string name="test_selection_separation">-------------------------------------------------- o --------------------------------------------------</string>
 
+    <string name="Publication_list_url">https://seguridadmujer.com/app_movil/Community/getPublicationList.php</string>
+    <string name="Comment_list_url">https://seguridadmujer.com/app_movil/Community/getCommentList.php</string>
+    <string name="Help_Publication_list_url">https://seguridadmujer.com/app_movil/HelpingNetwork/getHelpPublicationList.php?email=</string>
+
+    <!-- Strings del modulo de defensa -->
     <string name="Body_defense_url">https://seguridadmujer.com/app_movil/Defensa/getBodyDefenseList.php</string>
     <string name="Weapon_defense_url">https://seguridadmujer.com/app_movil/Defensa/getWeaponDefenseList.php</string>
     <string name="Defense_publication_content_label">Contenido de la publicación:</string>
     <string name="Defense_publication_video_label">Video de la publicación:</string>
     <string name="Defense_publication_additional_image_label">Imagenes adicionales:</string>
 
+    <!-- Strings de lista de instituciones del modulo informativo -->
     <string name="Institution_list_url">https://seguridadmujer.com/app_movil/Institucion/getInstitutionList.php</string>
     <string name="InstitutionAreaLabel">Area o rubro:</string>
     <string name="Institution_description_label">Descripción y antecedentes:</string>
@@ -79,6 +85,7 @@
     <string name="Institution_page_label">Pagina web:</string>
     <string name="Institution_ubication_label">ubicación:</string>
 
+    <!-- Strings para botones de tests del modulo informativo -->
     <string name="FamiliarViolenceButton">Familiar</string>
     <string name="CoupleViolenceButton">De pareja</string>
     <string name="FriendViolenceButton">Amigos</string>
@@ -91,6 +98,53 @@
     <string name="NextQuestion">Siguiente pregunta</string>
     <string name="ResultsButton">Ver resultados</string>
 
+    <!-- Strings con los tipos de violencia -->
+    <string-array name="ViolenceType">
+        <item>Sexismo y discriminación</item>
+        <item>Violencia verbal</item>
+        <item>Violencia física</item>
+        <item>Violencia psicológica</item>
+        <item>Violencia sexual</item>
+    </string-array>
+
+    <!-- Strings con las categorias para un nuevo post en la red de apoyo -->
+    <string-array name="Helping_Network_Categories">
+        <item>Selecciona una opción</item>
+        <item>Apoyo sobre violencia doméstica</item>
+        <item>Apoyo sobre discriminación</item>
+        <item>Apoyo sobre abuso sexual</item>
+        <item>Apoyo sobre un suceso de acoso</item>
+        <item>Apoyo sobre un acontecimiento de abuso infantil</item>
+        <item>Apoyo sobre violencia de pareja</item>
+    </string-array>
+
+    <!-- Strings con los tipos de test -->
+    <string-array name="TestType">
+        <item>Test de control</item>
+        <item>Violencia familiar</item>
+        <item>Violencia de pareja</item>
+        <item>Violencia entre amigos</item>
+        <item>Violencia laboral</item>
+    </string-array>
+
+    <string-array name="ReportCategory">
+        <item>Lenguaje inapropiado</item>
+        <item>Contenido sexual</item>
+        <item>Contenido violento</item>
+        <item>Atenta contra un usuario de la comunidad</item>
+        <item>Incita al odio</item>
+    </string-array>
+
+    <!-- Strings con los tipos de test -->
+    <string-array name="RelationType">
+        <item>RELACIÓN ABUSIVA, necesidad de acción inmediata</item>
+        <item>RELACIÓN CON VIOLENCIA</item>
+        <item>EXISTE UNA VIOLENCIA Y PUEDE LLEGAR A MAYORES pero estamos a tiempo de discutirlo</item>
+        <item>RELACIÓN NO VIOLENTA, debes externar su inconformidad con ciertas acciones pero la relación puede sanar sin mayor problema</item>
+    </string-array>
+    <string name="DefaultRelation">Sin resultados del test</string>
+
+    <!-- Strings con preguntas de los tests: test de control -->
     <string-array name="ControlQuestions">
         <item>¿Has llegado a sentirte incómoda o intimidada con alguno de tus familiares?</item>
         <item>¿Actualmente tienes pareja?</item>
@@ -98,6 +152,7 @@
         <item>¿Actualmente estás laborando?</item>
     </string-array>
 
+    <!-- Test de violencia familiar y variables a la que aporta -->
     <string-array name="FamiliarViolenceQuestions">
         <item>¿Sientes que tu familia te discrimina y no te provee oportunidades académicas por el hecho de ser mujer?</item>
         <item>¿Te han pedido que dejes de estudiar para dedicarte a labores domésticas?</item>
@@ -128,6 +183,7 @@
         <item>4</item>
     </string-array>
 
+    <!-- Test de violencia de pareja y variables a la que aporta -->
     <string-array name="CoupleViolenceQuestions">
         <item>¿Tu pareja te acusa constantemente de engaño?</item>
         <item>¿Has perdido contacto con amigos, familiares, compañeras/os de tu escuela o trabajo debido a tu pareja?</item>
@@ -158,6 +214,7 @@
         <item>4</item>
     </string-array>
 
+    <!-- Test de violencia entre amigos y variables a la que aporta -->
     <string-array name="FriendViolenceQuestions">
         <item>¿Tus amigos o conocidos te desaniman a intentar nuevos retos o conseguir metas diciéndote que no lo lograrás?</item>
         <item>¿Tus amigos o conocidos te han hecho sentir menos capaz o valiosa por el hecho de ser mujer?</item>
@@ -188,6 +245,7 @@
         <item>4</item>
     </string-array>
 
+    <!-- Test de violencia laboral y variables a la que aporta -->
     <string-array name="WorkViolenceQuestions">
         <item>¿Tu opinión no es escuchada en tu trabajo, debido a que seas mujer?</item>
         <item>¿Se te ha negado la oportunidad de subir de puesto porque un hombre es más "hábil" para desarrollar la tarea?</item>
@@ -219,5 +277,6 @@
     </string-array>
     <string name="title_activity_ubication">Map</string>
     <string name="title_activity_institution_ubication">Map</string>
+    <string name="Test_results_label">Resultados:</string>
 
 </resources>

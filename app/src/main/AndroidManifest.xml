@@ -71,6 +71,15 @@
             android:name=".InstitutionListActivity"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".TestResultsActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ReportPublicationActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".CommentListActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".ListContentActivity"
             android:label="@string/title_activity_institution_ubication"
             android:parentActivityName=".InstitutionListActivity" />

@@ -60,10 +60,18 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.ProyectoSeguridadMujer.NoActionBar" />
+
         <!-- Modulo de defensa personal -->
         <activity
             android:name=".BodyDefenseActivity"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".WeaponDefenseActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".DefenseTechniqueActivity"
+            android:parentActivityName=".BodyDefenseActivity" />
+
         <!-- Modulo de Acontecimientos en la ruta -->
         <activity
             android:name=".MapsActivity"
@@ -81,6 +89,7 @@
         <activity
             android:name=".RestrictedAreaAlert"
             android:theme="@style/AppThene.AlertTheme" />
+
         <!-- Modulo de alerta -->
         <activity
             android:name=".AddTrustedFriendsActivity"

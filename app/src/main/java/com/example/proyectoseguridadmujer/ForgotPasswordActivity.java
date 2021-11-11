@@ -51,9 +51,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         mButtonRecover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendRecoveryEmail("paulinitax3@gmail.com");
+                //sendRecoveryEmail("paulinitax3@gmail.com");
                 String email;
                 email = String.valueOf(mEditTextEmailRecovery.getText());
+                verifyEmailExistance(email);
                 if (!email.equals("")) {
 
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -69,6 +70,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     public boolean sendRecoveryEmail(String email){
+        //Si no envia nada desactiva tu antivirus
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -81,7 +83,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         properties.put("mail.smtp.port", "465");
 
         String encode_email="";
-
         try{
 
 
@@ -104,6 +105,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 Transport.send(message);
                 Toast.makeText(getApplicationContext(), "Hemos enviado el link de reestablecimiento a su correo electrónico", Toast.LENGTH_LONG).show();
 
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "mamarre", Toast.LENGTH_LONG).show();
             }
         }
 

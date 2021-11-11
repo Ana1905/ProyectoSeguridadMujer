@@ -23,16 +23,16 @@ import org.json.JSONArray;
 import java.util.Arrays;
 import java.util.List;
 
-public class BodyDefenseActivity extends AppCompatActivity
+public class WeaponDefenseActivity extends AppCompatActivity
 {
-    String email="";
+    String email = "";
 
     Button mBotonCambiarLista;
 
     RecyclerView mRecyclerView;
 
-    List<DefenseTechniques> ListBodyDefense;
-    BodyDefenseAdapter bodyDefenseAdapter;
+    List<DefenseTechniques> ListWeaponDefense;
+    WeaponDefenseAdapter weaponDefenseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,18 +44,18 @@ public class BodyDefenseActivity extends AppCompatActivity
         mRecyclerView = findViewById(R.id.DefenseRecyclerView);
         mBotonCambiarLista = findViewById(R.id.change_list_button);
 
-        mRecyclerView.setAdapter(bodyDefenseAdapter);
+        mRecyclerView.setAdapter(weaponDefenseAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         getCredentialData();
 
-        getBodyList(getString(R.string.Body_defense_url));
+        getWeaponList(getString(R.string.Weapon_defense_url));
 
-        mBotonCambiarLista.setText("Mostrar manejo de herramientas");
+        mBotonCambiarLista.setText("Mostrar defensa cuerpo a cuerpo");
         mBotonCambiarLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), WeaponDefenseActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BodyDefenseActivity.class);
                 startActivity(intent);
             }
         });
@@ -64,7 +64,7 @@ public class BodyDefenseActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        Intent intent = NavUtils.getParentActivityIntent(BodyDefenseActivity.this);
+        Intent intent = NavUtils.getParentActivityIntent(WeaponDefenseActivity.this);
         startActivity(intent);
         finish();
     }
@@ -75,7 +75,7 @@ public class BodyDefenseActivity extends AppCompatActivity
         email = preferences.getString("email", "");
     }
 
-    public void getBodyList(String Link)
+    public void getWeaponList(String Link)
     {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Link, new Response.Listener<JSONArray>()
         {
@@ -86,10 +86,10 @@ public class BodyDefenseActivity extends AppCompatActivity
                 Gson gson = new Gson();
                 DefenseTechniques[] BodyDefenseRegister = gson.fromJson(BodyDefenseData, DefenseTechniques[].class);
 
-                ListBodyDefense = Arrays.asList(BodyDefenseRegister);
+                ListWeaponDefense = Arrays.asList(BodyDefenseRegister);
 
-                bodyDefenseAdapter = new BodyDefenseAdapter(BodyDefenseActivity.this, ListBodyDefense);
-                mRecyclerView.setAdapter(bodyDefenseAdapter);
+                weaponDefenseAdapter = new WeaponDefenseAdapter(WeaponDefenseActivity.this, ListWeaponDefense);
+                mRecyclerView.setAdapter(weaponDefenseAdapter);
             }
         },
                 new Response.ErrorListener()

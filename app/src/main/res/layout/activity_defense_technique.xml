@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/purple_200">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".DefenseTechniqueActivity"
+        >
+
+        <TextView
+            android:id="@+id/TechniqueTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@string/Defense_publication_title_label"/>
+
+        <ImageView
+            android:id="@+id/TechniqueImage"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp" />
+
+        <!--
+        <TextView
+            android:id="@+id/TechniqueContentLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="210dp"
+            android:layout_marginRight="210dp"
+            android:gravity="left"
+            android:text="@string/Defense_publication_content_label"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TechniqueImage" />
+            -->
+
+        <TextView
+            android:id="@+id/TechniqueContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:text="@string/Defense_publication_content_label" />
+
+        <TextView
+            android:id="@+id/TechniqueVideoLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:text="@string/Defense_publication_video_label"
+            android:textSize="15sp"
+            android:textColor="@color/quantum_pink100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TechniqueContent" />
+
+        <FrameLayout
+            android:id="@+id/VideoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp" >
+
+            <VideoView
+                android:id="@+id/TechniqueVideo"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                tools:ignore="InvalidId" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/TechniqueAdittionalImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:text="@string/Defense_publication_additional_image_label"
+            android:textSize="15sp"
+            android:textColor="@color/quantum_pink100" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ListViewImagenesDefensa"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

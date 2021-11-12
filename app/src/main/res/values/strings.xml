@@ -338,6 +338,17 @@
     <string name="title_activity_institution_ubication">Map</string>
     <string name="Test_results_label">Resultados:</string>
 
+    <!-- Strings con las categorias para un nuevo post en la red de apoyo -->
+    <string-array name="Helping_Network_Categories">
+        <item>Selecciona una opción</item>
+        <item>Apoyo sobre violencia doméstica</item>
+        <item>Apoyo sobre discriminación</item>
+        <item>Apoyo sobre abuso sexual</item>
+        <item>Apoyo sobre un suceso de acoso</item>
+        <item>Apoyo sobre un acontecimiento de abuso infantil</item>
+        <item>Apoyo sobre violencia de pareja</item>
+    </string-array>
+
 
     <string name="terminos_y_condiciones">Términos y condiciones de uso
         \n\n1. Estos Términos y Condiciones de Uso regulan las reglas a que se sujeta la utilización de la APP “Seguridad Mujer” que puede descargarse desde la tienda de aplicaciones Android “play store”.  La descarga o utilización de la APP atribuye la condición de la usuaria a quien lo haga e implica la aceptación de todas las condiciones incluidas en este documento. La Usuaria debería leer estas condiciones cada vez que utilice la APP, ya que podrían ser modificadas en lo sucesivo.

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp" >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/CommentRow"
+        android:layout_marginTop="3dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="4dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/CommentRowImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@color/purple_200" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/CommentRowUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/CommentRowImage"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:text="Usuario"
+                        android:textSize="20sp"
+                        android:textColor="#000" />
+
+                    <TextView
+                        android:id="@+id/DateRowComment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/CommentRowImage"
+                        app:layout_constraintTop_toBottomOf="@id/CommentRowUser"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="16dp"
+                        android:text="Fecha" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/CommentRowContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/CommentRowImage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:text="contenido xxxxxxxxxxxxxxxxxxxxx"
+                android:textColor="#000" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Se verifica si existen peticiones de usuario web pendientes:
         obtenerPeticiones("https://seguridadmujer.com/app_movil/PeticionesRecibidas/obtener_solicitudes.php?email=" + email);
+        obtenerAdvertencias("https://seguridadmujer.com/app_movil/PeticionesRecibidas/obtener_advertencias.php?email=" + email);
 
         //Configuracion de la Toolbar:
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -224,6 +225,85 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         return true;
+    }
+
+    //Metodo para obtener las peticiones de usuario web desde la base de datos:
+    public void obtenerAdvertencias(String URL){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                JSONObject jsonObject = null;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        jsonObject = jsonArray.getJSONObject(i);
+                        String Contenido= jsonObject.getString("Contenido");
+                        String Fecha = jsonObject.getString("Fecha");
+                        String ID = jsonObject.getString("ID_Advertencia");
+
+                        dialogoAdvertencia(Contenido, Fecha, ID);
+
+                    }
+                    catch (JSONException e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }
+        );
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    //Metodo para mostrar el AlertDialog de peticion de usuario web:
+    public void dialogoAdvertencia(String Contenido, String Fecha, String ID){
+        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MainActivity.this);
+        dialogo1.setTitle("Ha recibido una advertencia");
+        //dialogo1.setMessage("El usuario web llamado");
+        dialogo1.setMessage("Una usuaria ha reportado una de sus pusblicaciones del módulo de comunidad el día "+Fecha+", por el momento no se le ha realizado ningún castigo o sancion, sin embargo le recomendamos: "+Contenido);
+        dialogo1.setCancelable(false);
+
+        dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                //Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
+                updateadvertencia(ID);
+            }
+        });
+        AlertDialog dialogo = dialogo1.create();
+        dialogo.show();
+    }
+
+    //Metodo para actualizar la peticion del usuario web en la base de datos:
+    public void updateadvertencia(String ID_Advertencia){
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                String[] field = new String[1];
+                field[0] = "ID_Advertencia";
+
+                //Creating array for data
+                String[] data = new String[1];
+                data[0] = ID_Advertencia;
+
+                PutData putData = new PutData("https://seguridadmujer.com/app_movil/PeticionesRecibidas/updateAdvertencias.php", "POST", field, data);
+                if (putData.startPut()) {
+                    if (putData.onComplete()) {
+                        String result = putData.getResult();
+                        if (result.equals("Success")) {
+                            Toast.makeText(getApplicationContext(), "Notificación atendida", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                }
+            }
+        });
     }
 
 }

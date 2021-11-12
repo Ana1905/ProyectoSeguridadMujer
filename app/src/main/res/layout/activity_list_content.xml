@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/purple_200" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ListContentActivity" >
+
+        <Button
+            android:id="@+id/button_dialog_institution_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/close_icon"
+            android:text="Volver" />
+
+        <TextView
+            android:id="@+id/InstitutionNameLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="@string/titulo_de_la_institucion"/>
+
+        <ImageView
+            android:id="@+id/InstitutionImageHolder"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"  />
+
+        <TextView
+            android:id="@+id/InstitutionAreaLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:text="@string/InstitutionAreaLabel"
+            android:textSize="15sp"
+            android:textColor="@color/quantum_pink100" />
+
+        <TextView
+            android:id="@+id/InstitutionAreaContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:text="@string/InstitutionAreaLabel"  />
+
+        <TextView
+            android:id="@+id/InstitutionDescriptionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/quantum_pink100"
+            android:text="@string/Institution_description_label" />
+
+        <TextView
+            android:id="@+id/InstitutionDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:text="@string/Institution_description_label" />
+
+        <TextView
+            android:id="@+id/InstitutionPhoneLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/quantum_pink100"
+            android:text="@string/Institution_phone_label" />
+
+        <TextView
+            android:id="@+id/InstitutionPhone"
+            android:autoLink="phone"
+            android:linksClickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:text="@string/Institution_phone_label" />
+
+        <TextView
+            android:id="@+id/InstitutionPageLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/quantum_pink100"
+            android:text="@string/Institution_page_label" />
+
+        <TextView
+            android:id="@+id/InstitutionPage"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:text="@string/Institution_page_label"/>
+
+        <TextView
+            android:id="@+id/redes_sociales_instituciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:text="@string/redes_sociales"
+            android:textSize="15sp"
+            android:textColor="@color/quantum_pink100" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerRedesSociales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/InstitutionUbicationLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/quantum_pink100"
+            android:text="@string/Institution_ubication_label" />
+
+        <fragment
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            tools:context=".ListContentActivity"
+            app:layout_constraintTop_toBottomOf="@+id/InstitutionUbicationLabel" />
+
+        <TextView
+            android:id="@+id/imagenes_adicionales_instituciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:text="@string/Defense_publication_additional_image_label"
+            android:textSize="15sp"
+            android:textColor="@color/quantum_pink100" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerImagenesInstituciones"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

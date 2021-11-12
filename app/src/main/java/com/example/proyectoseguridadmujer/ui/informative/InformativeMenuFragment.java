@@ -16,7 +16,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.proyectoseguridadmujer.BodyDefenseActivity;
+import com.example.proyectoseguridadmujer.InstitutionListActivity;
 import com.example.proyectoseguridadmujer.R;
+import com.example.proyectoseguridadmujer.TestActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,29 +48,19 @@ public class InformativeMenuFragment extends Fragment {
         mImageButtonInstitution.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "hola", Toast.LENGTH_SHORT).show();
-                /*
-                Intent intent = new Intent(view.getContext(), InstitutionListFragment.class);
+                Intent intent = new Intent(view.getContext(), InstitutionListActivity.class);
                 startActivity(intent);
                 getActivity().finish();
-                Fragment nuevoFragmento = new InstitutionListFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fra)
-                transaction.addToBackStack(null);
-
-                // Commit a la transacción
-                transaction.commit();*/
-
             }
         });
-/*
+
         mImageButtonTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), TestFragment.class);
+                Intent intent = new Intent(view.getContext(), TestActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }
-        });*/
+        });
     }
 }

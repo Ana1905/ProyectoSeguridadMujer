@@ -72,6 +72,23 @@
             android:name=".DefenseTechniqueActivity"
             android:parentActivityName=".BodyDefenseActivity" />
 
+        <!-- Modulo informativo -->
+        <activity
+            android:name=".InstitutionListActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".ListContentActivity"
+            android:parentActivityName=".InstitutionListActivity"/>
+        <activity
+            android:name=".TestActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".QuestionsActivity"
+            android:parentActivityName=".TestActivity"/>
+        <activity
+            android:name=".TestResultsActivity"
+            android:parentActivityName=".TestActivity"/>
+
         <!-- Modulo de Acontecimientos en la ruta -->
         <activity
             android:name=".MapsActivity"

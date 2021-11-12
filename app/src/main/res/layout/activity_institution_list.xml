@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/purple_Light"
+    tools:context=".InstitutionListActivity" >
+
+    <Button
+        android:id="@+id/change_list_button_institution"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/sign_in_button_shape"
+        android:paddingHorizontal="10dp"
+        android:text="@string/cambiar_de_lista"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/InstitutionList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

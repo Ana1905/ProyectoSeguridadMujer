@@ -155,4 +155,197 @@
     <string name="Defense_publication_video_label">Video explicativo</string>
     <string name="Defense_publication_additional_image_label">Imagenes adicionales</string>
 
+    <!-- Strings de lista de instituciones del modulo informativo -->
+    <string name="Institution_list_url">https://seguridadmujer.com/app_movil/Institucion/getInstitutionList.php</string>
+    <string name="InstitutionAreaLabel">Area o rubro:</string>
+    <string name="Institution_description_label">Descripción y antecedentes:</string>
+    <string name="Institution_phone_label">Número de telefono:</string>
+    <string name="Institution_page_label">Pagina web:</string>
+    <string name="Institution_ubication_label">Ubicación:</string>
+
+    <!-- Strings para botones de tests del modulo informativo -->
+    <string name="FamiliarViolenceButton">Familiar</string>
+    <string name="CoupleViolenceButton">De pareja</string>
+    <string name="FriendViolenceButton">Amigos</string>
+    <string name="WorkViolenceButton">Laboral</string>
+    <string name="TrueAnswer">Si</string>
+    <string name="SometimesAnswer">A veces</string>
+    <string name="SeldomAnswer">Rara vez</string>
+    <string name="NeverAnswer">Nunca</string>
+    <string name="PreviousQuestion">Pregunta anterior</string>
+    <string name="NextQuestion">Siguiente pregunta</string>
+    <string name="ResultsButton">Ver resultados</string>
+
+    <!-- Strings con los tipos de violencia -->
+    <string-array name="ViolenceType">
+        <item>Sexismo y discriminación</item>
+        <item>Violencia verbal</item>
+        <item>Violencia física</item>
+        <item>Violencia psicológica</item>
+        <item>Violencia sexual</item>
+    </string-array>
+
+    <!-- Strings con los tipos de test -->
+    <string-array name="TestType">
+        <item>Test de control</item>
+        <item>Violencia familiar</item>
+        <item>Violencia de pareja</item>
+        <item>Violencia entre amigos</item>
+        <item>Violencia laboral</item>
+    </string-array>
+
+    <!-- Strings con los tipos de test -->
+    <string-array name="RelationType">
+        <item>RELACIÓN ABUSIVA, necesidad de acción inmediata</item>
+        <item>RELACIÓN CON VIOLENCIA</item>
+        <item>EXISTE UNA VIOLENCIA Y PUEDE LLEGAR A MAYORES pero estamos a tiempo de discutirlo</item>
+        <item>RELACIÓN NO VIOLENTA, debes externar su inconformidad con ciertas acciones pero la relación puede sanar sin mayor problema</item>
+    </string-array>
+    <string name="DefaultRelation">Sin resultados del test</string>
+
+    <!-- Strings con preguntas de los tests: test de control -->
+    <string-array name="ControlQuestions">
+        <item>¿Has llegado a sentirte incómoda o intimidada con alguno de tus familiares?</item>
+        <item>¿Actualmente tienes pareja?</item>
+        <item>¿Alguno de tus amigos hace comentarios incómodos hacia tu persona o te ha llegado a tocar sin autorización?</item>
+        <item>¿Actualmente estás laborando?</item>
+    </string-array>
+
+    <!-- Test de violencia familiar y variables a la que aporta -->
+    <string-array name="FamiliarViolenceQuestions">
+        <item>¿Sientes que tu familia te discrimina y no te provee oportunidades académicas por el hecho de ser mujer?</item>
+        <item>¿Te han pedido que dejes de estudiar para dedicarte a labores domésticas?</item>
+        <item>¿Dentro de tu hogar las mujeres suelen ser quienes realizan las actividades domésticas?</item>
+        <item>¿Discutes fuertemente con los miembros de tu hogar?</item>
+        <item>¿Tus familiares te han puesto apodos o sobrenombres que te hacen sentir incómoda?</item>
+        <item>¿Tus familiares te han insultado en una discusión?</item>
+        <item>¿Cuando tienes alguna discusión con tus familiares los reprendimietos a los que se te somete son, como por ejemplo: “No comer” o  “Trabajos físicos muy pesados”?</item>
+        <item>¿Tus familiares te golpean?</item>
+        <item>¿Tus familiares te “jalonean” o  empujan constantemente?</item>
+        <item>¿Tus familiares han hecho comentarios inadecuados o insinuaciones hacia tu vida sexual o tu cuerpo?</item>
+        <item>¿Has sufrido tocamientos, roces, insinuaciones sexuales por parte de algún familiar?</item>
+        <item>¿Has sufrido de violación por parte de un familiar?</item>
+    </string-array>
+
+    <string-array name="FamiliarViolenceValues">
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>4</item>
+        <item>4</item>
+        <item>4</item>
+    </string-array>
+
+    <!-- Test de violencia de pareja y variables a la que aporta -->
+    <string-array name="CoupleViolenceQuestions">
+        <item>¿Tu pareja te acusa constantemente de engaño?</item>
+        <item>¿Has perdido contacto con amigos, familiares, compañeras/os de tu escuela o trabajo debido a tu pareja?</item>
+        <item>¿Tu pareja te pide tus contraseñas de redes sociales o busca revisar tu teléfono constantemente?</item>
+        <item>¿Tu pareja se burla de tus gustos o hobbies?</item>
+        <item>¿Tu pareja te pone apodos que te hacen sentir incómoda o triste?</item>
+        <item>¿Te critica y humilla en público o en privado, opina negativamente sobre tu apariencia, tu forma de ser o el modo en que te vistes?</item>
+        <item>¿Cuando discuten tu pareja te jalonea, te empuja o te golpea?</item>
+        <item>¿Te ha amenazado alguna vez con un objeto o armas, o con matarse él, a ti o a algún miembro de la familia si no cedes a sus peticiones?</item>
+        <item>¿Has buscado o has recibido ayuda por lesiones que él te ha causado? (primeros auxilios, atención médica o legal)</item>
+        <item>¿Tu pareja te ha pedido tener relaciones sexuales para demostrar tu amor?</item>
+        <item>¿Tu pareja ha insistido en tener relaciones sexuales a pesar de que dejaste en claro que no querías?</item>
+        <item>¿Tu pareja te ha tocado cuando tu le habías dicho que no querías?</item>
+    </string-array>
+
+    <string-array name="CoupleViolenceValues">
+        <item>3</item>
+        <item>3</item>
+        <item>3</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>4</item>
+        <item>4</item>
+        <item>4</item>
+    </string-array>
+
+    <!-- Test de violencia entre amigos y variables a la que aporta -->
+    <string-array name="FriendViolenceQuestions">
+        <item>¿Tus amigos o conocidos te desaniman a intentar nuevos retos o conseguir metas diciéndote que no lo lograrás?</item>
+        <item>¿Tus amigos o conocidos te han hecho sentir menos capaz o valiosa por el hecho de ser mujer?</item>
+        <item>¿Tus amigos o conocidos te humillan en público o cuentan cuestiones personales tuyas frente a otras personas?</item>
+        <item>¿Tus amigos o conocidos te hacen comentarios negativos con respecto a tus habilidades, tu físico o tus gustos?</item>
+        <item>¿Tus amigos o conocidos se burlan de las situaciones de riesgo que viven algunas mujeres en nuestro país?</item>
+        <item>¿Tus amigos o conocidos te ponen sobrenombres ofensivos?</item>
+        <item>¿Tus amigos o conocidos te han agredido físicamente por “broma” o “juego”?</item>
+        <item>¿Al estar bajo los efectos del alcohol tus amigos se ponen violentos con los demás?</item>
+        <item>¿Tus amigos te han amenazado con dañarte si no les ayudas y/o cumples lo que te piden?</item>
+        <item>¿Tus amigos o conocidos “rolan” fotos íntimas de otras chicas sin su consentimiento?</item>
+        <item>¿Tus amigos te han besado o intentado tener algún tipo de interacción sexual sin consentimiento en una fiesta?</item>
+        <item>¿Tus amigos han intentado embriagar a una mujer para aprovecharse de ella?</item>
+    </string-array>
+
+    <string-array name="FriendViolenceValues">
+        <item>3</item>
+        <item>3</item>
+        <item>3</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>4</item>
+        <item>4</item>
+        <item>4</item>
+    </string-array>
+
+    <!-- Test de violencia laboral y variables a la que aporta -->
+    <string-array name="WorkViolenceQuestions">
+        <item>¿Tu opinión no es escuchada en tu trabajo, debido a que seas mujer?</item>
+        <item>¿Se te ha negado la oportunidad de subir de puesto porque un hombre es más "hábil" para desarrollar la tarea?</item>
+        <item>¿Se te discrimina con respecto a tus actividades por el hecho de ser mujer?</item>
+        <item>¿Tus compañeros de trabajo o superiores te miran incómodamente cuando traes una falta o un escote?</item>
+        <item>¿Tus compañeros de trabajo o superiores te hacen comentarios y/o preguntas inadecuadas sobre tu vida sexual?</item>
+        <item>¿Has sufrido toqueteos o roces intencionados por algún compañero de trabajo o superior?</item>
+        <item>¿Tus compañeros de trabajo se burlan de las situaciones de riesgo de las mujeres?</item>
+        <item>¿Tus compañeros del trabajo te han insultado?</item>
+        <item>¿Tus superiores te gritan o te hablan de mala manera?</item>
+        <item>¿Tus superiores o compañeros de trabajo no respetan tus pertenencias o las maltratan?</item>
+        <item>¿Tus compañeros de trabajo o superiores te han amenazado con golpearte, a algún miembro de tu familia o amigo?</item>
+        <item>¿Te han golpeado o agredido con algún objeto porque cometiste un error?</item>
+    </string-array>
+
+    <string-array name="WorkViolenceValues">
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
+        <item>4</item>
+        <item>4</item>
+        <item>4</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+    </string-array>
+    <string name="title_activity_ubication">Map</string>
+    <string name="title_activity_institution_ubication">Map</string>
+    <string name="Test_results_label">Resultados:</string>
+
+    <!-- Botones recien creados -->
+    <string name="cambiar_de_lista">Cambiar de lista</string>
+    <string name="mostrar_manejo">Mostrar manejo de herramientas</string>
+    <string name="indentificar_institucion">Identificar institución de apoyo</string>
+    <string name="name">Name</string>
+    <string name="location">Location</string>
+    <string name="titulo_de_la_institucion">Titulo de la institucion</string>
+    <string name="redes_sociales">Redes sociales:</string>
+    <string name="ver_cat_logo_de_instituciones">Ver catálogo de instituciones</string>
+
 </resources>

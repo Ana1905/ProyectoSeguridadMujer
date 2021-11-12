@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/border_recycler" >
-
+    android:layout_marginBottom="10dp"
+    >
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -13,47 +13,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+
         android:padding="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:background="@color/purple_200"
             >
 
             <ImageView
-                android:id="@+id/InstitutionImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@drawable/rounded_corner"
+                android:id="@+id/ImagenRedSocial"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_margin="3dp"
-                android:padding="5dp"
-                android:layout_gravity="center_vertical"
                 tools:ignore="ContentDescription,VectorDrawableCompat" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/InstitutionName"
+                    android:id="@+id/TipoRedSocial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Tipo Red Social"
                     android:layout_marginStart="12dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/name"
                     android:textSize="24sp"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/InstitutionArea"
+                    android:id="@+id/NombreRedSocial"
+                    android:autoLink="web"
+                    android:linksClickable="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/location"
+                    android:text="Nombre Red Social"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
+
 
             </LinearLayout>
 

@@ -1,15 +1,16 @@
 package com.example.proyectoseguridadmujer;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,39 +24,39 @@ import org.json.JSONArray;
 import java.util.Arrays;
 import java.util.List;
 
-public class BodyDefenseActivity extends AppCompatActivity
-{
-    String email="";
+public class InstitutionListActivity extends AppCompatActivity {
+
+    String email = "";
 
     Button mBotonCambiarLista;
 
-    RecyclerView mRecyclerView;
+    RecyclerView institutionList;
 
-    List<DefenseTechniques> ListBodyDefense;
-    BodyDefenseAdapter bodyDefenseAdapter;
+    List<Institutions> InstitutionList;
+    InstitutionListAdapter institutionListAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_defense);
+        setContentView(R.layout.activity_institution_list);
 
-        //Wiring Up
-        mRecyclerView = findViewById(R.id.DefenseRecyclerView);
-        mBotonCambiarLista = findViewById(R.id.change_list_button);
+        //WiringUp
+        institutionList = findViewById(R.id.InstitutionList);
+        mBotonCambiarLista = findViewById(R.id.change_list_button_institution);
 
-        mRecyclerView.setAdapter(bodyDefenseAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        institutionList.setAdapter(institutionListAdapter);
+        institutionList.setLayoutManager(new LinearLayoutManager(this));
 
         getCredentialData();
 
-        getBodyList(getString(R.string.Body_defense_url));
+        getInstitutionList(getString(R.string.Institution_list_url));
 
-        mBotonCambiarLista.setText(R.string.mostrar_manejo);
+        mBotonCambiarLista.setText(R.string.indentificar_institucion);
         mBotonCambiarLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), WeaponDefenseActivity.class);
+                Intent intent = new Intent(getApplicationContext(), TestActivity.class);
                 startActivity(intent);
             }
         });
@@ -64,7 +65,7 @@ public class BodyDefenseActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        Intent intent = NavUtils.getParentActivityIntent(BodyDefenseActivity.this);
+        Intent intent = NavUtils.getParentActivityIntent(InstitutionListActivity.this);
         startActivity(intent);
         finish();
     }
@@ -75,21 +76,21 @@ public class BodyDefenseActivity extends AppCompatActivity
         email = preferences.getString("email", "");
     }
 
-    public void getBodyList(String Link)
+    public void getInstitutionList(String Link)
     {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Link, new Response.Listener<JSONArray>()
         {
             @Override
             public void onResponse(JSONArray response)
             {
-                String BodyDefenseData = response.toString();
+                String InstitutionData = response.toString();
                 Gson gson = new Gson();
-                DefenseTechniques[] BodyDefenseRegister = gson.fromJson(BodyDefenseData, DefenseTechniques[].class);
+                Institutions[] InstitutionsRegister = gson.fromJson(InstitutionData, Institutions[].class);
 
-                ListBodyDefense = Arrays.asList(BodyDefenseRegister);
+                InstitutionList = Arrays.asList(InstitutionsRegister);
 
-                bodyDefenseAdapter = new BodyDefenseAdapter(BodyDefenseActivity.this, ListBodyDefense);
-                mRecyclerView.setAdapter(bodyDefenseAdapter);
+                institutionListAdapter = new InstitutionListAdapter(InstitutionListActivity.this, InstitutionList);
+                institutionList.setAdapter(institutionListAdapter);
             }
         },
                 new Response.ErrorListener()
@@ -103,4 +104,6 @@ public class BodyDefenseActivity extends AppCompatActivity
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
+
+
 }

@@ -303,7 +303,7 @@ public class TestResultsActivity extends AppCompatActivity
                         enlace = enlace + "&ID" + (i+1) + "=" + mArrayVariablesObtenidas.get(i);
                     }
                 }
-                Toast.makeText(getApplicationContext(), enlace, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), enlace, Toast.LENGTH_LONG).show();
                 obtenerInstituciones(enlace);
             }
             else{
@@ -327,7 +327,7 @@ public class TestResultsActivity extends AppCompatActivity
                     enlace = enlace + "&ID" + (i+1) + "=" + mArrayVariablesObtenidas.get(i);
                 }
             }
-            Toast.makeText(getApplicationContext(), enlace, Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), enlace, Toast.LENGTH_LONG).show();
             obtenerTips(enlace);
         }
 
@@ -382,7 +382,7 @@ public class TestResultsActivity extends AppCompatActivity
     }
 
     private void mostrarRedesSociales(){
-        Toast.makeText(getApplicationContext(), String.valueOf(mListaInstituciones.size()), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), String.valueOf(mListaInstituciones.size()), Toast.LENGTH_SHORT).show();
         if(!mListaInstituciones.isEmpty()){
             mRecyclerInstituciones.setVisibility(View.VISIBLE);
             InstitutionLabel.setVisibility(View.VISIBLE);
@@ -440,7 +440,7 @@ public class TestResultsActivity extends AppCompatActivity
     }
 
     private void mostrarTips(){
-        Toast.makeText(getApplicationContext(), String.valueOf(mListaInstituciones.size()), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), String.valueOf(mListaTips.size()), Toast.LENGTH_SHORT).show();
         if(!mListaTips.isEmpty()){
             mRecyclerTips.setVisibility(View.VISIBLE);
             TipsLabel.setVisibility(View.VISIBLE);

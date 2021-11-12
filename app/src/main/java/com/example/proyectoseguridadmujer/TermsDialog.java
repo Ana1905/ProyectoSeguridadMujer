@@ -18,7 +18,7 @@ public class TermsDialog extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         AlertDialog .Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Términos y condiciones").setMessage("Aqui van los terminos y condiciones de la aplicación").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        builder.setTitle("Términos y condiciones").setMessage(getString(R.string.terminos_y_condiciones)).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
               //si quieres que al picar aceptar haga algo, ponlo aqui. Si no pones nada solo lo va a cerrar

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,8 +34,12 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.proyectoseguridadmujer.AdapterContacts;
 import com.example.proyectoseguridadmujer.AdapterWebUser;
+import com.example.proyectoseguridadmujer.LoginActivity;
+import com.example.proyectoseguridadmujer.MainActivity;
 import com.example.proyectoseguridadmujer.R;
 import com.example.proyectoseguridadmujer.ReporteAcontecimiento;
+import com.example.proyectoseguridadmujer.Sancion;
+import com.example.proyectoseguridadmujer.SanctionAlert;
 import com.example.proyectoseguridadmujer.WebUser;
 
 import org.json.JSONArray;
@@ -44,6 +49,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import httpurlconnection.PutData;
 
@@ -63,6 +69,7 @@ public class ProfileFragment extends Fragment {
     boolean mImagenModificada = false;
 
     ArrayList<WebUser> mListaUsuarios = new ArrayList<>();
+    ArrayList<Sancion> mListaSanciones = new ArrayList<Sancion>();
 
     private int mID;
     private String mNombre, mApellidoPaterno, mApellidoMaterno, mDescripcion, mRutaImagen;
@@ -91,6 +98,9 @@ public class ProfileFragment extends Fragment {
 
         //Cambia el texto del boton de las notificaciones:
         definirTextoBoton();
+
+        //Verifica si hay un baneo activo;
+        obtenerSanciones("https://seguridadmujer.com/app_movil/LoginRegister/ObtenerSanciones.php?email="+email);
 
         //Obtiene la informacion de la usuaria:
         obtenerInformacionUsuaria("https://seguridadmujer.com/app_movil/Profile/obtenerInfoUsuaria.php?email="+email);
@@ -179,6 +189,9 @@ public class ProfileFragment extends Fragment {
         SharedPreferences notificaciones = this.getActivity().getSharedPreferences("Notificaciones", Context.MODE_PRIVATE);
         estadoNotificaciones = notificaciones.getString("estado", "no");
 
+        if(email.isEmpty() || email == null){
+            CloseSession();
+        }
         //Toast.makeText(getContext(), estadoNotificaciones, Toast.LENGTH_SHORT).show();
     }
 
@@ -384,6 +397,68 @@ public class ProfileFragment extends Fragment {
         );
         requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(jsonArrayRequest);
+    }
+
+    //Metodo que valida si hay un baneo de cuenta:
+    private void obtenerSanciones(String URL){
+
+        //Vacia la lista:
+        if(!mListaSanciones.isEmpty()){
+            mListaSanciones.clear();
+        }
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                JSONObject jsonObject = null;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        jsonObject = jsonArray.getJSONObject(i);
+
+                        Sancion sancion = new Sancion();
+                        sancion.setID(jsonObject.getInt("ID_Baneo"));
+                        sancion.setID_Usuaria(jsonObject.getInt("ID_Usuaria"));
+                        sancion.setDuracion(jsonObject.getInt("Duracion"));
+                        sancion.setFechaInicio(jsonObject.getString("FechaInicio"));
+                        sancion.setFechaFin(jsonObject.getString("FechaFin"));
+                        sancion.setTipoSancion(jsonObject.getString("Tipo"));
+
+                        mListaSanciones.add(sancion);
+                    }
+                    catch (JSONException e) {
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                if(!mListaSanciones.isEmpty()){
+                    getActivity().getFragmentManager().popBackStack();
+                    CloseSession();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }
+        );
+        requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    //Metodo para cerrar la sesion:
+    public boolean CloseSession(){
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("Credencials", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("email", "");
+        editor.putString("password", "");
+        editor.commit();
+
+        Intent intent = new Intent(getContext(), LoginActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        return true;
     }
 
 }

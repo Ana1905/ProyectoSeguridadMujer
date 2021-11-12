@@ -39,6 +39,7 @@
         <!-- Modulo de inicio de sesion y menu principal -->
         <activity
             android:name=".LoginActivity"
+            android:parentActivityName=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

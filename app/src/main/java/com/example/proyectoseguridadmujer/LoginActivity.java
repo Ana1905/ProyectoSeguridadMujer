@@ -3,6 +3,7 @@ package com.example.proyectoseguridadmujer;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -20,6 +21,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 import httpurlconnection.PutData;
 
 public class LoginActivity extends AppCompatActivity {
@@ -30,6 +44,12 @@ public class LoginActivity extends AppCompatActivity {
     String email, contraseña;
     String mPhoneNumber;
     int REQUEST_CODE= 200;
+
+    RequestQueue requestQueue;
+
+    ArrayList<Sancion> mListaSanciones = new ArrayList<Sancion>();
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Variables to catch data
                 //Toast.makeText(getApplicationContext(), "IMPORTANTE: Recuerda que si no aceptaste el permiso de teléfono para aplicacion seguridad mujer no tendrás acceso a la aplicacion)", Toast.LENGTH_LONG).show();
+
                 email = String.valueOf(mEditTextSignInEmail.getText());
                 contraseña = String.valueOf(mEditTextSignInPassword.getText());
 
@@ -127,25 +148,22 @@ public class LoginActivity extends AppCompatActivity {
                                     String result = putData.getResult();
 
                                     if (result.equals("Login Success")) {
-                                        Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                                        guardarSesion();
-                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+
+                                        obtenerSanciones("https://seguridadmujer.com/app_movil/LoginRegister/ObtenerSanciones.php?email="+email);
 
                                     } else {
 
-                                            if (result.equals("Missing email verification email or Password wrong")) {
-                                                Toast.makeText(getApplicationContext(), "La cuenta aún no ha sido creada pues no se ha verificado la dirección de correo", Toast.LENGTH_LONG).show();
+                                        if (result.equals("Missing email verification email or Password wrong")) {
+                                            Toast.makeText(getApplicationContext(), "La cuenta aún no ha sido creada pues no se ha verificado la dirección de correo", Toast.LENGTH_LONG).show();
+                                        }
+                                        else {
+                                            if (result.equals("phones not match email or Password wrong")) {
+                                                Toast.makeText(getApplicationContext(), "Estás intentando acceder desde un dispositivo que no es el que tenemos registrado, por tu seguridad no te daremos acceso", Toast.LENGTH_LONG).show();
                                             }
                                             else {
-                                                if (result.equals("phones not match email or Password wrong")) {
-                                                    Toast.makeText(getApplicationContext(), "Estás intentando acceder desde un dispositivo que no es el que tenemos registrado, por tu seguridad no te daremos acceso", Toast.LENGTH_LONG).show();
-                                                }
-                                                else {
-                                                    Toast.makeText(getApplicationContext(), "Correo o contraseña erróneos", Toast.LENGTH_SHORT).show();
-                                                }
+                                                Toast.makeText(getApplicationContext(), "Correo o contraseña erróneos", Toast.LENGTH_SHORT).show();
                                             }
+                                        }
 
 
                                     }
@@ -158,6 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -221,5 +240,94 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    //Metodo que valida si hay un baneo de cuenta:
+    private void obtenerSanciones(String URL){
+
+        //Vacia la lista:
+        if(!mListaSanciones.isEmpty()){
+            mListaSanciones.clear();
+        }
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                JSONObject jsonObject = null;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        jsonObject = jsonArray.getJSONObject(i);
+
+                        Sancion sancion = new Sancion();
+                        sancion.setID(jsonObject.getInt("ID_Baneo"));
+                        sancion.setID_Usuaria(jsonObject.getInt("ID_Usuaria"));
+                        sancion.setDuracion(jsonObject.getInt("Duracion"));
+                        sancion.setFechaInicio(jsonObject.getString("FechaInicio"));
+                        sancion.setFechaFin(jsonObject.getString("FechaFin"));
+                        sancion.setTipoSancion(jsonObject.getString("Tipo"));
+
+                        mListaSanciones.add(sancion);
+                    }
+                    catch (JSONException e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                if(mListaSanciones.isEmpty()){
+                    login();
+                }
+                else{
+                    //Toast.makeText(getApplicationContext(), "Mamaste", Toast.LENGTH_SHORT).show();
+
+                    String mensajeSancion = "";
+                    ArrayList<Integer> listaDuraciones = new ArrayList<Integer>();
+
+                    for(int i=0; i<mListaSanciones.size(); i++){
+                        listaDuraciones.add(mListaSanciones.get(i).getDuracion());
+                    }
+
+                    for(int i=0; i<mListaSanciones.size(); i++){
+                        if(mListaSanciones.get(i).getDuracion() == Collections.max(listaDuraciones)){
+                            if(mListaSanciones.get(i).getDuracion() == 876000){
+                                mensajeSancion = "Lo sentimos, su cuenta ha sido bloqueada permanentemente.";
+                            }
+                            else{
+                                mensajeSancion = "Lo sentimos, su cuenta se encuentra bloqueada actualmente, podrá volver a acceder el día "+mListaSanciones.get(i).getFechaFin();
+                            }
+                        }
+                    }
+
+                    Intent intent = new Intent(LoginActivity.this, SanctionAlert.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("mensaje", mensajeSancion);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }
+        );
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public void login(){
+        //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+        guardarSesion();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = NavUtils.getParentActivityIntent(LoginActivity.this);
+        startActivity(intent);
+        finish();
     }
 }

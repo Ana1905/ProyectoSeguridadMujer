@@ -1,21 +1,33 @@
 package com.example.proyectoseguridadmujer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.CommentViewHolder>
@@ -86,4 +98,6 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             Comment = listElement;
         }
     }
+
+
 }

@@ -19,6 +19,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/SpinnerLabelCommunity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filtrar por categoria: "
+        android:textSize="18sp"
+        android:textColor="@color/Purple_Dark"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@+id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp" />
+
+    <Spinner
+        android:id="@+id/FilterSpinnerCommunity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/SpinnerLabelCommunity"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="20dp"
+        android:spinnerMode="dropdown" />
+
     <EditText
         android:id="@+id/search_post_comunity"
         android:layout_width="325dp"
@@ -39,21 +61,8 @@
         app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintVertical_bias="0.03" />
 
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-
-        android:background="@drawable/search_icon"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.921"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.752" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/PublicationRecyclerView"
         android:background="@color/purple_200"
         android:layout_marginTop="200dp"
         android:layout_marginBottom="50dp"

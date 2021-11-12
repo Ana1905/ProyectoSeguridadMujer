@@ -375,4 +375,12 @@
     <string name="redes_sociales">Redes sociales:</string>
     <string name="ver_cat_logo_de_instituciones">Ver catálogo de instituciones</string>
 
+    <string-array name="ReportCategory">
+        <item>Lenguaje inapropiado</item>
+        <item>Contenido sexual</item>
+        <item>Contenido violento</item>
+        <item>Atenta contra un usuario de la comunidad</item>
+        <item>Incita al odio</item>
+    </string-array>
+
 </resources>

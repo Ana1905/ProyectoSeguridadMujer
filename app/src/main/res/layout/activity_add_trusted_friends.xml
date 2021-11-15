@@ -25,28 +25,28 @@
                 android:src="@drawable/logo_app"
                 android:layout_marginEnd="10dp"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_configurar_alerta"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:background="@drawable/sign_in_button_shape"
+                android:background="@drawable/back_button"
                 android:paddingHorizontal="10dp"
-                android:text="Configurar alerta"
+                android:text="@string/configure_alert_label"
                 android:textColor="@android:color/white"
                 android:textSize="15sp"
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/alert_Add"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/sign_in_button_shape"
+                android:background="@drawable/confirm_button"
                 android:paddingHorizontal="10dp"
-                android:text="Añadir contacto"
+                android:text="@string/add_contact_label"
                 android:textColor="@android:color/white"
                 android:textSize="15sp"
                 android:visibility="visible"
@@ -55,26 +55,14 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/labelMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/edit_text_margin"
-            android:gravity="center"
-            android:text="Si deseas que tus contactos de confianza puedan recibir la alerta vía WhatsApp, pídeles que envíen por medio de dicha aplicación el código 'join government-note' al número +1 415 523 8886"
-            android:textColor="@color/white"
-            android:textColorHighlight="@color/black"
-            android:textColorHint="@color/Gray"
-            android:textSize="15sp"
-            android:layout_marginTop="15dp"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_pulsera"
             android:layout_width="266dp"
             android:layout_height="44dp"
-            android:background="@drawable/sign_in_button_shape"
+            android:background="@drawable/confirm_button"
             android:paddingHorizontal="10dp"
-            android:text="Conectar pulsera"
+            android:text="@string/connect_bracelate"
             android:textColor="@android:color/white"
             android:textSize="15sp"
             android:layout_gravity="center"
@@ -99,8 +87,8 @@
             android:id="@+id/TextViewLabeladd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Aún no tienes contactos de confianza, añade uno:"
-            android:textSize="18dp"
+            android:text="@string/add_first_contact"
+            android:textSize="18sp"
             android:gravity="center"
             android:textColor="@color/white"
             android:layout_marginStart="20dp"
@@ -112,11 +100,11 @@
             android:layout_height="240dp"
             android:layout_gravity="center"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/alert_Add_friend"
             android:layout_width="266dp"
             android:layout_height="44dp"
-            android:background="@drawable/sign_in_button_shape"
+            android:background="@drawable/back_button"
             android:paddingHorizontal="10dp"
             android:text="@string/alert_añadir_contacto"
             android:textColor="@android:color/white"
@@ -131,16 +119,26 @@
         android:orientation="vertical"
         android:layout_centerInParent="true">
 
+        <ImageView
+            android:id="@+id/user_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            />
+
         <EditText
             android:id="@+id/nombre"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Nombre"
+            android:hint="@string/name_hint"
             android:layout_marginHorizontal="@dimen/edit_text_margin"
             android:background="@drawable/edit_text_shape"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
             android:padding="10sp"
+            android:layout_marginTop="5dp"
             android:visibility="invisible"
             android:textColor="@color/Gray_highlight"
             android:textColorHighlight="@color/black"
@@ -150,7 +148,7 @@
             android:id="@+id/telefono"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="telefono"
+            android:hint="@string/phone_hint"
             android:layout_marginHorizontal="@dimen/edit_text_margin"
             android:background="@drawable/edit_text_shape"
             android:importantForAutofill="no"
@@ -164,13 +162,14 @@
             android:layout_marginTop="15dp"
             android:maxLength="13"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/add_confirm_button"
             android:layout_width="266dp"
             android:layout_height="44dp"
-            android:background="@drawable/sign_in_button_shape"
+            android:background="@drawable/confirm_button"
+            android:drawableEnd="@drawable/check_circle_foreground"
             android:paddingHorizontal="10dp"
-            android:text="Confirmar contacto"
+            android:text="@string/confirm_contact"
             android:visibility="invisible"
             android:textColor="@android:color/white"
             android:textSize="15sp"

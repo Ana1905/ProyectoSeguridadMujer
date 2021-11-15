@@ -2,6 +2,7 @@ package com.example.proyectoseguridadmujer;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -51,6 +52,9 @@ public class TestResultsActivity extends AppCompatActivity
     protected void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_results);
+
+        //Action Bar Color:
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Action_Bar_Color)));
 
         //WiringUo
         TestTaken = findViewById(R.id.TestTaken);
@@ -123,9 +127,9 @@ public class TestResultsActivity extends AppCompatActivity
         if (ControlTestSkip)
         {
             ViolenceResult.setText(resources.getString(R.string.DefaultRelation));
-            ViolenceType.setVisibility(View.INVISIBLE);
-            ViolenceTypeLayout.setVisibility(View.INVISIBLE);
-            InstitutionLabel.setVisibility(View.INVISIBLE);
+            ViolenceType.setVisibility(View.GONE);
+            ViolenceTypeLayout.setVisibility(View.GONE);
+            InstitutionLabel.setVisibility(View.GONE);
         }
 
         for (int i = 1; i < 5; i++)
@@ -183,16 +187,16 @@ public class TestResultsActivity extends AppCompatActivity
         }
         else if (Test [TestCounter] >= 10 && Test [TestCounter] <= 18)
         {
-            ViolenceType.setVisibility(View.INVISIBLE);
-            ViolenceTypeLayout.setVisibility(View.INVISIBLE);
-            InstitutionLabel.setVisibility(View.INVISIBLE);
+            ViolenceType.setVisibility(View.GONE);
+            ViolenceTypeLayout.setVisibility(View.GONE);
+            InstitutionLabel.setVisibility(View.GONE);
             return 2;
         }
         else
         {
-            ViolenceType.setVisibility(View.INVISIBLE);
-            ViolenceTypeLayout.setVisibility(View.INVISIBLE);
-            InstitutionLabel.setVisibility(View.INVISIBLE);
+            ViolenceType.setVisibility(View.GONE);
+            ViolenceTypeLayout.setVisibility(View.GONE);
+            InstitutionLabel.setVisibility(View.GONE);
             return 3;
         }
     }
@@ -330,8 +334,6 @@ public class TestResultsActivity extends AppCompatActivity
             //Toast.makeText(getApplicationContext(), enlace, Toast.LENGTH_LONG).show();
             obtenerTips(enlace);
         }
-
-
     }
 
     public void obtenerInstituciones(String URL){
@@ -444,8 +446,15 @@ public class TestResultsActivity extends AppCompatActivity
         if(!mListaTips.isEmpty()){
             mRecyclerTips.setVisibility(View.VISIBLE);
             TipsLabel.setVisibility(View.VISIBLE);
-            TipAdapter tipAdapter = new TipAdapter(this, mListaTips);
+            TipAdapter tipAdapter = new TipAdapter(this, mListaTips, isAbusive);
             mRecyclerTips.setAdapter(tipAdapter);
+
+            if(isAbusive){
+                TipsLabel.setText(R.string.tips_label);
+            }
+            else{
+                TipsLabel.setText(R.string.prevention_tips_label);
+            }
         }
         else{
             mRecyclerTips.setVisibility(View.GONE);

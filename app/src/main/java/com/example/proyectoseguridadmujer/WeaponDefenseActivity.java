@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,6 +29,8 @@ public class WeaponDefenseActivity extends AppCompatActivity
 {
     String email = "";
 
+    TextView mTVTitle;
+
     Button mBotonCambiarLista;
 
     RecyclerView mRecyclerView;
@@ -40,7 +44,11 @@ public class WeaponDefenseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_defense);
 
+        //Action Bar Color:
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Action_Bar_Color)));
+
         //Wiring Up
+        mTVTitle = findViewById(R.id.self_defense_title);
         mRecyclerView = findViewById(R.id.DefenseRecyclerView);
         mBotonCambiarLista = findViewById(R.id.change_list_button);
 
@@ -51,7 +59,7 @@ public class WeaponDefenseActivity extends AppCompatActivity
 
         getWeaponList(getString(R.string.Weapon_defense_url));
 
-        mBotonCambiarLista.setText("Mostrar defensa cuerpo a cuerpo");
+        mTVTitle.setText(R.string.weapon_defense_title);
         mBotonCambiarLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

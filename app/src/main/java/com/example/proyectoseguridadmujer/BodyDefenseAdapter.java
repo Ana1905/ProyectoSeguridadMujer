@@ -45,7 +45,7 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
     public void onBindViewHolder(@NonNull @NotNull BodyDefenseViewHolder holder, int position)
     {
         holder.Title.setText(list.get(position).getTitulo());
-        holder.Description.setText(list.get(position).getContenido());
+        //holder.Description.setText(list.get(position).getContenido());
         Glide.with(context).load(list.get(position).getRutaImagenPresentacion()).into(holder.Image);
         holder.bind(list.get(position));
 
@@ -71,7 +71,7 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
 
     public class BodyDefenseViewHolder extends RecyclerView.ViewHolder
     {
-        TextView Title, Description;
+        TextView Title;
         ImageView Image;
         DefenseTechniques Data;
 
@@ -80,7 +80,6 @@ public class BodyDefenseAdapter extends RecyclerView.Adapter<BodyDefenseAdapter.
             super(itemView);
 
             Title = itemView.findViewById(R.id.DefenseTechnique);
-            Description = itemView.findViewById(R.id.DefenseDescription);
             Image = itemView.findViewById(R.id.DefenseImage);
         }
 

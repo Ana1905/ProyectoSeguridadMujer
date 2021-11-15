@@ -102,7 +102,7 @@ public class CreateAccountActivity extends AppCompatActivity implements GoogleAp
             mPhoneNumber = "0123456789";
         }
 
-        Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_SHORT).show();
 
 
         //Wiring up

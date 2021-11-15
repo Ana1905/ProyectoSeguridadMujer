@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             mPhoneNumber = "0123456789";
         }
 
-        Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), mPhoneNumber, Toast.LENGTH_LONG).show();
 
         //Wiring up
         mEditTextSignInEmail = findViewById(R.id.sign_in_email_input);
@@ -277,7 +277,6 @@ public class LoginActivity extends AppCompatActivity {
                     login();
                 }
                 else{
-                    //Toast.makeText(getApplicationContext(), "Mamaste", Toast.LENGTH_SHORT).show();
 
                     String mensajeSancion = "";
                     ArrayList<Integer> listaDuraciones = new ArrayList<Integer>();

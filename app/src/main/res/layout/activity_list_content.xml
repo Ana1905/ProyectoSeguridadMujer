@@ -15,14 +15,16 @@
         android:orientation="vertical"
         tools:context=".ListContentActivity" >
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_dialog_institution_back"
-            android:layout_width="match_parent"
+            android:layout_width="139dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/close_icon"
-            android:text="Volver" />
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/back_button"
+            android:drawableStart="@drawable/back_foreground"
+            android:text="@string/back_label" />
 
         <TextView
             android:id="@+id/InstitutionNameLabel"
@@ -88,6 +90,13 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             android:text="@string/Institution_description_label" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerImagenesInstituciones"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"/>
 
         <TextView
             android:id="@+id/InstitutionPhoneLabel"
@@ -178,23 +187,6 @@
             android:layout_marginRight="20dp"
             tools:context=".ListContentActivity"
             app:layout_constraintTop_toBottomOf="@+id/InstitutionUbicationLabel" />
-
-        <TextView
-            android:id="@+id/imagenes_adicionales_instituciones"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:gravity="center"
-            android:text="@string/Defense_publication_additional_image_label"
-            android:textSize="15sp"
-            android:textColor="@color/quantum_pink100" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerImagenesInstituciones"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
     </LinearLayout>
 

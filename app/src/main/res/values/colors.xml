@@ -15,6 +15,17 @@
     <color name="button_normal">#929392</color>
     <color name="button_pressed">#c0c1c0</color>
     <color name="dialog_divider">@android:color/black</color>
+    <color name="button_purple">#9D69E7</color>
 
-
+    <color name="Action_Bar_Color">#02000A</color>
+    <color name="Login_Layout_Background">#4b0374</color>
+    <color name="Login_Button_Purple">#1b003a</color>
+    <color name="Button_Purple_Light">#d5c6dc</color>
+    <color name="Light_Gray">#CDC8CD</color>
+    <color name="Background_Light_Gray">#EFECEF</color>
+    <color name="Bootsrap_Succes">#5CB85C</color>
+    <color name="Bootsrap_Danger">#D9534F</color>
+    <color name="Bootsrap_Primary">#0275DB</color>
+    <color name="Button_Question_Color">#9C27B0</color>
+    <color name="Route_Button_Gray">#6F6A70</color>
     </resources>

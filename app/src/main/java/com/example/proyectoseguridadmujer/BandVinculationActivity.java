@@ -606,7 +606,7 @@ public class BandVinculationActivity extends AppCompatActivity {
         for(int i=0; i<mListaContactos.size(); i++){
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(mListaContactos.get(i).getNumero(),null, mAlert.getMensaje(), null ,null );
-            Toast.makeText(BandVinculationActivity.this, "SMS no. "+ (i) + " enviado",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(BandVinculationActivity.this, "SMS no. "+ (i) + " enviado",Toast.LENGTH_SHORT).show();
         }
 
 
@@ -756,7 +756,7 @@ public class BandVinculationActivity extends AppCompatActivity {
         for(int i=0; i<mListaContactos.size(); i++){
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(mListaContactos.get(i).getNumero(),null, mensaje, null ,null );
-            Toast.makeText(BandVinculationActivity.this, "SMS no. "+ (i) + " enviado",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(BandVinculationActivity.this, "SMS no. "+ (i) + " enviado",Toast.LENGTH_SHORT).show();
         }
 
         Intent i = new Intent(getApplicationContext(), AddTrustedFriendsActivity.class);
@@ -880,7 +880,7 @@ public class BandVinculationActivity extends AppCompatActivity {
 
         SharedPreferences notificaciones = getSharedPreferences("Notificaciones", MODE_PRIVATE);
         estadoNotificaciones = notificaciones.getString("estado", "");
-        Toast.makeText(getApplicationContext(), estadoNotificaciones, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Notificaciones: " + estadoNotificaciones, Toast.LENGTH_SHORT).show();
     }
 
     @Override

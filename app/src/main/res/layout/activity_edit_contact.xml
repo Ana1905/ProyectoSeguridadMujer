@@ -24,7 +24,7 @@
         android:id="@+id/nombre"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="nombre"
+        android:hint="@string/name_hint"
         android:layout_marginHorizontal="@dimen/edit_text_margin"
         android:background="@drawable/edit_text_shape"
         android:importantForAutofill="no"
@@ -46,7 +46,7 @@
         android:id="@+id/telefono"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="telefono"
+        android:hint="@string/phone_hint"
         android:layout_marginHorizontal="@dimen/edit_text_margin"
         android:background="@drawable/edit_text_shape"
         android:importantForAutofill="no"
@@ -65,32 +65,35 @@
         app:layout_constraintVertical_bias="0.464"
         android:maxLength="13"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_eliminar_contacto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#E40000"
-        android:text="Eliminar"
+        android:background="@drawable/delete_button"
+        android:drawableEnd="@drawable/delete_icon_foreground"
+        android:paddingHorizontal="10dp"
+        android:text="@string/delete_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.28"
+        app:layout_constraintHorizontal_bias="0.209"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.587" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_editar_contacto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/quantum_googgreen"
-        android:text="Guardar"
+        android:background="@drawable/confirm_button"
+        android:drawableEnd="@drawable/check_circle_foreground"
+        android:paddingHorizontal="10dp"
+        android:text="@string/save_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.722"
+        app:layout_constraintHorizontal_bias="0.808"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.587" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

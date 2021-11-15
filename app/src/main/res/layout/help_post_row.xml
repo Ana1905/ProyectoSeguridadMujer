@@ -10,48 +10,56 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/HelpPostCardView"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="4dp"
         >
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/user_profilepic_helping_network"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="16dp"
-                android:src="@color/purple_200" />
-
-            <TextView
-                android:id="@+id/user_name_helping_network"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/user_profilepic_helping_network"
-                android:text="nombre"
-                android:textSize="20sp" />
+                android:background="@color/Light_Gray">
 
-            <TextView
-                android:id="@+id/post_category_label_helping_network"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/user_name_helping_network"
-                android:layout_toRightOf="@+id/user_profilepic_helping_network"
-                android:text="categoria" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/user_profilepic_helping_network"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="16dp"
+                    app:civ_border_width="3dp"
+                    app:civ_border_color="@color/white"
+                    android:src="@color/purple_200" />
 
-            <Button
-                android:id="@+id/Delete_Button_HN"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:scaleType="fitCenter"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/deletebuttonwaton" />
+                <TextView
+                    android:id="@+id/user_name_helping_network"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/user_profilepic_helping_network"
+                    android:text="@string/name_hint"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/post_category_label_helping_network"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_name_helping_network"
+                    android:layout_toEndOf="@+id/user_profilepic_helping_network"
+                    android:text="@string/category_label" />
+
+                <Button
+                    android:id="@+id/Delete_Button_HN"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:scaleType="centerCrop"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/baboni"  />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,7 +107,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

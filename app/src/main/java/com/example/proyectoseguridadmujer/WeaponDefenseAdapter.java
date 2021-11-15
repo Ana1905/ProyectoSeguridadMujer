@@ -44,7 +44,7 @@ public class WeaponDefenseAdapter extends RecyclerView.Adapter<WeaponDefenseAdap
     public void onBindViewHolder(@NonNull @NotNull WeaponDefenseViewHolder holder, int position)
     {
         holder.Title.setText(list.get(position).getTitulo());
-        holder.Description.setText(list.get(position).getContenido());
+        //holder.Description.setText(list.get(position).getContenido());
         Glide.with(context).load(list.get(position).getRutaImagenPresentacion()).into(holder.Image);
         holder.bind(list.get(position));
 
@@ -69,7 +69,7 @@ public class WeaponDefenseAdapter extends RecyclerView.Adapter<WeaponDefenseAdap
 
     public class WeaponDefenseViewHolder extends RecyclerView.ViewHolder
     {
-        TextView Title, Description;
+        TextView Title;
         ImageView Image;
         DefenseTechniques Data;
 
@@ -79,7 +79,7 @@ public class WeaponDefenseAdapter extends RecyclerView.Adapter<WeaponDefenseAdap
             super(itemView);
 
             Title = itemView.findViewById(R.id.DefenseTechnique);
-            Description = itemView.findViewById(R.id.DefenseDescription);
+            //Description = itemView.findViewById(R.id.DefenseDescription);
             Image = itemView.findViewById(R.id.DefenseImage);
         }
 

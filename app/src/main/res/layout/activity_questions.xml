@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/Login_Layout_Background">
 
     <TextView
         android:id="@+id/QuestionNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:gravity="left" />
+        android:textSize="20sp"
+        android:text="@string/no_question"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:gravity="start" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:text="@string/question"
             android:layout_margin="5dp"
-            android:textColor="#CDA4CA"
+            android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold|italic" />
 
@@ -38,19 +44,25 @@
         android:layout_marginBottom="300dp"
         android:layout_marginTop="100dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/TrueAnswer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#9C27B0"
+            android:background="@drawable/question_button"
+            android:textColor="@color/white"
             android:layout_weight="1"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:text="@string/TrueAnswer" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/SometimesAnswer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#9C27B0"
+            android:background="@drawable/question_button"
+            android:textColor="@color/white"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_weight="1"
             android:text="@string/SometimesAnswer" />
 
@@ -64,32 +76,55 @@
         android:layout_marginBottom="200dp"
         android:layout_marginTop="30dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/SeldomAnswer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#9C27B0"
+            android:background="@drawable/question_button"
+            android:textColor="@color/white"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_weight="1"
             android:text="@string/SeldomAnswer" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/NeverAnswer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#9C27B0"
+            android:background="@drawable/question_button"
+            android:textColor="@color/white"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_weight="1"
             android:text="@string/NeverAnswer" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/ResultsButton"
-        android:layout_marginTop="70dp"
-        android:layout_marginBottom="50dp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#9C27B0"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/ResultsButton" />
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/test_complete_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test_result"
+            android:layout_gravity="center"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ResultsButton"
+            android:layout_width="139dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/confirm_button"
+            android:textColor="@color/white"
+            android:text="@string/ResultsButton"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+
 </RelativeLayout>

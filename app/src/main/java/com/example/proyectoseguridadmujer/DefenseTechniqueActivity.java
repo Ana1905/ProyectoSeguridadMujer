@@ -2,6 +2,7 @@ package com.example.proyectoseguridadmujer;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 
 public class DefenseTechniqueActivity extends AppCompatActivity
 {
-    TextView TechniqueTitle, TechniqueContent, imagenesAdicionalesLabel;
+    TextView TechniqueTitle, TechniqueContent;
     ImageView TechniqueImage;
     VideoView TechniqueVideo;
     FrameLayout VideoLayout;
@@ -53,15 +54,17 @@ public class DefenseTechniqueActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_defense_technique);
 
+        //Action Bar Color:
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Action_Bar_Color)));
+
         //WiringUp
         TechniqueTitle = findViewById(R.id.TechniqueTitle);
         TechniqueContent = findViewById(R.id.TechniqueContent);
         TechniqueImage = findViewById(R.id.TechniqueImage);
-        imagenesAdicionalesLabel = findViewById(R.id.TechniqueAdittionalImage);
 
         mRecyclerView = findViewById(R.id.ListViewImagenesDefensa);
         //mRecyclerView.setAdapter();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL,false));
 
         VideoLayout = findViewById(R.id.VideoLayout);
         TechniqueVideo = findViewById(R.id.TechniqueVideo);
@@ -138,12 +141,12 @@ public class DefenseTechniqueActivity extends AppCompatActivity
 
     private void mostrarImagenesAdicionales(){
         if(!mListaImagenes.isEmpty()){
-            imagenesAdicionalesLabel.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
             ImageAdapter imageAdapter = new ImageAdapter(this, mListaImagenes);
             mRecyclerView.setAdapter(imageAdapter);
         }
         else{
-            imagenesAdicionalesLabel.setVisibility(View.INVISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         }
     }
 }

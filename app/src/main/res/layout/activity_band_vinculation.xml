@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/Purple_Dark"
+    android:background="@color/Login_Layout_Background"
     tools:context=".BandVinculationActivity">
 
     <TextView
@@ -13,28 +13,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="ELIJA LA PULSERA A CONECTAR"
+        android:text="@string/choose_bracelate"
         android:textSize="19sp"
         android:textStyle="bold"
         android:background="@color/white"
         />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_cerrar_conexion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/sign_in_button_shape"
+        android:background="@drawable/delete_button"
+        android:textColor="@color/white"
+        android:paddingHorizontal="20dp"
         android:layout_marginTop="5dp"
-        android:text="Desconectar pulsera"/>
+        android:text="@string/disconnect_bracelate"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_mostrar_dispositivos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/sign_in_button_shape"
-        android:text="Mostrar dispositivos vinculados"
+        android:paddingHorizontal="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/back_button"
+        android:text="@string/show_connected_devices"
         android:layout_marginTop="5dp"/>
 
     <ListView
@@ -46,9 +50,6 @@
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
         android:layout_marginTop="5dp"
-        android:background="@color/quantum_pink50"/>
-
-
-
+        android:background="@color/Light_Gray"/>
 
 </LinearLayout>

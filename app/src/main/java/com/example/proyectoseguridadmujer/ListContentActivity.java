@@ -2,6 +2,7 @@ package com.example.proyectoseguridadmujer;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -42,10 +43,10 @@ import org.json.JSONObject;
 import java.net.URI;
 import java.util.ArrayList;
 
-public class ListContentActivity extends FragmentActivity implements OnMapReadyCallback
+public class ListContentActivity extends AppCompatActivity implements OnMapReadyCallback
 {
     Button mBotonVolver;
-    TextView InstitutionName, InstitutionArea, InstitutionDescription, InstitutionPhone, InstitutionPage, imagenesAdicionalesLabel, redesSocialesLabel;
+    TextView InstitutionName, InstitutionArea, InstitutionDescription, InstitutionPhone, InstitutionPage, redesSocialesLabel;
     ImageView InstitutionImage;
     private GoogleMap mMap;
     Institutions institutions;
@@ -67,6 +68,9 @@ public class ListContentActivity extends FragmentActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_content);
 
+        //Action Bar Color:
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Action_Bar_Color)));
+
         //WiringUp
         mBotonVolver = findViewById(R.id.button_dialog_institution_back);
         InstitutionName = findViewById(R.id.InstitutionNameLabel);
@@ -75,11 +79,10 @@ public class ListContentActivity extends FragmentActivity implements OnMapReadyC
         InstitutionDescription = findViewById(R.id.InstitutionDescription);
         InstitutionPhone = findViewById(R.id.InstitutionPhone);
         InstitutionPage = findViewById(R.id.InstitutionPage);
-        imagenesAdicionalesLabel = findViewById(R.id.imagenes_adicionales_instituciones);
         redesSocialesLabel = findViewById(R.id.redes_sociales_instituciones);
 
         mRecyclerView = findViewById(R.id.recyclerImagenesInstituciones);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL,false));
 
         mRecyclerViewRedesSociales = findViewById(R.id.recyclerRedesSociales);
         mRecyclerViewRedesSociales.setLayoutManager(new LinearLayoutManager(this));
@@ -120,8 +123,7 @@ public class ListContentActivity extends FragmentActivity implements OnMapReadyC
     {
         InstitutionName.setText(institutions.getNombre());
         Glide.with(this).load(institutions.getRutaImagenPresentacion()).into(InstitutionImage);
-        InstitutionArea.setText(institutions.getArea());
-        //InstitutionArea.setText("áéíóú");
+        InstitutionArea.setText(institutions.getNombreCategoria());
         InstitutionDescription.setText(institutions.getDescripcion());
         InstitutionPhone.setText(institutions.getTelefono());
         InstitutionPage.setText(institutions.getPaginaWeb());
@@ -174,12 +176,12 @@ public class ListContentActivity extends FragmentActivity implements OnMapReadyC
 
     private void mostrarImagenesAdicionales(){
         if(!mListaImagenes.isEmpty()){
-            imagenesAdicionalesLabel.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
             ImageAdapter imageAdapter = new ImageAdapter(this, mListaImagenes);
             mRecyclerView.setAdapter(imageAdapter);
         }
         else{
-            imagenesAdicionalesLabel.setVisibility(View.INVISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         }
     }
 

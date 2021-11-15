@@ -8,17 +8,20 @@
     android:background="@color/purple_200"
     android:padding="16dp" >
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ReportBackButton"
-        android:layout_width="match_parent"
+        android:layout_width="139dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/close_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/back_button"
+        android:drawableStart="@drawable/back_foreground"
+        android:text="@string/back_label"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Volver a la lista" />
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.002" />
 
     <TextView
         android:id="@+id/ReportPublicationHeaderLabel"
@@ -155,15 +158,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ReportPublicationCommentLabel" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ReportPublicationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
+        android:paddingHorizontal="10dp"
         android:enabled="false"
         android:text="Reportar"
+        android:textColor="@color/white"
+        android:background="@drawable/delete_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ReportPublicationComment" />
 

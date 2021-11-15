@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
@@ -24,17 +24,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Información de la cuenta:"
+                android:text="@string/account_info_label"
                 android:textStyle="bold"
                 android:textSize="24sp"
+                android:textColor="@color/white"
                 />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imagen_perfil_usuaria"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:background="@drawable/rounded_corner"
+                app:civ_border_width="3dp"
+                app:civ_border_color="@color/white"
                 android:layout_marginTop="10dp"/>
 
             <TextView
@@ -42,36 +44,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="¡Hola usuaria!"
-                android:textSize="22sp"/>
+                android:text="@string/hello_user_label"
+                android:textSize="22sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"/>
 
             <TextView
                 android:id="@+id/text_view_correo_perfil_usuaria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Correo: "
+                android:text="@string/email_label"
                 android:textSize="20sp"
-                android:layout_marginTop="3dp"/>
+                android:layout_marginTop="3dp"
+                android:textColor="@color/white" />
 
             <EditText
                 android:id="@+id/edit_text_descripcion_perfil_usuaria"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@drawable/rounded_layout"
-                android:hint="Agregue una descrpición"
+                android:hint="@string/add_a_description"
                 android:inputType="text|textMultiLine"
                 android:padding="10dp"
                 android:gravity="top"
                 android:layout_marginTop="10dp"
-                android:maxLength="150"/>
+                android:maxLength="150"
+                android:textColor="@color/white"
+                android:textColorHint="@color/Light_Gray"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Agregue información en los siguientes campos en caso de querer modificar la información de la cuenta:"
-                android:layout_marginTop="15dp"/>
+                android:text="@string/modify_account_info"
+                android:textColor="@color/white"
+                android:layout_marginTop="15dp"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,7 +95,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:hint="Nombre"
+                    android:hint="@string/account_info_label_name"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/Light_Gray"
                     />
 
                 <EditText
@@ -94,14 +105,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.5"
-                    android:hint="Ap. Paterno" />
+                    android:hint="@string/account_info_label_ap_p"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/Light_Gray"/>
 
                 <EditText
                     android:id="@+id/edit_text_apellido_materno_perfil_usuaria"
                     android:layout_width="0dp"
                     android:layout_weight="1.5"
                     android:layout_height="wrap_content"
-                    android:hint="Ap. Materno" />
+                    android:hint="@string/account_info_label_ap_m"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/Light_Gray"/>
 
             </LinearLayout>
 
@@ -110,65 +125,84 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1.5"
                 android:layout_height="wrap_content"
-                android:hint="Nueva contraseña"
-                android:inputType="textPassword"/>
+                android:hint="@string/account_info_label_new_password"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/Light_Gray"/>
 
             <EditText
                 android:id="@+id/edit_text_password_perfil_usuaria"
                 android:layout_width="match_parent"
                 android:layout_weight="1.5"
                 android:layout_height="wrap_content"
-                android:hint="Confirme su contraseña actual"
-                android:inputType="textPassword" />
+                android:hint="@string/account_info_label_confirm_password"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/Light_Gray" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/boton_guardar_cambios_perfil_usuaria"
                 android:layout_width="266dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/sign_in_button_shape"
-                android:paddingHorizontal="10dp"
-                android:text="Guardar cambios"
-                android:textColor="@android:color/white"
-                android:textSize="15sp"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="15dp"
+                android:background="@drawable/confirm_button"
+                android:drawableEnd="@drawable/check_circle_foreground"
+                android:paddingHorizontal="10dp"
+                android:text="@string/account_info_label_save_changes"
+                android:textColor="@android:color/white"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Usuarios de confianza:"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:layout_marginTop="10dp"
-            />
+            android:orientation="vertical"
+            android:background="@drawable/rounded_layout"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            >
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Pulse sobre el usuario que desea eliminar:"
-            android:layout_marginTop="10dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/account_info_label_web_users"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewUsuariosConfianza"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/account_info_label_delete_web_user"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white" />
 
-        <Button
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewUsuariosConfianza"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/boton_notificaciones"
             android:layout_width="266dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/sign_in_button_shape"
+            android:background="@drawable/confirm_button"
             android:paddingHorizontal="10dp"
-            android:text="Notificaciones"
+            android:text="@string/account_info_label_notifications"
             android:textColor="@android:color/white"
             android:textSize="15sp"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="3dp"/>
     </LinearLayout>
 
 

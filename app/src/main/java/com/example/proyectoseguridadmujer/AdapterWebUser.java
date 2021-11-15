@@ -56,7 +56,7 @@ public class AdapterWebUser extends RecyclerView.Adapter<AdapterWebUser.ViewHold
         {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), String.valueOf(mListaUsuarios.get(position).getID()), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(v.getContext(), String.valueOf(mListaUsuarios.get(position).getID()), Toast.LENGTH_SHORT).show();
 
                 /*
                 Intent intent = new Intent(v.getContext(), EditContactActivity.class);

@@ -4,7 +4,7 @@
         android:width="1dp"
         android:color="@color/white" />
 
-    <solid android:color="#FFC0CB" />
+    <solid android:color="@color/Login_Layout_Background" />
 
     <padding
         android:left="1dp"

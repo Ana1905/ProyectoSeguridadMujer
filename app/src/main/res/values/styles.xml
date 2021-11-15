@@ -10,4 +10,13 @@
         <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
 
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">#1b003a</item>
+    </style>
+
+    <style name="DialogeTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/Action_Bar_Color</item>
+        <item name="colorAccent">@android:color/white</item>
+    </style>
+
 </resources>

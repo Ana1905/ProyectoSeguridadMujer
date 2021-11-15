@@ -1,11 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ConfigureAlertActivity"
     android:background="@color/purple_Light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,6 +19,19 @@
         android:background="@drawable/logo_shape"
         android:src="@drawable/logo_app"
         />
+
+    <TextView
+        android:id="@+id/labelMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/edit_text_margin"
+        android:gravity="center"
+        android:text="@string/whatsapp_alert_message"
+        android:textColor="@color/white"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/Gray"
+        android:textSize="15sp"
+        android:layout_marginTop="15dp"/>
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -26,10 +43,10 @@
         android:id="@+id/TextViewChooseMessageOption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Elija una opcion para el envio del mensaje: "
-        android:textSize="16dp"
+        android:text="@string/choose_option"
+        android:textSize="16sp"
         android:textColor="@color/white"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
        />
 
     <Spinner
@@ -52,8 +69,8 @@
         android:id="@+id/TextViewWriteMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="Escriba el mensaje que desea enviar: "
+        android:textSize="20sp"
+        android:text="@string/write_message"
         android:gravity="center"
         android:textColor="@color/white"/>
 
@@ -64,7 +81,7 @@
         android:inputType="text|textMultiLine"
         android:gravity="top"
         android:background="@drawable/edit_text_shape"
-        android:hint="Mensaje (Máximo 100 caracteres)"
+        android:hint="@string/message_max_100"
         android:importantForAutofill="no"
         android:padding="10sp"
         android:textColor="@color/Gray_highlight"
@@ -72,15 +89,15 @@
         android:textColorHint="@color/Gray"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="3dp"
-        android:maxLength="200" />
+        android:maxLength="100" />
 
     <TextView
         android:id="@+id/TextViewAddImageAlert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:layout_marginTop="15dp"
-        android:text="Inserta una imágen: "
+        android:text="@string/insert_an_image"
         android:gravity="center"
         android:textColor="@color/white"/>
 
@@ -94,14 +111,14 @@
             android:id="@+id/imageAlert"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
             android:src="@drawable/instagram_profile_image"/>
 
         <ImageView
             android:id="@+id/ButtonAddImageAlert"
         android:layout_width="50dp"
         android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
         android:src="@drawable/add_image_icon"
             android:layout_marginTop="20dp"/>
     </LinearLayout>
@@ -116,10 +133,10 @@
             android:id="@+id/TextViewChooseContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Elija el contacto a llamar: "
-            android:textSize="16dp"
+            android:text="@string/choose_contact"
+            android:textSize="16sp"
             android:textColor="@color/white"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             />
 
         <Spinner
@@ -134,21 +151,25 @@
         android:id="@+id/checkbox_compartir_ubicacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Compartir ubicación"
+        android:text="@string/share_location"
         android:textColor="@color/white"
         android:layout_marginStart="10dp"
         />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveAlertButton"
-        android:layout_width="wrap_content"
+        android:layout_width="139dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/quantum_googgreen"
+        android:paddingHorizontal="10dp"
+        android:background="@drawable/confirm_button"
+        android:drawableEnd="@drawable/check_circle_foreground"
         android:gravity="center"
-        android:text="Guardar"
-        android:layout_marginLeft="250dp"
+        android:text="@string/save_label"
+        android:layout_marginStart="230dp"
         android:textColor="@color/white"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

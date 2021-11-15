@@ -12,8 +12,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/CommentRow"
         android:layout_marginTop="3dp"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="4dp"
         >
 
         <LinearLayout

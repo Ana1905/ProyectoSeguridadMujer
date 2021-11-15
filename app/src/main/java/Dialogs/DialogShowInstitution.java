@@ -47,7 +47,7 @@ import java.util.ArrayList;
 public class DialogShowInstitution extends DialogFragment implements OnMapReadyCallback{
 
     Button mBotonVolver;
-    TextView InstitutionName, InstitutionArea, InstitutionDescription, InstitutionPhone, InstitutionPage, imagenesAdicionalesLabel, redesSocialesLabel;
+    TextView InstitutionName, InstitutionArea, InstitutionDescription, InstitutionPhone, InstitutionPage, redesSocialesLabel;
     ImageView InstitutionImage;
     private GoogleMap mMap;
     Institutions institutions = new Institutions();
@@ -100,11 +100,10 @@ public class DialogShowInstitution extends DialogFragment implements OnMapReadyC
         InstitutionDescription = root.findViewById(R.id.InstitutionDescription);
         InstitutionPhone = root.findViewById(R.id.InstitutionPhone);
         InstitutionPage = root.findViewById(R.id.InstitutionPage);
-        imagenesAdicionalesLabel = root.findViewById(R.id.imagenes_adicionales_instituciones);
         redesSocialesLabel = root.findViewById(R.id.redes_sociales_instituciones);
 
         mRecyclerView = root.findViewById(R.id.recyclerImagenesInstituciones);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
 
         mRecyclerViewRedesSociales = root.findViewById(R.id.recyclerRedesSociales);
         mRecyclerViewRedesSociales.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -206,12 +205,12 @@ public class DialogShowInstitution extends DialogFragment implements OnMapReadyC
 
     private void mostrarImagenesAdicionales(){
         if(!mListaImagenes.isEmpty()){
-            imagenesAdicionalesLabel.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
             ImageAdapter imageAdapter = new ImageAdapter(getActivity(), mListaImagenes);
             mRecyclerView.setAdapter(imageAdapter);
         }
         else{
-            imagenesAdicionalesLabel.setVisibility(View.INVISIBLE);
+            mRecyclerView.setVisibility(View.INVISIBLE);
         }
     }
 

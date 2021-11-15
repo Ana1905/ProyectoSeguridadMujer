@@ -2,9 +2,11 @@ package com.example.proyectoseguridadmujer;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +17,8 @@ import javax.mail.Quota;
 public class TestActivity extends AppCompatActivity
 {
 
-    Button TestButton, FamiliarTestButton, CoupleTestButton, FriendTestButton, WorkTestButton, mBotonVolver;
+    Button TestButton, mBotonVolver;
+    ImageView WorkTestButton, FamiliarTestButton, CoupleTestButton, FriendTestButton;
     String [] Questions, Values;
     Resources resources;
 
@@ -24,6 +27,9 @@ public class TestActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
+        //Action Bar Color:
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Action_Bar_Color)));
 
         //Wiring Up
         mBotonVolver = findViewById(R.id.change_list_button_test);

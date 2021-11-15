@@ -63,7 +63,7 @@ public class ConfigureAlertActivity extends AppCompatActivity {
     Button mButtonSave;
     EditText mEditTextMessage;
     Spinner mSpinnerOptionsAlert, mSpinnerContact;
-    TextView mTextViewChooseOption, mTextViewWriteMessage, mTextViewAddImage, mTextViewChooseContact;
+    TextView mTextViewChooseOption, mTextViewWriteMessage, mTextViewAddImage, mTextViewChooseContact, mWhatsappLabel;
     CheckBox mCheckBoxCompartirUbicacion;
 
     int optionSelected = 0;
@@ -98,6 +98,7 @@ public class ConfigureAlertActivity extends AppCompatActivity {
         mTextViewChooseContact = findViewById(R.id.TextViewChooseContact);
         mSpinnerContact = findViewById(R.id.SpinnerContact);
         mCheckBoxCompartirUbicacion = findViewById(R.id.checkbox_compartir_ubicacion);
+        mWhatsappLabel = findViewById(R.id.labelMessage);
 
         //Se obtiene el email de la usuaria:
         getCredentialData();
@@ -471,6 +472,7 @@ public class ConfigureAlertActivity extends AppCompatActivity {
     public void ChangeView(int option){
         switch (option){
             case 0:
+                mWhatsappLabel.setVisibility(GONE);
                 mSpinnerOptionsAlert.setVisibility(View.VISIBLE);
                 mImageViewIconAlert.setVisibility(View.INVISIBLE);
                 mEditTextMessage.setVisibility(View.INVISIBLE);
@@ -487,6 +489,7 @@ public class ConfigureAlertActivity extends AppCompatActivity {
                 imageType = "";
                 break;
             case 1:
+                mWhatsappLabel.setVisibility(View.VISIBLE);
                 mSpinnerOptionsAlert.setVisibility(View.VISIBLE);
                 mImageViewIconAlert.setVisibility(View.VISIBLE);
                 mEditTextMessage.setVisibility(View.VISIBLE);
@@ -506,6 +509,7 @@ public class ConfigureAlertActivity extends AppCompatActivity {
                 imageType = "";
                 break;
             case 2:
+                mWhatsappLabel.setVisibility(GONE);
                 mSpinnerOptionsAlert.setVisibility(View.VISIBLE);
                 mImageViewIconAlert.setVisibility(View.VISIBLE);
                 mEditTextMessage.setVisibility(View.VISIBLE);
@@ -522,6 +526,7 @@ public class ConfigureAlertActivity extends AppCompatActivity {
                 imageType = "";
                 break;
             case 3:
+                mWhatsappLabel.setVisibility(GONE);
                 mSpinnerOptionsAlert.setVisibility(View.VISIBLE);
                 mImageViewIconAlert.setVisibility(View.VISIBLE);
                 mEditTextMessage.setVisibility(GONE);

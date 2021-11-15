@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,10 +23,12 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.TipViewHolder>{
 
     Context context;
     ArrayList<Tip> mListaTips;
+    boolean isAbusive;
 
-    public TipAdapter(Context context, ArrayList<Tip> arrayList){
+    public TipAdapter(Context context, ArrayList<Tip> arrayList, boolean isAbusive){
         this.context = context;
         this.mListaTips = arrayList;
+        this.isAbusive = isAbusive;
     }
 
     @NonNull
@@ -39,6 +42,13 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.TipViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull TipViewHolder holder, int position) {
+
+        if(isAbusive){
+            holder.mImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.tiplogo));
+        }
+        else{
+            holder.mImageView.setImageDrawable(context.getResources().getDrawable(R.drawable.tipprevencionlogo));
+        }
 
         holder.mTextViewTitulo.setText(mListaTips.get(position).getTitulo());
 
@@ -71,12 +81,14 @@ public class TipAdapter extends RecyclerView.Adapter<TipAdapter.TipViewHolder>{
 
     public class TipViewHolder extends RecyclerView.ViewHolder{
 
+        ImageView mImageView;
         TextView mTextViewTitulo;
 
         public TipViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
             mTextViewTitulo = itemView.findViewById(R.id.TituloTipLista);
+            mImageView = itemView.findViewById(R.id.tip_logo);
         }
     }
 }

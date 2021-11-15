@@ -1,133 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/Login_Layout_Background"
     tools:context=".TestActivity" >
 
-    <Button
-        android:id="@+id/change_list_button_test"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="6dp"
-        android:background="@drawable/sign_in_button_shape"
-        android:paddingHorizontal="10dp"
-        android:text="@string/ver_cat_logo_de_instituciones"
-        android:textColor="@android:color/white"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView5" />
+        android:layout_height="match_parent"
+        >
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/institution_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/instituciones_test"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/change_list_button_test"/>
 
-        android:layout_marginTop="50dp"
-        android:text="@string/Institution_identification"
-        android:textSize="21dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/TestButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-
-        android:text="@string/start_test_button"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView5" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test_selection_separation"
-
-        android:layout_marginTop="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TestButton" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test_selection_label"
-        android:textSize="18dp"
-
-        android:layout_marginTop="100dp"
-        app:layout_constraintTop_toBottomOf="@id/textView6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/textView7"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <Button
-            android:id="@+id/FamiliarTestButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:text="@string/FamiliarViolenceButton"
-            android:padding="15dp"
-            android:layout_margin="5dp"
-            android:textSize="12dp"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/change_list_button_test"
+            android:layout_alignParentEnd="true"
+            android:layout_width="65dp"
+            android:layout_height="50dp"
+            android:background="@drawable/show_button"
+            android:drawableEnd="@drawable/catalogobig"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="5dp"
             />
 
-        <Button
-            android:id="@+id/CoupleTestButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:text="@string/CoupleViolenceButton"
-            android:padding="15dp"
-            android:layout_margin="5dp"
-            android:textSize="12dp"
-            />
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignBottom="@id/white_line"
+            android:layout_marginBottom="100dp">
 
-        <Button
-            android:id="@+id/FriendTestButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:text="@string/FriendViolenceButton"
-            android:padding="15dp"
-            android:layout_margin="5dp"
-            android:textSize="12dp"
-            />
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Institution_identification"
+                android:textSize="21sp"
+                android:textColor="@color/white"
+                android:gravity="center" />
 
-        <Button
-            android:id="@+id/WorkTestButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:text="@string/WorkViolenceButton"
-            android:padding="15dp"
-            android:layout_margin="5dp"
-            android:textSize="12dp"
-            />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/TestButton"
+                android:layout_margin="5dp"
+                android:layout_width="139dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/confirm_button"
+                android:text="Iniciar test"
+                android:textColor="@color/white"
+                android:layout_gravity="center" />
 
-    </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/white_line"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@android:color/white"
+            android:layout_centerInParent="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignTop="@id/white_line">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/test_selection_label"
+                android:textSize="21sp"
+                android:textColor="@color/white"
+                android:layout_marginTop="100dp"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/textView7"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp">
+
+                    <ImageView
+                        android:id="@+id/FamiliarTestButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/familylogo"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="@string/familiar"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp">
+
+                    <ImageView
+                        android:id="@+id/CoupleTestButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/couplelogo"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="@string/de_pareja"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp">
+
+                    <ImageView
+                        android:id="@+id/FriendTestButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/friendslogo"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="@string/de_amistad"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp">
+
+                    <ImageView
+                        android:id="@+id/WorkTestButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/laborallogo"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="@string/laboral"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

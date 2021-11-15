@@ -46,8 +46,8 @@ import httpurlconnection.PutData;
 
 public class AddTrustedFriendsActivity extends AppCompatActivity {
 
-    ImageView mImageViewIcon;
-    TextView mTextViewLabel, mLabelMessage;
+    ImageView mImageViewIcon, mImageUserIcon;
+    TextView mTextViewLabel;
     Button mButtonAddFriend, mButtonAdd, mButtonConfirm, mButtonPulsera, mButtonConfigurarAlerta;
     EditText mNombre;
     EditText mTel;
@@ -76,8 +76,8 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewContacts);
         mButtonConfirm=findViewById(R.id.add_confirm_button);
         mButtonPulsera = findViewById(R.id.button_pulsera);
-        mLabelMessage = findViewById(R.id.labelMessage);
         mButtonConfigurarAlerta = findViewById(R.id.button_configurar_alerta);
+        mImageUserIcon = findViewById(R.id.user_image);
 
         //Obtiene el email de la usuaria:
         getCredentialData();
@@ -90,7 +90,6 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
 
         //mButtonPulsera.setVisibility(View.INVISIBLE);
         //mButtonConfigurarAlerta.setVisibility(View.INVISIBLE);
-        //mLabelMessage.setVisibility(View.INVISIBLE);
         //mButtonConfirm.findViewById(R.id.add_confirm_button);
 
         //ver si tiene amigos o no
@@ -150,7 +149,6 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
             mButtonConfigurarAlerta.setVisibility(View.INVISIBLE);
             mButtonAdd.setVisibility(View.INVISIBLE);
 
-            mLabelMessage.setVisibility(View.INVISIBLE);
             mButtonPulsera.setVisibility(View.INVISIBLE);
             recyclerView.setVisibility(View.INVISIBLE);
 
@@ -158,6 +156,7 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
             mImageViewIcon.setVisibility(View.VISIBLE);
             mButtonAddFriend.setVisibility(View.VISIBLE);
 
+            mImageUserIcon.setVisibility(View.INVISIBLE);
             mNombre.setVisibility(View.INVISIBLE);
             mTel.setVisibility(View.INVISIBLE);
             mButtonConfirm.setVisibility(View.INVISIBLE);
@@ -166,7 +165,6 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
             mButtonConfigurarAlerta.setVisibility(View.VISIBLE);
             mButtonAdd.setVisibility(View.VISIBLE);
 
-            mLabelMessage.setVisibility(View.VISIBLE);
             mButtonPulsera.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
 
@@ -174,6 +172,7 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
             mImageViewIcon.setVisibility(View.INVISIBLE);
             mButtonAddFriend.setVisibility(View.INVISIBLE);
 
+            mImageUserIcon.setVisibility(View.INVISIBLE);
             mNombre.setVisibility(View.INVISIBLE);
             mTel.setVisibility(View.INVISIBLE);
             mButtonConfirm.setVisibility(View.INVISIBLE);
@@ -310,6 +309,8 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
                         recyclerView.setVisibility(View.INVISIBLE);
                         mNombre.setEnabled(true);
                         mButtonConfirm.setVisibility(View.VISIBLE);
+
+                        mImageUserIcon.setVisibility(View.VISIBLE);
                         mNombre.setVisibility(View.VISIBLE);
                         mTel.setVisibility(View.VISIBLE);
 
@@ -344,6 +345,7 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
                     checkContacts();
                     Toast.makeText(getApplicationContext(), "Se ha añadido el contacto de confianza", Toast.LENGTH_SHORT).show();
                     showList = true;
+                    mImageUserIcon.setVisibility(View.INVISIBLE);
                     mNombre.setVisibility(View.INVISIBLE);
                     mTel.setVisibility(View.INVISIBLE);
                     mButtonConfirm.setVisibility(View.INVISIBLE);
@@ -351,6 +353,7 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
 
                 } else {
                     checkContacts();
+                    mImageUserIcon.setVisibility(View.INVISIBLE);
                     mNombre.setVisibility(View.INVISIBLE);
                     mTel.setVisibility(View.INVISIBLE);
                     mButtonConfirm.setVisibility(View.INVISIBLE);

@@ -2,9 +2,11 @@ package com.example.proyectoseguridadmujer;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import androidx.core.app.NavUtils;
 public class QuestionsActivity extends AppCompatActivity
 {
     int Type [], Variables [], Counter = 0, ControlCounter = 0, Response, Quiz, ControlQuiz;
+    ImageView mImageTestComplete;
     TextView Question, QuestionNumber;
     Button TrueAnswer, SometimesAnswer, SeldomAnswer, NeverAnswer, ResultsButton;
     String [] Questions, Values, ControlQuestions;
@@ -28,7 +31,11 @@ public class QuestionsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
 
+        //Action Bar Color:
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Action_Bar_Color)));
+
         //WiringUp
+        mImageTestComplete = findViewById(R.id.test_complete_image);
         Question = findViewById(R.id.Question);
         QuestionNumber = findViewById(R.id.QuestionNumber);
         TrueAnswer = findViewById(R.id.TrueAnswer);
@@ -38,6 +45,7 @@ public class QuestionsActivity extends AppCompatActivity
         ResultsButton = findViewById(R.id.ResultsButton);
         resources = getResources();
 
+        mImageTestComplete.setVisibility(View.INVISIBLE);
         ResultsButton.setVisibility(View.INVISIBLE);
 
         Type = new int[4];
@@ -115,6 +123,7 @@ public class QuestionsActivity extends AppCompatActivity
                 startActivity(intent);
                 finish();
 
+                /*
                 if (Quiz == 0)
                 {
                     Toast.makeText(getApplicationContext(),  Type [0] + " " + Type [1] + " " + Type [2] + " " + Type [3] + " " + Variables [0]
@@ -125,6 +134,7 @@ public class QuestionsActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(),  Type [Quiz - 1] + " " + Variables [0] + " " + Variables [1] + " " + Variables [2]
                             + " " + Variables [3] + " " + Variables [4], Toast.LENGTH_SHORT).show();
                 }
+                 */
             }
         });
 
@@ -152,6 +162,7 @@ public class QuestionsActivity extends AppCompatActivity
             {
                 isControlQuestion = true;
                 ControlQuestions = Questions;
+                mImageTestComplete.setVisibility(View.INVISIBLE);
                 ResultsButton.setVisibility(View.INVISIBLE);
                 SeldomAnswer.setVisibility(View.INVISIBLE);
                 NeverAnswer.setVisibility(View.INVISIBLE);
@@ -169,11 +180,13 @@ public class QuestionsActivity extends AppCompatActivity
                         SometimesAnswer.setVisibility(View.INVISIBLE);
                         SeldomAnswer.setVisibility(View.INVISIBLE);
                         NeverAnswer.setVisibility(View.INVISIBLE);
+                        mImageTestComplete.setVisibility(View.VISIBLE);
                         ResultsButton.setVisibility(View.VISIBLE);
                         Question.setText(" ");
                     }
                     else
                     {
+                        mImageTestComplete.setVisibility(View.INVISIBLE);
                         ResultsButton.setVisibility(View.INVISIBLE);
                         SeldomAnswer.setVisibility(View.INVISIBLE);
                         NeverAnswer.setVisibility(View.INVISIBLE);
@@ -193,6 +206,7 @@ public class QuestionsActivity extends AppCompatActivity
                             SometimesAnswer.setVisibility(View.INVISIBLE);
                             SeldomAnswer.setVisibility(View.INVISIBLE);
                             NeverAnswer.setVisibility(View.INVISIBLE);
+                            mImageTestComplete.setVisibility(View.VISIBLE);
                             ResultsButton.setVisibility(View.VISIBLE);
                             Question.setText(" ");
                         }
@@ -224,6 +238,7 @@ public class QuestionsActivity extends AppCompatActivity
                 SometimesAnswer.setVisibility(View.INVISIBLE);
                 SeldomAnswer.setVisibility(View.INVISIBLE);
                 NeverAnswer.setVisibility(View.INVISIBLE);
+                mImageTestComplete.setVisibility(View.VISIBLE);
                 ResultsButton.setVisibility(View.VISIBLE);
                 Question.setText(" ");
             }

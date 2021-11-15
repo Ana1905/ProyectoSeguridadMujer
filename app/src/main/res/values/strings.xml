@@ -7,6 +7,133 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Login layout -->
+    <string name="sign_in_label">Bienvenida</string>
+    <string name="sign_in_username">Correo electrónico</string>
+    <string name="sign_in_password">Contraseña</string>
+    <string name="sign_in_start">Iniciar sesión</string>
+    <string name="create_account">Crear cuenta</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <!-- /////////// -->
+
+    <!-- Create account layout -->
+    <string name="waiting_email_verification">Esperando verificación de correo electrónico…</string>
+    <string name="sign_up_name">Nombre</string>
+    <string name="sign_up_paternal_surname">Apellido paterno</string>
+    <string name="sign_up_maternal_surname">Apellido materno</string>
+    <string name="sign_up_birthdate">Fecha de nacimiento</string>
+    <string name="sign_up_email">Correo electrónico</string>
+    <string name="sign_up_password">Contraseña</string>
+    <string name="sign_up_confirm_password">Confirme su contraseña</string>
+    <string name="sign_up_create_account">Crear cuenta</string>
+    <string name="sign_up_verify_robot">No soy un robot</string>
+    <string name="sign_up_terms">He leido y acepto los términos y condiciones</string>
+    <string name="feha_nacimiento_label">Fecha de nacimiento:</string>
+    <string name="terms_conditions">Términos y condiciones</string>
+    <string name="have_account">Ya tengo una cuenta</string>
+    <string name="forgot_password_text">Forgot password?</string>
+    <!-- /////////// -->
+
+    <!-- Profile Fragment -->
+    <string name="account_info_label">Información de la cuenta:</string>
+    <string name="hello_user_label">¡Hola usuaria!</string>
+    <string name="email_label">Correo: </string>
+    <string name="add_a_description">Agregue una descrpición</string>
+    <string name="modify_account_info">Agregue información en los siguientes campos en caso de querer modificar la información de la cuenta:</string>
+    <string name="account_info_label_name">Nombre</string>
+    <string name="account_info_label_ap_p">Ap. Paterno</string>
+    <string name="account_info_label_ap_m">Ap. Materno</string>
+    <string name="account_info_label_new_password">Nueva contraseña</string>
+    <string name="account_info_label_confirm_password">Confirme su contraseña actual</string>
+    <string name="account_info_label_save_changes">Guardar cambios</string>
+    <string name="account_info_label_web_users">Usuarios de confianza:</string>
+    <string name="account_info_label_delete_web_user">Pulse sobre el usuario que desea eliminar:</string>
+    <string name="account_info_label_notifications">Notificaciones</string>
+    <!-- /////////// -->
+
+    <!-- Self defense -->
+    <string name="welcome_label">Bienvenida</string>
+    <string name="Self_defense_option_label">¿Qué deseas aprender hoy?</string>
+    <string name="Body_image_button">Defensa cuerpo a cuerpo</string>
+    <string name="Weapon_image_button">Manejo de herramientas</string>
+    <string name="body_defense_title">Defensa cuerpo a cuerpo</string>
+    <string name="weapon_defense_title">Manejo de herramientas</string>
+    <string name="title_self_defense">Titulo</string>
+    <!-- /////////// -->
+
+    <!-- Informative -->
+    <string name="Catalog_image_button">Catálogo de instituciones</string>
+    <string name="Informative_option_label">¿Qué quieres hacer hoy?</string>
+    <string name="Test_image_button">Identificar institución de <br />  apoyo</string>
+    <string name="instituciones">¿No sabes a que institución acudir? ¡Clickea el ícono!</string>
+    <string name="instituciones_test">¿Deseas ver el catálogo completo de instituciones? ¡Clickea el ícono!</string>
+    <string name="familiar">Familiar</string>
+    <string name="de_pareja">De pareja</string>
+    <string name="de_amistad">De amistad</string>
+    <string name="laboral">Laboral</string>
+    <string name="no_question">Número de pregunta</string>
+    <string name="question">Pregunta</string>
+    <string name="nombre_del_tip">Nombre del tip</string>
+    <string name="Test_results_label">Resultados:</string>
+    <string name="test_realizado">Test realizado: </string>
+    <string name="si">Si</string>
+    <string name="vives_violencia">¿Vives en violencia?</string>
+    <string name="violence_type">Tipo de violencia sufrida: </string>
+    <string name="recomended_institutions">Instituciones recomendadas: </string>
+    <string name="tips_label">Tips: </string>
+    <string name="prevention_tips_label">Tips de prevención: </string>
+    <string name="tip">Tip</string>
+    <string name="prevention_tip">Tip de prevención</string>
+    <string name="back_label">Volver</string>
+    <string name="genetic_tip_type">Tipo de tip</string>
+    <string name="generic_tip_title">Titulo del tip</string>
+    <string name="generic_tip_body">Tip de prevención</string>
+    <!-- /////////// -->
+
+    <!-- Route -->
+    <string name="change_report_view">Crear reporte de acontecimiento</string>
+    <string name="lat_label">Latitud</string>
+    <string name="lng_label">Longitud</string>
+    <string name="category_label">Categoría:</string>
+    <string name="report_body_hint">Describa el acontecimiento o brinde alguna recomendación para otra usuaria (Máximo 200 caracteres)</string>
+    <string name="radius_hint">Radio del reporte:</string>
+    <string name="create_report">Crear reporte</string>
+    <string name="destino_de_la_ruta">Destino de la ruta</string>
+    <string name="origen_de_la_ruta">Origen de la ruta</string>
+    <string name="origen_de_la_ruta_mi_ubicacion">Origen: Mi ubicación</string>
+    <string name="transport">Medio de transporte:</string>
+    <string name="delete_points">Eliminar puntos intermedios</string>
+    <string name="time">Tiempo estimado:</string>
+    <string name="distance">Distancia:</string>
+    <!-- /////////// -->
+
+    <!-- Alert -->
+    <string name="configure_alert_label">Configurar alerta</string>
+    <string name="add_contact_label">Añadir contacto</string>
+    <string name="alert_añadir_contacto">Elegir contacto</string>
+    <string name="whatsapp_alert_message">Si deseas que tus contactos de confianza puedan recibir la alerta vía WhatsApp, pídeles que envíen por medio de dicha aplicación el código "join government-note" al número +1 415 523 8886</string>
+    <string name="connect_bracelate">Conectar pulsera</string>
+    <string name="add_first_contact">Aún no tienes contactos de confianza, añade uno:</string>
+    <string name="name_hint">Nombre</string>
+    <string name="phone_hint">Telefono</string>
+    <string name="confirm_contact">Confirmar contacto</string>
+    <string name="delete_label">Eliminar</string>
+    <string name="save_label">Guardar</string>
+    <string name="choose_option">Elija una opcion para el envio del mensaje: </string>
+    <string name="write_message">Escriba el mensaje que desea enviar: </string>
+    <string name="message_max_100">Mensaje (Máximo 100 caracteres)</string>
+    <string name="insert_an_image">Inserta una imágen: </string>
+    <string name="choose_contact">Elija el contacto a llamar: </string>
+    <string name="choose_bracelate">ELIJA LA PULSERA A CONECTAR</string>
+    <string name="disconnect_bracelate">Desconectar pulsera</string>
+    <string name="show_connected_devices">Mostrar dispositivos vinculados</string>
+    <string name="share_location">Compartir ubicación</string>
+    <!-- /////////// -->
+
+    <!-- Community -->
+    <string name="report_label">Reportar</string>
+    <!-- /////////// -->
+
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -18,27 +145,11 @@
     <string name="menu_comunity">Comunidad</string>
     <string name="menu_profile">Mi perfil</string>
 
-    <string name="sign_in_label">Bienvenida</string>
-    <string name="sign_in_username">Correo electrónico</string>
-    <string name="sign_in_password">Contraseña</string>
-    <string name="sign_in_start">Iniciar sesión</string>
-    <string name="create_account">Crear cuenta</string>
-    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
-    <string name="sign_up_name">Nombre</string>
-    <string name="sign_up_paternal_surname">Apellido paterno</string>
-    <string name="sign_up_maternal_surname">Apellido materno</string>
-    <string name="sign_up_birthdate">Fecha de nacimiento</string>
-    <string name="sign_up_email">Correo electrónico</string>
-    <string name="sign_up_password">Contraseña</string>
-    <string name="sign_up_confirm_password">Confirme su contraseña</string>
-    <string name="sign_up_create_account">Crear cuenta</string>
-    <string name="sign_up_verify_robot">No soy un robot</string>
-    <string name="sign_up_terms">He leido y acepto los términos y condiciones</string>
-    <string name="forgot_password_text">Forgot password?</string>
+
     <string name="email_forgot_password">Please tell us your email</string>
     <string name="recover_password">Recover</string>
     <string name="restore_password_label">Reestablecer contraseña</string>
-    <string name="welcome_label">Bienvenida</string>
+
     <string name="menu_helping_network">Red de apoyo</string>
     <string name="date_of_birth_label">Fecha de nacimiento</string>
     <string name="captcha_label">No soy un robot</string>
@@ -47,17 +158,13 @@
 
     <string name="ip">http://192.168.56.1</string>
 
-    <string name="Catalog_image_button">Catálogo de instituciones</string>
-    <string name="Informative_option_label">¿Qué quieres hacer hoy?</string>
-    <string name="Self_defense_option_label">¿Qué deseas aprender hoy?</string>
-    <string name="Test_image_button">Identificar institución de <br />  apoyo</string>
-    <string name="Body_image_button">Defensa cuerpo a cuerpo</string>
-    <string name="Weapon_image_button">Manejo de herramientas</string>
+
+
     <string name="Institution_list_fragment">Lista de instituciones</string>
     <string name="Test_fragment">Test</string>
     <string name="Body_defense_fragment">Defensa cuerpo a cuerpo</string>
     <string name="Weapon_defense_fragment">Manejo de herramientas</string>
-    <string name="action_logout">logout</string>
+    <string name="action_logout">Cerrar sesión</string>
     <string name="seach_label_comunity">¿Qué andas buscando?</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -65,7 +172,6 @@
     <string name="start_test_button">Iniciar test</string>
     <string name="test_selection_label">¿Sabes si vives en violencia?</string>
     <string name="test_selection_separation">-------------------------------------------------- o --------------------------------------------------</string>
-    <string name="alert_añadir_contacto">Elegir contacto</string>
 
     <string-array name="Test_values_Recycler_view">
         <item>building</item>
@@ -96,9 +202,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_maps">Map</string>
-    <string name="destino_de_la_ruta">Destino de la ruta</string>
-    <string name="origen_de_la_ruta">Origen de la ruta</string>
-    <string name="origen_de_la_ruta_mi_ubicacion">Origen: Mi ubicación</string>
+
 
     <string-array name="array_categorias_reporte_acontecimiento">
         <item> </item>
@@ -152,8 +256,7 @@
     <string name="Weapon_defense_url">https://seguridadmujer.com/app_movil/Defensa/getWeaponDefenseList.php</string>
     <string name="Defense_publication_title_label">Título de la publicación</string>
     <string name="Defense_publication_content_label">Contenido de la publicación</string>
-    <string name="Defense_publication_video_label">Video explicativo</string>
-    <string name="Defense_publication_additional_image_label">Imagenes adicionales</string>
+    <string name="Defense_publication_video_label">¿Dudas?, ¡Revisa el siguiente video!</string>
 
     <!-- Strings de lista de instituciones del modulo informativo -->
     <string name="Institution_list_url">https://seguridadmujer.com/app_movil/Institucion/getInstitutionList.php</string>
@@ -336,7 +439,7 @@
     </string-array>
     <string name="title_activity_ubication">Map</string>
     <string name="title_activity_institution_ubication">Map</string>
-    <string name="Test_results_label">Resultados:</string>
+
 
     <!-- Strings con las categorias para un nuevo post en la red de apoyo -->
     <string-array name="Helping_Network_Categories">

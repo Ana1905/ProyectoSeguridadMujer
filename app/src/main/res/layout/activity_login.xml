@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Purple_Dark"
+    android:background="@color/Login_Layout_Background"
     tools:context=".LoginActivity">
 
     <ImageView
@@ -43,6 +43,7 @@
         android:textColor="@color/Gray_highlight"
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/Gray"
+        android:maxLength="255"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,21 +63,23 @@
         android:textColor="@color/Gray_highlight"
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/Gray"
+        android:maxLength="30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_email_input"
         app:layout_constraintVertical_bias="0.1" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sign_in_enter_button"
-        android:layout_width="wrap_content"
+        android:layout_width="139dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/sign_in_button_shape"
+        android:background="@drawable/login_button"
         android:text="@string/sign_in_start"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_password_input"
         app:layout_constraintVertical_bias="0.1" />
@@ -94,12 +97,11 @@
         app:layout_constraintTop_toBottomOf="@+id/sign_in_enter_button"
         app:layout_constraintVertical_bias="0.125" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/sign_in_create_account_button"
-        android:layout_width="wrap_content"
+        android:layout_width="139dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/sign_in_button_shape"
-        android:paddingHorizontal="10dp"
+        android:background="@drawable/login_button"
         android:text="@string/create_account"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

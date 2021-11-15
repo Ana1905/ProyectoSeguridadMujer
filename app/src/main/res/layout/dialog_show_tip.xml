@@ -8,20 +8,21 @@
     android:padding="10dp"
     android:orientation="vertical">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_dialog_tip_back"
-        android:layout_width="match_parent"
+        android:layout_width="139dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/close_icon"
-        android:text="Volver" />
+        android:textColor="@color/white"
+        android:background="@drawable/back_button"
+        android:drawableStart="@drawable/back_foreground"
+        android:text="@string/back_label" />
 
     <TextView
         android:id="@+id/TipoTip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tipo de tip"
+        android:text="@string/genetic_tip_type"
         app:layout_constraintTop_toBottomOf="@+id/PublicationContentComment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +57,7 @@
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="20dp"
                 android:textSize="22sp"
-                android:text="Titulo del tip"
+                android:text="@string/generic_tip_title"
                 android:textStyle="bold"
                 android:gravity="center"
                 />
@@ -72,30 +73,15 @@
                 android:text="Cuerpo del tip"
                 android:textColor="#000" />
 
-            <ImageView
-                android:id="@+id/ImagenTip1"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:scaleType="fitCenter"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_gravity="center"
-                />
-
-            <ImageView
-                android:id="@+id/ImagenTip2"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:scaleType="fitCenter"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_gravity="center"
-                />
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerImagenesTips"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"/>
 
 </LinearLayout>

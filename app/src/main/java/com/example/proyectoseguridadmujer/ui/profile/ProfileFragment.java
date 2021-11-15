@@ -2,11 +2,14 @@ package com.example.proyectoseguridadmujer.ui.profile;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -21,6 +24,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -96,11 +101,18 @@ public class ProfileFragment extends Fragment {
         //Se obtienen las credenciales de la usuaria:
         getCredentialData();
 
+        cambiarColorBoton(estadoNotificaciones);
+
         //Cambia el texto del boton de las notificaciones:
         definirTextoBoton();
 
         //Verifica si hay un baneo activo;
         obtenerSanciones("https://seguridadmujer.com/app_movil/LoginRegister/ObtenerSanciones.php?email="+email);
+
+        //Verifica si hay peticiones de usuario web:
+        obtenerPeticiones("https://seguridadmujer.com/app_movil/PeticionesRecibidas/obtener_solicitudes.php?email=" + email);
+        //Verifica si hay advertencias de los administradores:
+        obtenerAdvertencias("https://seguridadmujer.com/app_movil/PeticionesRecibidas/obtener_advertencias.php?email=" + email);
 
         //Obtiene la informacion de la usuaria:
         obtenerInformacionUsuaria("https://seguridadmujer.com/app_movil/Profile/obtenerInfoUsuaria.php?email="+email);
@@ -197,6 +209,7 @@ public class ProfileFragment extends Fragment {
 
     //Metodo para activar o desactivar las notificaciones de la aplicacion:
     public void administrarNotificaciones(String estado){
+        cambiarColorBoton(estado);
         SharedPreferences preferences = this.getActivity().getSharedPreferences("Notificaciones", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("estado", estado);
@@ -246,12 +259,26 @@ public class ProfileFragment extends Fragment {
         requestQueue.add(jsonArrayRequest);
     }
 
+    private void cambiarColorBoton(String estado){
+        if(estado.equals("si")){
+
+            mBotonNotificaciones.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.delete_button));
+        }
+        else if(estado.equals("no")){
+
+            mBotonNotificaciones.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.confirm_button));
+        }
+    }
+
     //Metodo para mostrar en la interfaz la informacion obtenida desde la base de datos:
     private void cargarInformacion(){
 
         //Imagen:
         if(!mRutaImagen.isEmpty()){
             Glide.with(getActivity()).load(mRutaImagen).into(mImagenPerfil);
+        }
+        else{
+            Glide.with(getActivity()).load("https://seguridadmujer.com/administracion/includes/imagenes/add_image_icon.png").into(mImagenPerfil);
         }
 
         mTVNombre.setText("¡Hola " + mNombre + "!");
@@ -459,6 +486,175 @@ public class ProfileFragment extends Fragment {
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         return true;
+    }
+
+    //Metodo para obtener las peticiones de usuario web desde la base de datos:
+    public void obtenerPeticiones(String URL){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                JSONObject jsonObject = null;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        jsonObject = jsonArray.getJSONObject(i);
+                        String NombreUsuarioWeb= jsonObject.getString("Nombre");
+                        String CorreoUsuarioWeb= jsonObject.getString("Correo");
+                        String IDUsuarioWeb= jsonObject.getString("ID_UsuarioWeb");
+                        //Toast.makeText(getApplicationContext(), NombreUsuarioWeb, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), CorreoUsuarioWeb, Toast.LENGTH_LONG).show();
+                        int count=0;
+                        dialogopeticion(NombreUsuarioWeb,CorreoUsuarioWeb,IDUsuarioWeb);
+
+                    }
+                    catch (JSONException e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }
+        );
+        requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    //Metodo para mostrar el AlertDialog de peticion de usuario web:
+    public void dialogopeticion(String nombre, String correo,String IDUsuarioWeb){
+        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
+        dialogo1.setTitle("Tiene nuevas peticiones de enlace");
+        //dialogo1.setMessage("El usuario web llamado");
+        dialogo1.setMessage("El usuario web llamado " + nombre + " con el correo " + correo +" desea vincularse a su cuenta. Acepte o rechace esta petición: ");
+        dialogo1.setCancelable(false);
+
+        dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                //Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
+                updatepetitionstatus(IDUsuarioWeb,"1");
+
+            }
+        });
+        dialogo1.setNegativeButton("Rechazar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                //Toast.makeText(getApplicationContext(), "Declinar", Toast.LENGTH_LONG).show();
+                updatepetitionstatus(IDUsuarioWeb,"0");
+            }
+        });
+        AlertDialog dialogo = dialogo1.create();
+        dialogo.show();
+    }
+
+    //Metodo para actualizar la peticion del usuario web en la base de datos:
+    public void updatepetitionstatus(String IDUsuarioWeb, String status){
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                String[] field = new String[2];
+                field[0] = "ID_UsuarioWeb";
+                field[1] = "estatus";
+
+                //Creating array for data
+                String[] data = new String[2];
+                data[0] = IDUsuarioWeb;
+                data[1] = status;
+
+                PutData putData = new PutData("https://seguridadmujer.com/app_movil/PeticionesRecibidas/updatePetitions.php", "POST", field, data);
+                if (putData.startPut()) {
+                    if (putData.onComplete()) {
+                        String result = putData.getResult();
+                        if (result.equals("Update Success")) {
+                            Toast.makeText(getContext(), "Le notificaremos al usuario web tu decisión ¡Gracias!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    //Metodo para obtener las peticiones de usuario web desde la base de datos:
+    public void obtenerAdvertencias(String URL){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                JSONObject jsonObject = null;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        jsonObject = jsonArray.getJSONObject(i);
+                        String Contenido= jsonObject.getString("Contenido");
+                        String Fecha = jsonObject.getString("Fecha");
+                        String ID = jsonObject.getString("ID_Advertencia");
+
+                        dialogoAdvertencia(Contenido, Fecha, ID);
+
+                    }
+                    catch (JSONException e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        }
+        );
+        requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    //Metodo para mostrar el AlertDialog de peticion de usuario web:
+    public void dialogoAdvertencia(String Contenido, String Fecha, String ID){
+        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(getContext());
+        dialogo1.setTitle("Ha recibido una advertencia");
+        //dialogo1.setMessage("El usuario web llamado");
+        dialogo1.setMessage("Una usuaria ha reportado una de sus pusblicaciones del módulo de comunidad el día "+Fecha+", por el momento no se le ha realizado ningún castigo o sancion, sin embargo le recomendamos: "+Contenido);
+        dialogo1.setCancelable(false);
+
+        dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogo1, int id) {
+                //Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
+                updateadvertencia(ID);
+            }
+        });
+        AlertDialog dialogo = dialogo1.create();
+        dialogo.show();
+    }
+
+    //Metodo para actualizar la peticion del usuario web en la base de datos:
+    public void updateadvertencia(String ID_Advertencia){
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                String[] field = new String[1];
+                field[0] = "ID_Advertencia";
+
+                //Creating array for data
+                String[] data = new String[1];
+                data[0] = ID_Advertencia;
+
+                PutData putData = new PutData("https://seguridadmujer.com/app_movil/PeticionesRecibidas/updateAdvertencias.php", "POST", field, data);
+                if (putData.startPut()) {
+                    if (putData.onComplete()) {
+                        String result = putData.getResult();
+                        if (result.equals("Success")) {
+                            Toast.makeText(getContext(), "Notificación atendida", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                }
+            }
+        });
     }
 
 }

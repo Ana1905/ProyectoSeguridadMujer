@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.proyectoseguridadmujer.ImageAdapter;
 import com.example.proyectoseguridadmujer.R;
 import com.example.proyectoseguridadmujer.Tip;
 
@@ -37,9 +38,12 @@ public class DialogShowTip extends DialogFragment {
 
     Button mBotonVolver;
     TextView mTextViewTipo, mTextViewTitulo, mTextViewContenido;
-    ImageView mImageView1, mImageView2;
+    //ImageView mImageView1, mImageView2;
+    RecyclerView mRecyclerView;
 
     RequestQueue requestQueue;
+
+    ArrayList<String> mListaImagenes = new ArrayList<String>();
 
     public DialogShowTip() {
         // Required empty public constructor
@@ -67,8 +71,10 @@ public class DialogShowTip extends DialogFragment {
         mTextViewTipo = root.findViewById(R.id.TipoTip);
         mTextViewTitulo = root.findViewById(R.id.TituloTip);
         mTextViewContenido = root.findViewById(R.id.ContenidoTip);
-        mImageView1 = root.findViewById(R.id.ImagenTip1);
-        mImageView2 = root.findViewById(R.id.ImagenTip2);
+        //mImageView1 = root.findViewById(R.id.ImagenTip1);
+        //mImageView2 = root.findViewById(R.id.ImagenTip2);
+        mRecyclerView = root.findViewById(R.id.recyclerImagenesTips);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false));
 
         mBotonVolver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,8 +98,10 @@ public class DialogShowTip extends DialogFragment {
 
     public void obtenerImagenesTip(String URL){
         //Vacia la lista:
-        mTip.setRutaImagen1("");
-        mTip.setRutaImagen2("");
+        //Vacia la lista:
+        if(!mListaImagenes.isEmpty()){
+            mListaImagenes.clear();
+        }
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
             @Override
@@ -103,12 +111,7 @@ public class DialogShowTip extends DialogFragment {
                     try {
                         jsonObject = jsonArray.getJSONObject(i);
 
-                        if(i==0){
-                            mTip.setRutaImagen1(jsonObject.getString("RutaImagen"));
-                        }
-                        else{
-                            mTip.setRutaImagen2(jsonObject.getString("RutaImagen"));
-                        }
+                        mListaImagenes.add(jsonObject.getString("RutaImagen"));
                     }
                     catch (JSONException e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -130,10 +133,10 @@ public class DialogShowTip extends DialogFragment {
     private void definirInfoTip(){
 
         if(mTip.getTipo() == 1){
-            mTextViewTipo.setText("Tip");
+            mTextViewTipo.setText(R.string.tip);
         }
         else{
-            mTextViewTipo.setText("Tip de prevención");
+            mTextViewTipo.setText(R.string.prevention_tip);
         }
 
         mTextViewTitulo.setText(mTip.getTitulo());
@@ -142,19 +145,13 @@ public class DialogShowTip extends DialogFragment {
 
     private void mostrarImagenesAdicionales(){
         //Imagen 1:
-        if(!mTip.getRutaImagen1().isEmpty()){
-            mImageView1.setVisibility(View.VISIBLE);
-            Glide.with(getContext()).load(mTip.getRutaImagen1()).into(mImageView1);
-        }else{
-            mImageView1.setVisibility(View.GONE);
+        if(!mListaImagenes.isEmpty()){
+            mRecyclerView.setVisibility(View.VISIBLE);
+            ImageAdapter imageAdapter = new ImageAdapter(getActivity(), mListaImagenes);
+            mRecyclerView.setAdapter(imageAdapter);
         }
-
-        //Imagen 2:
-        if(!mTip.getRutaImagen2().isEmpty()){
-            mImageView2.setVisibility(View.VISIBLE);
-            Glide.with(getContext()).load(mTip.getRutaImagen2()).into(mImageView2);
-        }else{
-            mImageView2.setVisibility(View.GONE);
+        else{
+            mRecyclerView.setVisibility(View.INVISIBLE);
         }
     }
 

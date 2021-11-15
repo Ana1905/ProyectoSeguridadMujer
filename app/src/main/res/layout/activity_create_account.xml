@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Purple_Dark"
+    android:background="@color/Login_Layout_Background"
     tools:context=".CreateAccountActivity">
-
 
     <ImageView
         android:id="@+id/imageView"
@@ -36,9 +35,9 @@
         android:id="@+id/waitingLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Esperando verificación de correo electrónico..."
+        android:text="@string/waiting_email_verification"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.47"
@@ -50,7 +49,6 @@
         android:id="@+id/create_account_name"
         android:layout_width="match_parent"
         android:layout_height="40sp"
-
         android:background="@drawable/edit_text_shape"
         android:hint="@string/sign_up_name"
         android:importantForAutofill="no"
@@ -59,6 +57,9 @@
         android:textColor="@color/Gray_highlight"
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/Gray"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:maxLength="30"
         app:layout_constraintBottom_toBottomOf="@+id/create_account_create"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -78,18 +79,21 @@
         android:textColor="@color/Gray_highlight"
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/Gray"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:maxLength="30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.306"/>
+        app:layout_constraintVertical_bias="0.306" />
 
     <EditText
         android:id="@+id/create_account_maternal_surname"
         android:layout_width="match_parent"
         android:layout_height="40sp"
-
         android:background="@drawable/edit_text_shape"
         android:hint="@string/sign_up_maternal_surname"
         android:importantForAutofill="no"
@@ -98,52 +102,59 @@
         android:textColor="@color/Gray_highlight"
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/Gray"
-
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:maxLength="30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.387"
+        app:layout_constraintVertical_bias="0.387" />
 
-
-         />
-
-    <Button
-        android:id="@+id/create_account_dateOfBirth"
-        android:layout_width="200sp"
-        android:layout_height="50sp"
-        android:background="@drawable/button_shape"
-        android:backgroundTint="@color/white"
-        android:hint="@string/date_of_birth_label"
+    <EditText
+        android:id="@+id/create_account_password"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:background="@drawable/edit_text_shape"
+        android:hint="@string/sign_up_password"
         android:importantForAutofill="no"
-        android:inputType="date"
-        android:onClick="openDatePicker"
+        android:inputType="textPassword"
         android:padding="10sp"
-        android:textColor="@color/Purple_Dark"
-        android:textColorHighlight="@color/Purple_Dark"
-        android:textColorHint="@color/Purple_Dark"
-        android:textSize="15sp"
+        android:textColor="@color/Gray_highlight"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/Gray"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:maxLength="30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.857"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.712" />
+        app:layout_constraintVertical_bias="0.450" />
 
-    <TextView
-        android:id="@+id/fechaNacimientoLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fecha de nacimiento:"
-        android:textColor="@color/white"
-        android:textSize="15dp"
+    <EditText
+        android:id="@+id/create_account_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:background="@drawable/edit_text_shape"
+        android:hint="@string/sign_up_confirm_password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:padding="10sp"
+        android:textColor="@color/Gray_highlight"
+        android:textColorHighlight="@color/black"
+        android:textColorHint="@color/Gray"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:maxLength="30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.148"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.703" />
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.527" />
 
     <EditText
         android:id="@+id/create_account_email"
@@ -157,57 +168,50 @@
         android:textColor="@color/Gray_highlight"
         android:textColorHighlight="@color/black"
         android:textColorHint="@color/Gray"
-
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:maxLength="255"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.636" />
+        app:layout_constraintVertical_bias="0.614" />
 
-    <EditText
-        android:id="@+id/create_account_password"
-        android:layout_width="match_parent"
-        android:layout_height="40sp"
-
-        android:background="@drawable/edit_text_shape"
-        android:hint="@string/sign_up_password"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:padding="10sp"
-        android:textColor="@color/Gray_highlight"
-        android:textColorHighlight="@color/black"
-        android:textColorHint="@color/Gray"
-
+    <TextView
+        android:id="@+id/fechaNacimientoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/feha_nacimiento_label"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-
+        app:layout_constraintHorizontal_bias="0.148"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.453" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.693" />
 
-    <EditText
-        android:id="@+id/create_account_confirm_password"
-        android:layout_width="match_parent"
-        android:layout_height="40sp"
-
-        android:background="@drawable/edit_text_shape"
-        android:hint="@string/sign_up_confirm_password"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/create_account_dateOfBirth"
+        android:layout_width="200sp"
+        android:layout_height="50sp"
+        android:background="@drawable/button_light"
+        android:hint="@string/date_of_birth_label"
         android:importantForAutofill="no"
-        android:inputType="textPassword"
+        android:inputType="date"
+        android:onClick="openDatePicker"
         android:padding="10sp"
-        android:textColor="@color/Gray_highlight"
-        android:textColorHighlight="@color/black"
-        android:textColorHint="@color/Gray"
-
+        android:textColor="@color/Login_Button_Purple"
+        android:textColorHighlight="@color/Login_Button_Purple"
+        android:textColorHint="@color/Login_Button_Purple"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.857"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.537" />
+        app:layout_constraintVertical_bias="0.702" />
 
     <CheckBox
         android:id="@+id/create_account_captcha"
@@ -224,20 +228,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.775" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_create_account_terms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="true"
         android:paddingHorizontal="15dp"
-        android:background="@drawable/button_shape"
-        android:backgroundTint="@color/white"
-        android:text="Términos y condiciones"
-
-        android:textColor="@color/Purple_Dark"
-        android:textColorHighlight="@color/Purple_Dark"
-        android:textColorHint="@color/Purple_Dark"
-
+        android:background="@drawable/button_light"
+        android:text="@string/terms_conditions"
+        android:textColor="@color/Login_Button_Purple"
+        android:textColorHighlight="@color/Login_Button_Purple"
+        android:textColorHint="@color/Login_Button_Purple"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -267,9 +268,9 @@
         android:id="@+id/TextViewGotoLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ya tengo una cuenta"
+        android:text="@string/have_account"
         android:textColor="@color/white"
-        android:textSize="15dp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -277,11 +278,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.89" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/create_account_create"
         android:layout_width="266dp"
         android:layout_height="44dp"
-        android:background="@drawable/sign_in_button_shape"
+        android:background="@drawable/login_button"
         android:paddingHorizontal="10dp"
         android:text="@string/sign_up_create_account"
         android:textColor="@android:color/white"
@@ -292,6 +293,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_account_confirm_password"
         app:layout_constraintVertical_bias="0.899" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

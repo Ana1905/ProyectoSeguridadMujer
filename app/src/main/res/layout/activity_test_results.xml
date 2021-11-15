@@ -16,60 +16,56 @@
 
         <TextView
             android:id="@+id/ResultsTextView"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:background="@drawable/confirm_button"
             android:gravity="center"
             android:textStyle="bold"
             android:text="@string/Test_results_label"
-            android:textColor="#CDA4CA"
-            android:textSize="25sp" />
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:layout_gravity="center"/>
 
         <TextView
             android:id="@+id/TestTakenLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:gravity="center"
-            android:text="Test realizado: "
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:text="@string/test_realizado"
             android:textColor="#CDA4CA"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/TestTaken"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:textSize="20sp"
             android:textColor="@color/white"
-            android:text="Si" />
+            android:text="@string/si" />
 
         <TextView
             android:id="@+id/ViolenceLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:gravity="center"
-            android:text="¿Vives en violencia?"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:text="@string/vives_violencia"
             android:textColor="#CDA4CA"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/ViolenceResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Si"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:text="@string/si"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -78,21 +74,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:gravity="center"
-            android:text="Tipo de violencia sufrida: "
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:text="@string/violence_type"
             android:textColor="#CDA4CA"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/ViolenceType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Si"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:text="@string/si"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -101,12 +95,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:gravity="center"
-            android:text="Instituciones recomendadas: "
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:text="@string/recomended_institutions"
             android:textColor="#CDA4CA"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerinstitucionesresultado"
@@ -118,12 +111,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:gravity="center"
-            android:text="Tips: "
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:text="@string/tips_label"
             android:textColor="#CDA4CA"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclertipsresultado"

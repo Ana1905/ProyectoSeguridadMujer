@@ -3,23 +3,25 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@color/Purple_Dark">
+    android:background="@color/Login_Layout_Background">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_cancelar_reporte"
+        android:layout_width="139dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:background="@drawable/back_button"
+        android:drawableStart="@drawable/back_foreground"
+        android:text="@string/back_label"  />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/boton_cambiar_vista_reporte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/abc_vector_test" />
-
-    <Button
-        android:id="@+id/boton_cambiar_vista_reporte"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/sign_in_button_shape"
+        android:background="@drawable/confirm_button"
         android:paddingHorizontal="10dp"
-        android:text="Crear reporte de acontecimiento"
+        android:text="@string/change_report_view"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:layout_gravity="center_horizontal"
@@ -38,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="40sp"
         android:background="@drawable/edit_text_shape"
-        android:hint="Latitud"
+        android:hint="@string/lat_label"
         android:importantForAutofill="no"
         android:inputType="text"
         android:padding="10sp"
@@ -55,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="40sp"
         android:background="@drawable/edit_text_shape"
-        android:hint="Longitud"
+        android:hint="@string/lng_label"
         android:importantForAutofill="no"
         android:inputType="text"
         android:padding="10sp"
@@ -77,7 +79,7 @@
             android:id="@+id/categoriaLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Categoría:"
+            android:text="@string/category_label"
             android:textColor="@color/white"
             android:textSize="15dp" />
 
@@ -95,7 +97,7 @@
         android:inputType="text|textMultiLine"
         android:gravity="top"
         android:background="@drawable/edit_text_shape"
-        android:hint="Describa el acontecimiento o brinde alguna recomendación para otra usuaria (Máximo 200 caracteres)"
+        android:hint="@string/report_body_hint"
         android:importantForAutofill="no"
         android:padding="10sp"
         android:textColor="@color/Gray_highlight"
@@ -114,9 +116,9 @@
             android:id="@+id/radioLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Radio del reporte:"
+            android:text="@string/radius_hint"
             android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
         <Spinner
             android:id="@+id/spinner_area_reporte"
@@ -125,26 +127,29 @@
             android:spinnerMode="dropdown"/>
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_crear_reporte"
         android:layout_width="266dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/sign_in_button_shape"
+        android:background="@drawable/confirm_button"
         android:paddingHorizontal="10dp"
-        android:text="Crear reporte"
+        android:drawableEnd="@drawable/add_foreground"
+        android:text="@string/create_report"
         android:textColor="@android:color/white"
         android:textSize="15sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_origen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Gray"
+        android:background="@drawable/route_button"
+        android:paddingHorizontal="10dp"
         android:text="@string/origen_de_la_ruta"
         android:textColor="@android:color/white"
+        android:drawableStart="@drawable/origen1"
         android:textSize="12sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="3dp"
@@ -152,14 +157,15 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="3dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_destino"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/Gray"
+        android:background="@drawable/route_button"
         android:paddingHorizontal="10dp"
         android:text="@string/destino_de_la_ruta"
         android:textColor="@android:color/white"
+        android:drawableStart="@drawable/destino1"
         android:textSize="12sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"
@@ -176,9 +182,9 @@
             android:id="@+id/transporteLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medio de transporte:"
+            android:text="@string/transport"
             android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
         <Spinner
             android:id="@+id/spinner_transporte"
@@ -187,14 +193,15 @@
             android:spinnerMode="dropdown" />
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_eliminar_waypoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/purple_700"
+        android:background="@drawable/delete_button"
         android:paddingHorizontal="10dp"
-        android:text="Eliminar puntos intermedios"
+        android:text="@string/delete_points"
         android:textColor="@android:color/white"
+        android:drawableEnd="@drawable/delete_icon_foreground"
         android:textSize="12sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"
@@ -205,17 +212,17 @@
         android:id="@+id/distanciaLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Distancia:"
+        android:text="@string/distance"
         android:textColor="@color/white"
-        android:textSize="22dp" />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/tiempoEstimadoLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tiempo estimado:"
+        android:text="@string/time"
         android:textColor="@color/white"
-        android:textSize="22dp" />
+        android:textSize="22sp" />
 
     <fragment
         xmlns:tools="http://schemas.android.com/tools"

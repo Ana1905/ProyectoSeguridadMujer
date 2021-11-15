@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
@@ -64,12 +65,17 @@ public class MainActivity extends AppCompatActivity {
         getCredentialData();
 
         //Se verifica si existen peticiones de usuario web pendientes:
-        obtenerPeticiones("https://seguridadmujer.com/app_movil/PeticionesRecibidas/obtener_solicitudes.php?email=" + email);
-        obtenerAdvertencias("https://seguridadmujer.com/app_movil/PeticionesRecibidas/obtener_advertencias.php?email=" + email);
+        //obtenerPeticiones("https://seguridadmujer.com/app_movil/PeticionesRecibidas/obtener_solicitudes.php?email=" + email);
+
 
         //Configuracion de la Toolbar:
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Action Bar Color:
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.Action_Bar_Color)));
+
+        /*
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
+         */
 
         //Configuracion de la Navbar:
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -117,96 +124,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Metodo para obtener las peticiones de usuario web desde la base de datos:
-    public void obtenerPeticiones(String URL){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray jsonArray) {
-                JSONObject jsonObject = null;
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try {
-                        jsonObject = jsonArray.getJSONObject(i);
-                        String NombreUsuarioWeb= jsonObject.getString("Nombre");
-                        String CorreoUsuarioWeb= jsonObject.getString("Correo");
-                        String IDUsuarioWeb= jsonObject.getString("ID_UsuarioWeb");
-                        //Toast.makeText(getApplicationContext(), NombreUsuarioWeb, Toast.LENGTH_LONG).show();
-                        //Toast.makeText(getApplicationContext(), CorreoUsuarioWeb, Toast.LENGTH_LONG).show();
-                        int count=0;
-                        dialogopeticion(NombreUsuarioWeb,CorreoUsuarioWeb,IDUsuarioWeb);
-
-                    }
-                    catch (JSONException e) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        }
-        );
-        requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonArrayRequest);
-    }
-
-    //Metodo para mostrar el AlertDialog de peticion de usuario web:
-    public void dialogopeticion(String nombre, String correo,String IDUsuarioWeb){
-        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MainActivity.this);
-        dialogo1.setTitle("Tiene nuevas peticiones de enlace");
-        //dialogo1.setMessage("El usuario web llamado");
-        dialogo1.setMessage("El usuario web llamado " + nombre + " con el correo " + correo +" desea vincularse a su cuenta. Acepte o rechace esta petición: ");
-        dialogo1.setCancelable(false);
-
-        dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
-                //Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
-                updatepetitionstatus(IDUsuarioWeb,"1");
-
-            }
-        });
-        dialogo1.setNegativeButton("Rechazar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
-                //Toast.makeText(getApplicationContext(), "Declinar", Toast.LENGTH_LONG).show();
-                updatepetitionstatus(IDUsuarioWeb,"0");
-            }
-        });
-        AlertDialog dialogo = dialogo1.create();
-        dialogo.show();
-    }
-
-    //Metodo para actualizar la peticion del usuario web en la base de datos:
-    public void updatepetitionstatus(String IDUsuarioWeb, String status){
-        Handler handler = new Handler();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                String[] field = new String[2];
-                field[0] = "ID_UsuarioWeb";
-                field[1] = "estatus";
-
-                //Creating array for data
-                String[] data = new String[2];
-                data[0] = IDUsuarioWeb;
-                data[1] = status;
-
-                PutData putData = new PutData("https://seguridadmujer.com/app_movil/PeticionesRecibidas/updatePetitions.php", "POST", field, data);
-                if (putData.startPut()) {
-                    if (putData.onComplete()) {
-                        String result = putData.getResult();
-                        if (result.equals("Update Success")) {
-                            Toast.makeText(getApplicationContext(), "Le notificaremos al usuario web tu decisión ¡Gracias!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-                }
-            }
-        });
-    }
-
     //Metodo para obtener el email de la usuaria:
     public void getCredentialData(){
         SharedPreferences preferences = getSharedPreferences("Credencials",MODE_PRIVATE);
@@ -225,85 +142,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         return true;
-    }
-
-    //Metodo para obtener las peticiones de usuario web desde la base de datos:
-    public void obtenerAdvertencias(String URL){
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new com.android.volley.Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray jsonArray) {
-                JSONObject jsonObject = null;
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try {
-                        jsonObject = jsonArray.getJSONObject(i);
-                        String Contenido= jsonObject.getString("Contenido");
-                        String Fecha = jsonObject.getString("Fecha");
-                        String ID = jsonObject.getString("ID_Advertencia");
-
-                        dialogoAdvertencia(Contenido, Fecha, ID);
-
-                    }
-                    catch (JSONException e) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        }
-        );
-        requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(jsonArrayRequest);
-    }
-
-    //Metodo para mostrar el AlertDialog de peticion de usuario web:
-    public void dialogoAdvertencia(String Contenido, String Fecha, String ID){
-        AlertDialog.Builder dialogo1 = new AlertDialog.Builder(MainActivity.this);
-        dialogo1.setTitle("Ha recibido una advertencia");
-        //dialogo1.setMessage("El usuario web llamado");
-        dialogo1.setMessage("Una usuaria ha reportado una de sus pusblicaciones del módulo de comunidad el día "+Fecha+", por el momento no se le ha realizado ningún castigo o sancion, sin embargo le recomendamos: "+Contenido);
-        dialogo1.setCancelable(false);
-
-        dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
-                //Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
-                updateadvertencia(ID);
-            }
-        });
-        AlertDialog dialogo = dialogo1.create();
-        dialogo.show();
-    }
-
-    //Metodo para actualizar la peticion del usuario web en la base de datos:
-    public void updateadvertencia(String ID_Advertencia){
-        Handler handler = new Handler();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                String[] field = new String[1];
-                field[0] = "ID_Advertencia";
-
-                //Creating array for data
-                String[] data = new String[1];
-                data[0] = ID_Advertencia;
-
-                PutData putData = new PutData("https://seguridadmujer.com/app_movil/PeticionesRecibidas/updateAdvertencias.php", "POST", field, data);
-                if (putData.startPut()) {
-                    if (putData.onComplete()) {
-                        String result = putData.getResult();
-                        if (result.equals("Success")) {
-                            Toast.makeText(getApplicationContext(), "Notificación atendida", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
-                        }
-                    }
-                }
-            }
-        });
     }
 
 }

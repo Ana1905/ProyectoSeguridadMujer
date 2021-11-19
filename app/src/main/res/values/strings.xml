@@ -105,6 +105,9 @@
     <string name="delete_points">Eliminar puntos intermedios</string>
     <string name="time">Tiempo estimado:</string>
     <string name="distance">Distancia:</string>
+    <string name="volver_a_creaci_n_de_ruta">Volver a creación de ruta</string>
+    <string name="cancel_route">Cancelar ruta</string>
+    <string name="start_route">Comenzar ruta</string>
     <!-- /////////// -->
 
     <!-- Alert -->

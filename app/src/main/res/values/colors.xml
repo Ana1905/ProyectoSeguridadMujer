@@ -25,6 +25,7 @@
     <color name="Background_Light_Gray">#EFECEF</color>
     <color name="Bootsrap_Succes">#5CB85C</color>
     <color name="Bootsrap_Danger">#D9534F</color>
+    <color name="Bootsrap_Warning">#f0ad4e</color>
     <color name="Bootsrap_Primary">#0275DB</color>
     <color name="Button_Question_Color">#9C27B0</color>
     <color name="Route_Button_Gray">#6F6A70</color>

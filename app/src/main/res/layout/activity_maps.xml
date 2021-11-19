@@ -7,13 +7,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_cancelar_reporte"
-        android:layout_width="139dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingEnd="20dp"
         android:layout_marginTop="5dp"
         android:textColor="@color/white"
         android:background="@drawable/back_button"
         android:drawableStart="@drawable/back_foreground"
-        android:text="@string/back_label"  />
+        android:text="@string/volver_a_creaci_n_de_ruta"  />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_cambiar_vista_reporte"
@@ -195,13 +196,28 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/boton_eliminar_waypoints"
-        android:layout_width="wrap_content"
+        android:layout_width="266dp"
         android:layout_height="wrap_content"
         android:background="@drawable/delete_button"
         android:paddingHorizontal="10dp"
         android:text="@string/delete_points"
         android:textColor="@android:color/white"
         android:drawableEnd="@drawable/delete_icon_foreground"
+        android:textSize="12sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="3dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/boton_terminar_ruta"
+        android:layout_width="266dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/confirm_button"
+        android:paddingHorizontal="10dp"
+        android:text="@string/start_route"
+        android:textColor="@android:color/white"
+        android:drawableEnd="@drawable/check_circle_foreground"
         android:textSize="12sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"

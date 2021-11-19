@@ -1,6 +1,7 @@
 package Dialogs;
 
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,12 +94,21 @@ public class DialogUserProfile extends DialogFragment {
                     isSavedPublication = false;
                     getPublicationList("https://seguridadmujer.com/app_movil/Community/getUserPublicationList.php?ID_Usuaria="+ ID);
                     SavedPublications.setText("Ver publicaciones guardadas");
+
+                    Drawable img = getContext().getResources().getDrawable(R.drawable.folder);
+                    img.setBounds(0, 0, 60, 60);
+                    SavedPublications.setCompoundDrawables(img, null, null, null);
                 }
                 else
                 {
                     isSavedPublication = true;
                     getPublicationList("https://seguridadmujer.com/app_movil/Community/getSavedPublicationList.php?ID_Usuaria="+ ID);
                     SavedPublications.setText("Ver tus publicaciones");
+
+                    Drawable img = getContext().getResources().getDrawable(R.drawable.socialmedia);
+                    img.setBounds(0, 0, 60, 60);
+                    SavedPublications.setCompoundDrawables(img, null, null, null);
+
                 }
             }
         });
@@ -159,7 +169,7 @@ public class DialogUserProfile extends DialogFragment {
     public void getPublicationList (String Link)
     {
         mListaPublicaciones = new ArrayList<ListElement>();
-        Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Link, new Response.Listener<JSONArray>()
         {
             @Override

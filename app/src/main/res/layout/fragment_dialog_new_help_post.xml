@@ -258,13 +258,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.709" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Button_Delete_Image_HN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_shape"
-            android:backgroundTint="@color/purple_200"
             android:text="Borrar imagen anterior"
+            android:background="@drawable/delete_button"
+            android:textColor="@color/white"
+            android:paddingHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -272,13 +273,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.84" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Button_Add_Image_HN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_shape"
-            android:backgroundTint="@color/purple_200"
             android:text="Añadir imagen"
+            android:background="@drawable/confirm_button"
+            android:textColor="@color/white"
+            android:paddingHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.968"
@@ -286,13 +288,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.84" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Button_Publish_HN"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_shape"
-            android:backgroundTint="@color/purple_200"
             android:text="Publicar"
+            android:background="@drawable/confirm_button"
+            android:textColor="@color/white"
+            android:paddingHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.947"

@@ -133,7 +133,7 @@ public class DialogNewPostFragment extends DialogFragment {
         mButtonClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Closing", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Closing", Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });
@@ -246,7 +246,7 @@ public class DialogNewPostFragment extends DialogFragment {
                 else
                 {
 
-                    Toast.makeText(getActivity(), "publicando", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "publicando", Toast.LENGTH_SHORT).show();
                     SendImage();
                     dismiss();
                 }
@@ -311,7 +311,7 @@ public class DialogNewPostFragment extends DialogFragment {
                 {
                     Toast.makeText(getActivity(), "Por favor introduce un archivo valido", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(getActivity(), imagesType[Counter], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), imagesType[Counter], Toast.LENGTH_SHORT).show();
 
                 byte [] imageByte = array.toByteArray();
                 imagesToStrings[Counter] = Base64.encodeToString(imageByte, Base64.DEFAULT);
@@ -328,7 +328,7 @@ public class DialogNewPostFragment extends DialogFragment {
                 mButtonImage.setVisibility(View.INVISIBLE);
             }
         }
-        Toast.makeText(getActivity(), String.valueOf(Counter), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), String.valueOf(Counter), Toast.LENGTH_SHORT).show();
     }
 
     @NonNull
@@ -456,7 +456,7 @@ public class DialogNewPostFragment extends DialogFragment {
         builder.setItems(R.array.categories, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getContext(), reportes[which], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), reportes[which], Toast.LENGTH_SHORT).show();
             }
         });
         Dialog dialog = builder.create();

@@ -40,6 +40,16 @@ public class DialogReportPublication extends DialogFragment {
 
     RequestQueue requestQueue;
 
+    private ListenerReportPublication mListener;
+
+    public void setListener(ListenerReportPublication listener) {
+        mListener = listener;
+    }
+
+    public interface ListenerReportPublication {
+        void returnDataReportPublication(int result);
+    }
+
     public DialogReportPublication () {
         // Required empty public constructor
     }
@@ -71,6 +81,7 @@ public class DialogReportPublication extends DialogFragment {
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.returnDataReportPublication(1);
                 dismiss();
             }
         });
@@ -81,6 +92,7 @@ public class DialogReportPublication extends DialogFragment {
         Reason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(getResources().getColor(R.color.white));
                 CategoryID = position + 1;
             }
 
@@ -114,9 +126,9 @@ public class DialogReportPublication extends DialogFragment {
         Publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Reportando", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Reportando", Toast.LENGTH_SHORT).show();
                 ReportPublication();
-                dismiss();
+
             }
         });
 
@@ -151,6 +163,8 @@ public class DialogReportPublication extends DialogFragment {
                 //INSERT exitoso:
                 if(result.equals("Success")) {
                     Toast.makeText(getContext(), result, Toast.LENGTH_LONG).show();
+                    mListener.returnDataReportPublication(1);
+                    dismiss();
                 }
                 else{
                     Toast.makeText(getContext(), result + " Favor de intentarlo nuevamente.", Toast.LENGTH_LONG).show();

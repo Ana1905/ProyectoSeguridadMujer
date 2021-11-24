@@ -11,19 +11,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.proyectoseguridadmujer.ui.alert.AlertFragment;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import Dialogs.DialogEditContact;
+import Dialogs.DialogUserProfile;
+
 public class AdapterContacts extends RecyclerView.Adapter<AdapterContacts.ViewHolderContacts> {
 
+    private Context context;
     ArrayList<Contact> ListContacts;
+    DialogEditContact.Listener fragment;
 
-    public AdapterContacts(ArrayList<Contact> listContacts) {
+    public AdapterContacts(Context context, ArrayList<Contact> listContacts, DialogEditContact.Listener fragment) {
         this.ListContacts = listContacts;
+        this.context = context;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -45,16 +57,20 @@ public class AdapterContacts extends RecyclerView.Adapter<AdapterContacts.ViewHo
             public void onClick(View v) {
                 //Toast.makeText(v.getContext(), holder.Nombre.getText(), Toast.LENGTH_SHORT).show();
 
+                FragmentManager fragmentManager = ((MainActivity)context).getSupportFragmentManager();
+                DialogEditContact dialogEditContact = new DialogEditContact();
 
-                Intent intent = new Intent(v.getContext(), EditContactActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("ID", ListContacts.get(position).ID_Contacto);
                 bundle.putString("Nombre", ListContacts.get(position).Nombre);
                 bundle.putString("Numero", ListContacts.get(position).Numero);
-                intent.putExtras(bundle);
-                v.getContext().startActivity(intent);
 
-
+                dialogEditContact.setArguments(bundle);
+                dialogEditContact.setListener(fragment);
+                //dialogEditContact.setTargetFragment(fragment.frag("AlertFragment"), 1);
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.add(android.R.id.content, dialogEditContact).addToBackStack(null).commit();
             }
         });
     }
@@ -86,5 +102,7 @@ public class AdapterContacts extends RecyclerView.Adapter<AdapterContacts.ViewHo
         public void onClick(View v) {
 
         }
+
     }
+
 }

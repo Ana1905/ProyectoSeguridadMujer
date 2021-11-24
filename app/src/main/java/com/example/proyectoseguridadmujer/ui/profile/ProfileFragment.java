@@ -306,39 +306,42 @@ public class ProfileFragment extends Fragment {
         if(requestCode == 1){
             //Guarda la foto en un URI y la coonvierte a Bitmap
             Bitmap bitmap = null;
-            Uri uri = data.getData();
 
-            mImagenPerfil.setImageDrawable(null);
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+            if(data != null){
+                Uri uri = data.getData();
 
-                //Se obtiene la extension de la imagen:
-                ByteArrayOutputStream array = new ByteArrayOutputStream();
-                ContentResolver contentResolver = getActivity().getContentResolver();
-                MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-                mTipoImagen = mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-                //Toast.makeText(getActivity(), mTipoImagen, Toast.LENGTH_SHORT).show();
+                mImagenPerfil.setImageDrawable(null);
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
 
-                if(mTipoImagen.equals("jpg")){
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
-                    mImagenPerfil.setImageURI(uri);
+                    //Se obtiene la extension de la imagen:
+                    ByteArrayOutputStream array = new ByteArrayOutputStream();
+                    ContentResolver contentResolver = getActivity().getContentResolver();
+                    MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+                    mTipoImagen = mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+                    //Toast.makeText(getActivity(), mTipoImagen, Toast.LENGTH_SHORT).show();
+
+                    if(mTipoImagen.equals("jpg")){
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
+                        mImagenPerfil.setImageURI(uri);
+                    }
+                    else if(mTipoImagen.equals("png")){
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, array);
+                        mImagenPerfil.setImageURI(uri);
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "Por favor introduce un archivo valido", Toast.LENGTH_SHORT).show();
+                    }
+
+                    //Se convierte a string la imagen:
+                    byte [] imageByte = array.toByteArray();
+                    mImagenString = Base64.encodeToString(imageByte, Base64.DEFAULT);
+
+                    mImagenModificada = true;
                 }
-                else if(mTipoImagen.equals("png")){
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, array);
-                    mImagenPerfil.setImageURI(uri);
+                catch (IOException e) {
+                    e.printStackTrace();
                 }
-                else{
-                    Toast.makeText(getActivity(), "Por favor introduce un archivo valido", Toast.LENGTH_SHORT).show();
-                }
-
-                //Se convierte a string la imagen:
-                byte [] imageByte = array.toByteArray();
-                mImagenString = Base64.encodeToString(imageByte, Base64.DEFAULT);
-
-                mImagenModificada = true;
-            }
-            catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }

@@ -31,10 +31,9 @@ public class TestResultsActivity extends AppCompatActivity
     TextView TestTaken, ViolenceResult, ViolenceTypeLayout, ViolenceType, InstitutionLabel, TipsLabel;
     String [] TestLabel, ViolenceTypeLabel, RelationLabel;
     String ControlTestRelation = "", TestViolenceType = "";
-    int Quiz, ViolenceCounter = 0, ViolenceHelper = 0;
+    int Quiz, ViolenceCounter = 0, ViolenceHelper = 0, ControlTestSkip = 0;
     int [] Test, Violence, HViolence;
     boolean [] isTestTaken;
-    boolean ControlTestSkip = false;
     Resources resources;
 
     RecyclerView mRecyclerInstituciones, mRecyclerTips;
@@ -108,7 +107,7 @@ public class TestResultsActivity extends AppCompatActivity
                 {
                     if (i == 3)
                     {
-                        ControlTestSkip = true;
+                        ControlTestSkip++;
                     }
                     continue;
                 }
@@ -124,7 +123,7 @@ public class TestResultsActivity extends AppCompatActivity
             InstitutionLabel.setVisibility(View.VISIBLE);
         }
 
-        if (ControlTestSkip)
+        if (ControlTestSkip == 4)
         {
             ViolenceResult.setText(resources.getString(R.string.DefaultRelation));
             ViolenceType.setVisibility(View.GONE);

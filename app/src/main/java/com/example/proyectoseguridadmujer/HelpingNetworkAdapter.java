@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import Dialogs.DialogNewHelpPostFragment;
 import Dialogs.DialogShowHelpPublication;
 import httpurlconnection.PutData;
 
@@ -41,7 +42,6 @@ public class HelpingNetworkAdapter extends RecyclerView.Adapter<HelpingNetworkAd
     private ArrayList<HelpingNetworkPublication> FullList = new ArrayList<>();
     private String email;
     private boolean filtrando = false, Accepted = false;
-
 
     public HelpingNetworkAdapter(Context context, ArrayList<HelpingNetworkPublication> itemList)
     {
@@ -65,7 +65,7 @@ public class HelpingNetworkAdapter extends RecyclerView.Adapter<HelpingNetworkAd
         holder.Username.setText(list.get(position).getNombre());
         holder.Category.setText(list.get(position).getNombreCategoria());
         holder.Content.setText(list.get(position).getContenido());
-        if(list.get(position).getRutaImagen() != null && !list.get(position).getRutaImagen().isEmpty()){
+        if(list.get(position).getRutaImagen() != null && !list.get(position).getRutaImagen().isEmpty() && !list.get(position).getRutaImagen().equals("")){
             Glide.with(context).load(list.get(position).getRutaImagen()).into(holder.Profile);
         }
         else{
@@ -196,18 +196,18 @@ public class HelpingNetworkAdapter extends RecyclerView.Adapter<HelpingNetworkAd
 
     public void dialogo(int position){
         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
-        dialogo1.setTitle("Confirmar borrado");
-        dialogo1.setMessage("¿Seguro que quieres borrar esta publicación?");
+        dialogo1.setTitle(R.string.delete_dialog_title);
+        dialogo1.setMessage(R.string.delete_dialog_body);
         dialogo1.setCancelable(false);
 
-        dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        dialogo1.setPositiveButton(R.string.dialog_accept, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 //Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
                 //Accepted = true;
                 DeletePublication(list.get(position).getID_Publicacion(), position);
             }
         });
-        dialogo1.setNegativeButton("Rechazar", new DialogInterface.OnClickListener() {
+        dialogo1.setNegativeButton(R.string.dialog_no_accept, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 //Toast.makeText(getApplicationContext(), "Declinar", Toast.LENGTH_LONG).show();
                 //Accepted = false;

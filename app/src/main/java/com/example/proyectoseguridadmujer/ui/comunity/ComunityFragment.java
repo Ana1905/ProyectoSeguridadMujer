@@ -24,6 +24,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import Dialogs.DialogNewPostFragment;
+import Dialogs.DialogReportPublication;
+import Dialogs.DialogShowCommunityPublication;
+import Dialogs.DialogUserProfile;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -47,7 +50,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ComunityFragment extends Fragment {
+public class ComunityFragment extends Fragment implements DialogNewPostFragment.ListenerNewPostFragment, DialogReportPublication.ListenerReportPublication, DialogShowCommunityPublication.ListenerShowCommunityPublication, DialogUserProfile.ListenerUserProfile {
 
     private String email="";
 
@@ -168,7 +171,6 @@ public class ComunityFragment extends Fragment {
         mButtonNewPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Crear nueva publicaciÃ³n", Toast.LENGTH_SHORT).show();
                 obtenerSanciones("https://seguridadmujer.com/app_movil/Community/ObtenerSanciones.php?email="+email);
             }
         });
@@ -180,7 +182,7 @@ public class ComunityFragment extends Fragment {
     public void getPublicationList (String Link)
     {
         listElements = new ArrayList<ListElement>();
-        Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Link, new Response.Listener<JSONArray>()
         {
             @Override
@@ -210,11 +212,9 @@ public class ComunityFragment extends Fragment {
     public void setAdapter ()
     {
         ArrayList<ListElement> arrayList = new ArrayList<ListElement>(listElements);
-        PublicationListAdapter = new ListAdapter(getActivity(), arrayList);
+        PublicationListAdapter = new ListAdapter(getActivity(), arrayList,ComunityFragment.this, ComunityFragment.this, ComunityFragment.this);
         publicationList.setAdapter(PublicationListAdapter);
     }
-
-
 
     private void init(RecyclerView recyclerView) {
         //creo que aqui tendrias que obtener de la BD
@@ -236,11 +236,11 @@ public class ComunityFragment extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         DialogNewPostFragment dialogNewPostFragment = new DialogNewPostFragment();
 
+        dialogNewPostFragment.setListener(ComunityFragment.this);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.add(android.R.id.content, dialogNewPostFragment).addToBackStack(null).commit();
 
-        getPublicationList("https://seguridadmujer.com/app_movil/Community/getPublicationList.php?email="+email);
     }
 
     //Metodo que valida si hay un baneo de cuenta:
@@ -291,18 +291,18 @@ public class ComunityFragment extends Fragment {
                         if(mListaSanciones.get(i).getDuracion() == Collections.max(listaDuraciones)){
                             if(mListaSanciones.get(i).getTipoSancion().equals("Bloquear interaccion completa en modulo de Comunidad")){
                                 if(mListaSanciones.get(i).getDuracion() == 876000){
-                                    mensajeSancion = "Lo sentimos, la interaccion con el mÃ³dulo de comunidad se le ha sido bloqueada de forma permanente.";
+                                    mensajeSancion = "Lo sentimos, la interaccion con el modulo de comunidad se le ha sido bloqueada de forma permanente.";
                                 }
                                 else{
-                                    mensajeSancion = "Lo sentimos, la interacciÃ³n con el mÃ³dulo de comunidad se le ha sido bloqueada, podrÃ¡ volver a acceder el dÃ­a "+mListaSanciones.get(i).getFechaFin();
+                                    mensajeSancion = "Lo sentimos, la interaccion con el modulo de comunidad se le ha sido bloqueada, podra volver a acceder el dia "+mListaSanciones.get(i).getFechaFin();
                                 }
                             }
                             else if(mListaSanciones.get(i).getTipoSancion().equals("Bloquear funcion de publicacion")){
                                 if(mListaSanciones.get(i).getDuracion() == 876000){
-                                    mensajeSancion = "Lo sentimos, la funciÃ³n para crear publicaciones se le ha sido bloqueada de forma permanente.";
+                                    mensajeSancion = "Lo sentimos, la funcion para crear publicaciones se le ha sido bloqueada de forma permanente.";
                                 }
                                 else{
-                                    mensajeSancion = "Lo sentimos, la funciÃ³n para crear publicaciones se le ha sido bloqueada, podrÃ¡ volver a acceder el dÃ­a "+mListaSanciones.get(i).getFechaFin();
+                                    mensajeSancion = "Lo sentimos, la funcion para crear publicaciones se le ha sido bloqueada, podra volver a acceder el dia "+mListaSanciones.get(i).getFechaFin();
                                 }
                             }
 
@@ -327,5 +327,25 @@ public class ComunityFragment extends Fragment {
         );
         requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(jsonArrayRequest);
+    }
+
+    @Override
+    public void returnNewPostData(int result) {
+        getPublicationList("https://seguridadmujer.com/app_movil/Community/getPublicationList.php?email="+email);
+    }
+
+    @Override
+    public void returnDataReportPublication(int result) {
+        getPublicationList("https://seguridadmujer.com/app_movil/Community/getPublicationList.php?email="+email);
+    }
+
+    @Override
+    public void returnDataShowCommunityPublication(int result) {
+        getPublicationList("https://seguridadmujer.com/app_movil/Community/getPublicationList.php?email="+email);
+    }
+
+    @Override
+    public void returnUserProfile(int result) {
+        getPublicationList("https://seguridadmujer.com/app_movil/Community/getPublicationList.php?email="+email);
     }
 }

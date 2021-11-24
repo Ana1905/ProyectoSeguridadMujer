@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DialogUserProfile extends DialogFragment {
+public class DialogUserProfile extends DialogFragment implements DialogReportPublication.ListenerReportPublication, DialogShowCommunityPublication.ListenerShowCommunityPublication {
 
     ImageView ProfilePic;
     TextView Username, Description;
@@ -52,6 +52,16 @@ public class DialogUserProfile extends DialogFragment {
     boolean isSavedPublication = false;
 
     List<ListElement> mListaPublicaciones = new ArrayList<ListElement>();
+
+    private ListenerUserProfile mListener;
+
+    public void setListener(ListenerUserProfile listener) {
+        mListener = listener;
+    }
+
+    public interface ListenerUserProfile {
+        void returnUserProfile(int result);
+    }
 
     public DialogUserProfile () {
         // Required empty public constructor
@@ -82,6 +92,7 @@ public class DialogUserProfile extends DialogFragment {
         Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.returnUserProfile(1);
                 dismiss();
             }
         });
@@ -116,7 +127,12 @@ public class DialogUserProfile extends DialogFragment {
         UserPublications = root.findViewById(R.id.ProfileUserPublications);
         UserPublications.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Glide.with(getContext()).load(ImageResource).into(ProfilePic);
+        if(ImageResource != null && !ImageResource.isEmpty() && !ImageResource.equals("")){
+            Glide.with(getContext()).load(ImageResource).into(ProfilePic);
+        }
+        else{
+            Glide.with(getContext()).load("http://seguridadmujer.com/web/Resources/avatar_woman_people_girl_glasses_icon_159125.png").into(ProfilePic);
+        }
         Username.setText(UsernameLabel);
 
         getCredentialData();
@@ -199,7 +215,70 @@ public class DialogUserProfile extends DialogFragment {
     public void setAdapter ()
     {
         ArrayList<ListElement> arrayList = new ArrayList<ListElement>(mListaPublicaciones);
-        publicationCommunityAdapter = new ListAdapter(getActivity(), arrayList);
+        publicationCommunityAdapter = new ListAdapter(getActivity(), arrayList, DialogUserProfile.this, DialogUserProfile.this, mListener);
         UserPublications.setAdapter(publicationCommunityAdapter);
     }
+
+    @Override
+    public void returnDataReportPublication(int result) {
+        if (Mail.equals(email))
+        {
+            if (isSavedPublication)
+            {
+                isSavedPublication = false;
+                getPublicationList("https://seguridadmujer.com/app_movil/Community/getUserPublicationList.php?ID_Usuaria="+ ID);
+                SavedPublications.setText("Ver publicaciones guardadas");
+
+                Drawable img = getContext().getResources().getDrawable(R.drawable.folder);
+                img.setBounds(0, 0, 60, 60);
+                SavedPublications.setCompoundDrawables(img, null, null, null);
+            }
+            else
+            {
+                isSavedPublication = true;
+                getPublicationList("https://seguridadmujer.com/app_movil/Community/getSavedPublicationList.php?ID_Usuaria="+ ID);
+                SavedPublications.setText("Ver tus publicaciones");
+
+                Drawable img = getContext().getResources().getDrawable(R.drawable.socialmedia);
+                img.setBounds(0, 0, 60, 60);
+                SavedPublications.setCompoundDrawables(img, null, null, null);
+
+            }
+        }
+        else{
+            getPublicationList("https://seguridadmujer.com/app_movil/Community/getUserPublicationList.php?ID_Usuaria="+ ID);
+        }
+    }
+
+    @Override
+    public void returnDataShowCommunityPublication(int result) {
+        if (Mail.equals(email))
+        {
+            if (isSavedPublication)
+            {
+                isSavedPublication = false;
+                getPublicationList("https://seguridadmujer.com/app_movil/Community/getUserPublicationList.php?ID_Usuaria="+ ID);
+                SavedPublications.setText("Ver publicaciones guardadas");
+
+                Drawable img = getContext().getResources().getDrawable(R.drawable.folder);
+                img.setBounds(0, 0, 60, 60);
+                SavedPublications.setCompoundDrawables(img, null, null, null);
+            }
+            else
+            {
+                isSavedPublication = true;
+                getPublicationList("https://seguridadmujer.com/app_movil/Community/getSavedPublicationList.php?ID_Usuaria="+ ID);
+                SavedPublications.setText("Ver tus publicaciones");
+
+                Drawable img = getContext().getResources().getDrawable(R.drawable.socialmedia);
+                img.setBounds(0, 0, 60, 60);
+                SavedPublications.setCompoundDrawables(img, null, null, null);
+
+            }
+        }
+        else{
+            getPublicationList("https://seguridadmujer.com/app_movil/Community/getUserPublicationList.php?ID_Usuaria="+ ID);
+        }
+    }
+
 }

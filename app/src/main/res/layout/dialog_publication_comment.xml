@@ -12,7 +12,7 @@
         android:id="@+id/button_dialog_back"
         android:layout_width="139dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="30dp"
         android:textColor="@color/white"
         android:background="@drawable/back_button"
         android:drawableStart="@drawable/back_foreground"

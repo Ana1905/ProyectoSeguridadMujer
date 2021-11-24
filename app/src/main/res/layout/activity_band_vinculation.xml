@@ -8,6 +8,16 @@
     android:background="@color/Login_Layout_Background"
     tools:context=".BandVinculationActivity">
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ButtonBandVinculationBack"
+        android:layout_width="139dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/back_button"
+        android:drawableStart="@drawable/back_foreground"
+        android:text="@string/back_label" />
+
     <TextView
         android:id="@+id/text_view_mostrar_dispositivos"
         android:layout_width="match_parent"
@@ -17,6 +27,7 @@
         android:textSize="19sp"
         android:textStyle="bold"
         android:background="@color/white"
+        android:layout_marginTop="5dp"
         />
 
     <androidx.appcompat.widget.AppCompatButton

@@ -61,6 +61,7 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
     String email = " ";
     boolean showList=true;
     static final int PICK_CONTACT_REQUEST=1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -239,8 +240,8 @@ public class AddTrustedFriendsActivity extends AppCompatActivity {
 
         recyclerView= findViewById(R.id.recyclerViewContacts);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        AdapterContacts adapter= new AdapterContacts(ListContacts);
-        recyclerView.setAdapter(adapter);
+        //AdapterContacts adapter= new AdapterContacts(getApplicationContext(), ListContacts);
+        //recyclerView.setAdapter(adapter);
 
         /*
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

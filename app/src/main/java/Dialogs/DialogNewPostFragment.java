@@ -75,6 +75,16 @@ public class DialogNewPostFragment extends DialogFragment {
 
     //IComunicaFragments iComunicaFragments;
 
+    private ListenerNewPostFragment mListener;
+
+    public void setListener(ListenerNewPostFragment listener) {
+        mListener = listener;
+    }
+
+    public interface ListenerNewPostFragment {
+        void returnNewPostData(int result);
+    }
+
     public DialogNewPostFragment() {
         // Required empty public constructor
     }
@@ -134,6 +144,7 @@ public class DialogNewPostFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getContext(), "Closing", Toast.LENGTH_SHORT).show();
+                mListener.returnNewPostData(1);
                 dismiss();
             }
         });
@@ -248,6 +259,7 @@ public class DialogNewPostFragment extends DialogFragment {
 
                     //Toast.makeText(getActivity(), "publicando", Toast.LENGTH_SHORT).show();
                     SendImage();
+                    mListener.returnNewPostData(1);
                     dismiss();
                 }
             }
@@ -285,48 +297,51 @@ public class DialogNewPostFragment extends DialogFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_GALERIA)
         {
-            Uri uri = data.getData();
-            mImagePublication[Counter].setImageURI(uri);
-            mImagePublication[Counter].setVisibility(View.VISIBLE);
-            mButtonDelete.setVisibility(View.VISIBLE);
+            if(data != null){
+                Uri uri = data.getData();
+                mImagePublication[Counter].setImageURI(uri);
+                mImagePublication[Counter].setVisibility(View.VISIBLE);
+                mButtonDelete.setVisibility(View.VISIBLE);
 
-            try
-            {
-                bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
-                ByteArrayOutputStream array = new ByteArrayOutputStream();
-
-                ContentResolver contentResolver = getContext().getContentResolver();
-                MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-                imagesType[Counter] = mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-
-                if (imagesType[Counter] == "jpg")
+                try
                 {
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
+                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
+                    ByteArrayOutputStream array = new ByteArrayOutputStream();
+
+                    ContentResolver contentResolver = getContext().getContentResolver();
+                    MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+                    imagesType[Counter] = mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+
+                    if (imagesType[Counter] == "jpg")
+                    {
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
+                    }
+                    else if (imagesType[Counter] == "png")
+                    {
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, array);
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "Por favor introduce un archivo valido", Toast.LENGTH_SHORT).show();
+                    }
+                    //Toast.makeText(getActivity(), imagesType[Counter], Toast.LENGTH_SHORT).show();
+
+                    byte [] imageByte = array.toByteArray();
+                    imagesToStrings[Counter] = Base64.encodeToString(imageByte, Base64.DEFAULT);
+                    //Toast.makeText(getActivity(), String.valueOf(imagesToStrings[Counter]), Toast.LENGTH_SHORT).show();
                 }
-                else if (imagesType[Counter] == "png")
+                catch (IOException e)
                 {
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, array);
+
                 }
-                else
+
+                Counter++;
+                if (Counter == 10)
                 {
-                    Toast.makeText(getActivity(), "Por favor introduce un archivo valido", Toast.LENGTH_SHORT).show();
+                    mButtonImage.setVisibility(View.INVISIBLE);
                 }
-                //Toast.makeText(getActivity(), imagesType[Counter], Toast.LENGTH_SHORT).show();
-
-                byte [] imageByte = array.toByteArray();
-                imagesToStrings[Counter] = Base64.encodeToString(imageByte, Base64.DEFAULT);
-                //Toast.makeText(getActivity(), String.valueOf(imagesToStrings[Counter]), Toast.LENGTH_SHORT).show();
-            }
-            catch (IOException e)
-            {
-
             }
 
-            Counter++;
-            if (Counter == 10)
-            {
-                mButtonImage.setVisibility(View.INVISIBLE);
-            }
         }
         //Toast.makeText(getActivity(), String.valueOf(Counter), Toast.LENGTH_SHORT).show();
     }

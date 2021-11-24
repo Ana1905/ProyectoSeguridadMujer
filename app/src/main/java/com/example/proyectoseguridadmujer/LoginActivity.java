@@ -291,7 +291,7 @@ public class LoginActivity extends AppCompatActivity {
                                 mensajeSancion = "Lo sentimos, su cuenta ha sido bloqueada permanentemente.";
                             }
                             else{
-                                mensajeSancion = "Lo sentimos, su cuenta se encuentra bloqueada actualmente, podrá volver a acceder el día "+mListaSanciones.get(i).getFechaFin();
+                                mensajeSancion = "Lo sentimos, su cuenta se encuentra bloqueada actualmente, podra volver a acceder el día "+mListaSanciones.get(i).getFechaFin();
                             }
                         }
                     }

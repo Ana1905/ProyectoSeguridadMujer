@@ -1381,7 +1381,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
             //Validacion para una sancion de bloqueo de creacion de reportes general:
             if(mSancionesActuales.get(i) == 2){
                 sancionActiva = true;
-                mensajeSancion = "La función para crear reportes de acontecimiento se encuentra bloqueada actualmente.";
+                mensajeSancion = "La función para crear reportes de acontecimiento se encuentra bloqueada actualmente debido a que creaste 3 reportes en poco tiempo.";
                 break;
             }
             if((mSancionesActuales.get(i) == 3) && (positionCategoria >= 1 && positionCategoria <= 3)){

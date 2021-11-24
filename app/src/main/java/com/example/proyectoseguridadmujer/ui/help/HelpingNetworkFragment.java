@@ -43,7 +43,7 @@ import java.util.List;
 
 import Dialogs.DialogNewHelpPostFragment;
 
-public class HelpingNetworkFragment extends Fragment
+public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPostFragment.ListenerNewHelpPostFragment
 {
     private String email="";
 
@@ -234,16 +234,21 @@ public class HelpingNetworkFragment extends Fragment
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         DialogNewHelpPostFragment dialogNewHelpPostFragment = new DialogNewHelpPostFragment();
 
+        dialogNewHelpPostFragment.setListener(HelpingNetworkFragment.this);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.add(android.R.id.content, dialogNewHelpPostFragment).addToBackStack(null).commit();
 
-        getHelpPublicationList("https://seguridadmujer.com/app_movil/HelpingNetwork/getHelpPublicationList.php?email="+email);
     }
 
     public void onBackPressed()
     {
         Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void returnNewHelpPostData(int result) {
+        getHelpPublicationList("https://seguridadmujer.com/app_movil/HelpingNetwork/getHelpPublicationList.php?email="+email);
     }
 }

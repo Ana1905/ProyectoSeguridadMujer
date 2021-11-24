@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import Dialogs.DialogNewPostFragment;
 import Dialogs.DialogReportPublication;
 import Dialogs.DialogShowCommunityPublication;
 import Dialogs.DialogUserProfile;
@@ -50,15 +51,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
     private List<ListElement> FullList = new ArrayList<>();
     private String email;
     private boolean filtrando = false;
+    DialogReportPublication.ListenerReportPublication listenerReportPublication;
+    DialogShowCommunityPublication.ListenerShowCommunityPublication listenerShowCommunityPublication;
+    DialogUserProfile.ListenerUserProfile listenerUserProfile;
 
     ArrayList<Sancion> mListaSanciones = new ArrayList<Sancion>();
     RequestQueue requestQueue;
 
 
-    public ListAdapter(Context context, List<ListElement> itemList)
+    public ListAdapter(Context context, List<ListElement> itemList, DialogReportPublication.ListenerReportPublication listenerReportPublication, DialogShowCommunityPublication.ListenerShowCommunityPublication listenerShowCommunityPublication, DialogUserProfile.ListenerUserProfile listenerUserProfile)
     {
         this.context = context;
         this.list = itemList;
+        this.listenerReportPublication = listenerReportPublication;
+        this.listenerShowCommunityPublication = listenerShowCommunityPublication;
+        this.listenerUserProfile = listenerUserProfile;
         FullList = list;
         filtrando = false;
     }
@@ -89,6 +96,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
                 arguments.putString("Imagen", list.get(position).getRutaImagen());
 
                 dialogUserProfile.setArguments(arguments);
+                dialogUserProfile.setListener(listenerUserProfile);
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -99,7 +107,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
         holder.Category.setText(list.get(position).getNombreCategoria());
         holder.Content.setText(list.get(position).getContenido());
 
-        if(list.get(position).getRutaImagen() != null && !list.get(position).getRutaImagen().isEmpty()){
+        if(list.get(position).getRutaImagen() != null && !list.get(position).getRutaImagen().isEmpty() && !list.get(position).getRutaImagen().equals("")){
             Glide.with(context).load(list.get(position).getRutaImagen()).into(holder.Profile);
         }
         else{
@@ -108,15 +116,16 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
         holder.Profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = ((MainActivity)context).getSupportFragmentManager();
+                FragmentManager fragmentManager = ((MainActivity) context).getSupportFragmentManager();
                 DialogUserProfile dialogUserProfile = new DialogUserProfile();
 
                 Bundle arguments = new Bundle();
                 arguments.putString("Usuario", list.get(position).getNombre() + " " + list.get(position).getApellidoPaterno() + " " + list.get(position).getApellidoMaterno());
-                arguments.putInt("ID_Usuaria",list.get(position).getID_Usuaria());
+                arguments.putInt("ID_Usuaria", list.get(position).getID_Usuaria());
                 arguments.putString("Imagen", list.get(position).getRutaImagen());
 
                 dialogUserProfile.setArguments(arguments);
+                dialogUserProfile.setListener(listenerUserProfile);
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -129,7 +138,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
         holder.Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context.getApplicationContext(), "Borrando", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context.getApplicationContext(), "Borrando", Toast.LENGTH_SHORT).show();
                 dialogo(position);
             }
         });
@@ -166,6 +175,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
                 arguments.putInt("ID_Usuaria",list.get(position).getID_Usuaria());
 
                 dialogReportPublication.setArguments(arguments);
+                dialogReportPublication.setListener(listenerReportPublication);
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -187,7 +197,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
         holder.SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context.getApplicationContext(), "Guardando", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context.getApplicationContext(), "Guardando", Toast.LENGTH_SHORT).show();
                 SavePublication(list.get(position).getID_Publicacion(), list.get(position).getID_Usuaria());
             }
         });
@@ -204,7 +214,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
                 if (CommentInput.isEmpty())
                 {
                     holder.SendComment.setVisibility(View.INVISIBLE);
-                    Toast.makeText(context.getApplicationContext(), String.valueOf(position) + " " + list.size(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context.getApplicationContext(), String.valueOf(position) + " " + list.size(), Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -222,7 +232,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
             @Override
             public void onClick(View v) {
                 getCredentialData();
-                Toast.makeText(context.getApplicationContext(), "Comentando", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context.getApplicationContext(), "Comentando", Toast.LENGTH_SHORT).show();
                 //Toast.makeText(context.getApplicationContext(), String.valueOf(position) + " " + list.size(), Toast.LENGTH_SHORT).show();
                 //holder.Category.setText(holder.Comment.getText().toString());
                 obtenerSanciones("https://seguridadmujer.com/app_movil/Community/ObtenerSancionesComentario.php?email="+email, holder, position);
@@ -235,7 +245,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
             public void onClick(View v) {
                 //Toast.makeText(context.getApplicationContext(), String.valueOf(position) + " " + list.size(), Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(context.getApplicationContext(), "Mostrar comentarios", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context.getApplicationContext(), "Mostrar comentarios", Toast.LENGTH_SHORT).show();
 
                 /*
                     Intent intent = new Intent(context.getApplicationContext(), CommentListActivity.class);
@@ -266,6 +276,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
                 arguments.putString("ApellidoMaterno", list.get(position).getApellidoMaterno());
 
                 dialogShowCommunityPublication.setArguments(arguments);
+                dialogShowCommunityPublication.setListener(listenerShowCommunityPublication);
                 //dialogNewHelpPostFragment.show(((MainActivity)context).getSupportFragmentManager(), "tag");
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -282,18 +293,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
 
     public void dialogo(int position){
         AlertDialog.Builder dialogo1 = new AlertDialog.Builder(context);
-        dialogo1.setTitle("Confirmar borrado");
-        dialogo1.setMessage("Â¿Seguro que quieres borrar esta publicaciÃ³n?");
+        dialogo1.setTitle(R.string.delete_dialog_title);
+        dialogo1.setMessage(R.string.delete_dialog_body);
         dialogo1.setCancelable(false);
 
-        dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        dialogo1.setPositiveButton(R.string.dialog_accept, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 //Toast.makeText(getApplicationContext(), "Aceptar", Toast.LENGTH_LONG).show();
                 //Accepted = true;
                 DeletePublication(list.get(position).getID_Publicacion(), position);
             }
         });
-        dialogo1.setNegativeButton("Rechazar", new DialogInterface.OnClickListener() {
+        dialogo1.setNegativeButton(R.string.dialog_no_accept, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 //Toast.makeText(getApplicationContext(), "Declinar", Toast.LENGTH_LONG).show();
                 //Accepted = false;
@@ -373,7 +384,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
                 //INSERT exitoso:
                 if(result.equals("Success")) {
                     Toast.makeText(context.getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                    Toast.makeText(context.getApplicationContext(), String.valueOf(filtrando), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context.getApplicationContext(), String.valueOf(filtrando), Toast.LENGTH_LONG).show();
                     if(filtrando){
                         for(int i =0; i<FullList.size(); i++){
                             if(FullList.get(i).getID_Publicacion() == list.get(position).getID_Publicacion()){
@@ -553,18 +564,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.PublicationVie
                         if(mListaSanciones.get(i).getDuracion() == Collections.max(listaDuraciones)){
                             if(mListaSanciones.get(i).getTipoSancion().equals("Bloquear interaccion completa en modulo de Comunidad")){
                                 if(mListaSanciones.get(i).getDuracion() == 876000){
-                                    mensajeSancion = "Lo sentimos, la interaccion con el mÃ³dulo de comunidad se le ha sido bloqueada de forma permanente.";
+                                    mensajeSancion = "Lo sentimos, la interaccion con el modulo de comunidad se le ha sido bloqueada de forma permanente.";
                                 }
                                 else{
-                                    mensajeSancion = "Lo sentimos, la interacciÃ³n con el mÃ³dulo de comunidad se le ha sido bloqueada, podrÃ¡ volver a acceder el dÃ­a "+mListaSanciones.get(i).getFechaFin();
+                                    mensajeSancion = "Lo sentimos, la interaccion con el modulo de comunidad se le ha sido bloqueada, podra volver a acceder el dia "+mListaSanciones.get(i).getFechaFin();
                                 }
                             }
                             else if(mListaSanciones.get(i).getTipoSancion().equals("Bloquear funcion de comentario")){
                                 if(mListaSanciones.get(i).getDuracion() == 876000){
-                                    mensajeSancion = "Lo sentimos, la funciÃ³n para realizar comentarios se le ha sido bloqueada de forma permanente.";
+                                    mensajeSancion = "Lo sentimos, la funcion para realizar comentarios se le ha sido bloqueada de forma permanente.";
                                 }
                                 else{
-                                    mensajeSancion = "Lo sentimos, la funciÃ³n para realizar comentarios se le ha sido bloqueada, podrÃ¡ volver a acceder el dÃ­a "+mListaSanciones.get(i).getFechaFin();
+                                    mensajeSancion = "Lo sentimos, la funcion para realizar comentarios se le ha sido bloqueada, podra volver a acceder el dia "+mListaSanciones.get(i).getFechaFin();
                                 }
                             }
 

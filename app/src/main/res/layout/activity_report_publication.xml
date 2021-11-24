@@ -16,6 +16,7 @@
         android:drawableStart="@drawable/back_foreground"
         android:text="@string/back_label"
         android:textColor="@color/white"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.058"

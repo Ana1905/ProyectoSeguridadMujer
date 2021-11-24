@@ -114,7 +114,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".BandVinculationActivity"
-            android:parentActivityName=".AddTrustedFriendsActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".EditContactActivity"
             android:parentActivityName=".AddTrustedFriendsActivity" />
@@ -123,7 +123,7 @@
             android:parentActivityName=".AddTrustedFriendsActivity" />
         <activity
             android:name=".DesactivateAlertActivity"
-            android:parentActivityName=".AddTrustedFriendsActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".WrongNumberFormatAlert"
             android:theme="@style/AppThene.AlertTheme" />

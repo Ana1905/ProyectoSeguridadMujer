@@ -54,7 +54,7 @@
         android:padding="10sp"
         android:textColor="@color/white"
         android:textColorHighlight="@color/white"
-        android:textColorHint="@color/white"
+        android:textColorHint="@color/Light_Gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.125"

@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.example.proyectoseguridadmujer.Comment;
 import com.example.proyectoseguridadmujer.CommentListAdapter;
 import com.example.proyectoseguridadmujer.ListElement;
+import com.example.proyectoseguridadmujer.MainActivity;
 import com.example.proyectoseguridadmujer.PublicationExtraImageAdapter;
 import com.example.proyectoseguridadmujer.R;
 
@@ -55,6 +58,17 @@ public class DialogShowCommunityPublication extends DialogFragment {
     String email;
 
     RequestQueue requestQueue;
+
+    private ListenerShowCommunityPublication mListener;
+
+    public void setListener(ListenerShowCommunityPublication listener) {
+        mListener = listener;
+    }
+
+
+    public interface ListenerShowCommunityPublication {
+        void returnDataShowCommunityPublication(int result);
+    }
 
     public DialogShowCommunityPublication () {
         // Required empty public constructor
@@ -106,6 +120,7 @@ public class DialogShowCommunityPublication extends DialogFragment {
         BackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.returnDataShowCommunityPublication(1);
                 dismiss();
             }
         });
@@ -131,6 +146,46 @@ public class DialogShowCommunityPublication extends DialogFragment {
                 {
                     Content.setEnabled(true);
                 }
+            }
+        });
+
+        CommentImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                DialogUserProfile dialogUserProfile = new DialogUserProfile();
+
+                Bundle arguments = new Bundle();
+                arguments.putString("Usuario", mPublication.getNombre() + " " + mPublication.getApellidoPaterno() + " " + mPublication.getApellidoMaterno());
+                arguments.putInt("ID_Usuaria", mPublication.getID_Usuaria());
+                arguments.putString("Imagen", mPublication.getRutaImagen());
+
+                dialogUserProfile.setArguments(arguments);
+                dialogUserProfile.setListener((DialogUserProfile.ListenerUserProfile) mListener);
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.add(android.R.id.content, dialogUserProfile).addToBackStack(null).commit();
+            }
+        });
+
+        User.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                DialogUserProfile dialogUserProfile = new DialogUserProfile();
+
+                Bundle arguments = new Bundle();
+                arguments.putString("Usuario", mPublication.getNombre() + " " + mPublication.getApellidoPaterno() + " " + mPublication.getApellidoMaterno());
+                arguments.putInt("ID_Usuaria", mPublication.getID_Usuaria());
+                arguments.putString("Imagen", mPublication.getRutaImagen());
+
+                dialogUserProfile.setArguments(arguments);
+                dialogUserProfile.setListener((DialogUserProfile.ListenerUserProfile) mListener);
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.add(android.R.id.content, dialogUserProfile).addToBackStack(null).commit();
             }
         });
 
@@ -184,6 +239,7 @@ public class DialogShowCommunityPublication extends DialogFragment {
 
                         comment.setComentario(jsonObject.getString("Comentario"));
                         comment.setFecha(jsonObject.getString("Fecha"));
+                        comment.setID_Usuaria(jsonObject.getInt("ID_Usuaria"));
 
                         //Imagen
                         if(jsonObject.getString("RutaImagen") != null && !jsonObject.getString("RutaImagen").isEmpty()){

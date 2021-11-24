@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
@@ -29,6 +31,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import Dialogs.DialogUserProfile;
 
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.CommentViewHolder>
 {
@@ -57,6 +61,49 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         holder.User.setText(list.get(position).getNombre());
         holder.Content.setText(list.get(position).getComentario());
         holder.Date.setText(list.get(position).getFecha());
+
+        holder.User.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                FragmentManager fragmentManager = ((MainActivity)context).getSupportFragmentManager();
+                DialogUserProfile dialogUserProfile = new DialogUserProfile();
+
+                Bundle arguments = new Bundle();
+                arguments.putString("Usuario", list.get(position).getNombre());
+                arguments.putInt("ID_Usuaria",list.get(position).getID_Usuaria());
+                arguments.putString("Imagen", list.get(position).getRutaImagen());
+
+                dialogUserProfile.setArguments(arguments);
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.add(android.R.id.content, dialogUserProfile).addToBackStack(null).commit();
+                 */
+            }
+        });
+
+        holder.Profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                FragmentManager fragmentManager = ((MainActivity)context).getSupportFragmentManager();
+                DialogUserProfile dialogUserProfile = new DialogUserProfile();
+
+                Bundle arguments = new Bundle();
+                arguments.putString("Usuario", list.get(position).getNombre());
+                arguments.putInt("ID_Usuaria",list.get(position).getID_Usuaria());
+                arguments.putString("Imagen", list.get(position).getRutaImagen());
+
+                dialogUserProfile.setArguments(arguments);
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.add(android.R.id.content, dialogUserProfile).addToBackStack(null).commit();
+
+                 */
+            }
+        });
 
         if(list.get(position).getRutaImagen() != null && !list.get(position).getRutaImagen().isEmpty()){
             Glide.with(context).load(list.get(position).getRutaImagen()).into(holder.Profile);

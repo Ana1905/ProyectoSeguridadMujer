@@ -80,8 +80,6 @@ public class AlertFragment extends Fragment implements DialogEditContact.Listene
     boolean showList=true;
     static final int PICK_CONTACT_REQUEST=1;
 
-    private static final String TAG = "AlertFragment";
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 

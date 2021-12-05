@@ -22,7 +22,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -45,33 +44,34 @@ import Dialogs.DialogNewHelpPostFragment;
 
 public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPostFragment.ListenerNewHelpPostFragment
 {
-    private String email="";
+    EditText mEditTextBarraBusqueda;
+    Button mBotonCrearPublicacion;
+    Spinner mSpinnerBusquedaCategoria;
 
+    String email="";
     String category = "";
 
-    RecyclerView HelpPublication;
-    HelpingNetworkAdapter adapter;
-    EditText SearchBar;
-    Spinner FilterSpinner;
-    List<HelpingNetworkPublication> Publication;
-    Button newPost;
+    RecyclerView mRecyclerViewPublicaciones;
+    HelpingNetworkAdapter mAdapterPublicaciones;
+
+    List<HelpingNetworkPublication> mListaPublicaciones;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_helping_network, container, false);
 
-        SharedPreferences preferences = this.getActivity().getSharedPreferences("Credencials", Context.MODE_PRIVATE);
-        email = preferences.getString("email", "");
-
         //WiringUp
-        HelpPublication = root.findViewById(R.id.SupportPublicationRecyclerView);
-        //HelpPublication.setAdapter(adapter);
-        HelpPublication.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mEditTextBarraBusqueda = root.findViewById(R.id.search_post_support);
+        mBotonCrearPublicacion = root.findViewById(R.id.new_support_post_button);
+        mSpinnerBusquedaCategoria = root.findViewById(R.id.FilterSpinner);
+        mRecyclerViewPublicaciones = root.findViewById(R.id.SupportPublicationRecyclerView);
+        mRecyclerViewPublicaciones.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         getHelpPublicationList("https://seguridadmujer.com/app_movil/HelpingNetwork/getHelpPublicationList.php?email="+email);
 
-        SearchBar = root.findViewById(R.id.search_post_support);
-        SearchBar.addTextChangedListener(new TextWatcher() {
+        //TextWatcher para la barra de busqueda:
+        mEditTextBarraBusqueda.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -79,20 +79,15 @@ public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPos
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                /*
-                if(!SearchBar.getText().equals("")){
-                    FilterSpinner.setSelection(0);
-                }
 
-                 */
-                if(SearchBar.getText().toString().isEmpty()){
-                    FilterSpinner.setEnabled(true);
+                if(mEditTextBarraBusqueda.getText().toString().isEmpty()){
+                    mSpinnerBusquedaCategoria.setEnabled(true);
                 }
                 else{
-                    FilterSpinner.setEnabled(false);
+                    mSpinnerBusquedaCategoria.setEnabled(false);
                 }
 
-                adapter.getFilter().filter(SearchBar.getText().toString());
+                mAdapterPublicaciones.getFilter().filter(mEditTextBarraBusqueda.getText().toString());
             }
 
             @Override
@@ -101,11 +96,11 @@ public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPos
             }
         });
 
-        FilterSpinner = root.findViewById(R.id.FilterSpinner);
+        //OnItemSelectedListener del spinner:
         ArrayAdapter<CharSequence> adapterSpinner = ArrayAdapter.createFromResource(getContext(), R.array.Helping_Network_Categories, android.R.layout.simple_spinner_item);
-        FilterSpinner.setAdapter(adapterSpinner);
+        mSpinnerBusquedaCategoria.setAdapter(adapterSpinner);
 
-        FilterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinnerBusquedaCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
@@ -133,18 +128,18 @@ public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPos
                 }
 
                 if(position != 0){
-                    SearchBar.setEnabled(false);
+                    mEditTextBarraBusqueda.setEnabled(false);
                 }
                 else{
-                    SearchBar.setEnabled(true);
+                    mEditTextBarraBusqueda.setEnabled(true);
                 }
 
-                if(adapter != null){
+                if(mAdapterPublicaciones != null){
                     if(position != 0){
-                        adapter.getFilter().filter(String.valueOf(position));
+                        mAdapterPublicaciones.getFilter().filter(String.valueOf(position));
                     }
                     else{
-                        adapter.getFilter().filter("");
+                        mAdapterPublicaciones.getFilter().filter("");
                     }
                 }
 
@@ -159,29 +154,8 @@ public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPos
             }
         });
 
-        /*
-        TextViewCategory.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Toast.makeText(getContext(), "Cambio", Toast.LENGTH_SHORT).show();
-                adapter.getFilter().filter(TextViewCategory.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-         */
-
-        newPost = root.findViewById(R.id.new_support_post_button);
-        newPost.setOnClickListener(new View.OnClickListener() {
+        //OnClickLister del boton para crear una nueva publicacion:
+        mBotonCrearPublicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(getContext(), "Crear nueva publicación", Toast.LENGTH_SHORT).show();
@@ -194,7 +168,7 @@ public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPos
 
     public void getHelpPublicationList(String Link)
     {
-        Publication = new ArrayList<HelpingNetworkPublication>();
+        mListaPublicaciones = new ArrayList<HelpingNetworkPublication>();
         //Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Link, new Response.Listener<JSONArray>()
         {
@@ -205,7 +179,7 @@ public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPos
                 Gson gson = new Gson();
                 HelpingNetworkPublication[] PublicationRegister = gson.fromJson(PublicationData, HelpingNetworkPublication[].class);
 
-                Publication = Arrays.asList(PublicationRegister);
+                mListaPublicaciones = Arrays.asList(PublicationRegister);
                 //Publication = Arrays.asPublicationRegister;
                 setAdapter();
             }
@@ -224,9 +198,9 @@ public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPos
 
     public void setAdapter ()
     {
-        ArrayList<HelpingNetworkPublication> arrayList = new ArrayList<HelpingNetworkPublication>(Publication);
-        adapter = new HelpingNetworkAdapter(getActivity(), arrayList);
-        HelpPublication.setAdapter(adapter);
+        ArrayList<HelpingNetworkPublication> arrayList = new ArrayList<HelpingNetworkPublication>(mListaPublicaciones);
+        mAdapterPublicaciones = new HelpingNetworkAdapter(getActivity(), arrayList);
+        mRecyclerViewPublicaciones.setAdapter(mAdapterPublicaciones);
     }
 
     private void HelpNewPostDialog()
@@ -238,7 +212,6 @@ public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPos
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.add(android.R.id.content, dialogNewHelpPostFragment).addToBackStack(null).commit();
-
     }
 
     public void onBackPressed()
@@ -250,5 +223,11 @@ public class HelpingNetworkFragment extends Fragment implements DialogNewHelpPos
     @Override
     public void returnNewHelpPostData(int result) {
         getHelpPublicationList("https://seguridadmujer.com/app_movil/HelpingNetwork/getHelpPublicationList.php?email="+email);
+    }
+
+    //Metodo para obtener el email de la usuaria:
+    public void getCredentialData(){
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("Credencials", Context.MODE_PRIVATE);
+        email = preferences.getString("email", "");
     }
 }

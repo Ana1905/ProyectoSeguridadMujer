@@ -383,12 +383,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-        //Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        /*
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-         */
-        //Map Fragment:
         FragmentManager fragmentManager = getChildFragmentManager();
         SupportMapFragment mapFragment = (SupportMapFragment) fragmentManager
                 .findFragmentByTag(MAP_FRAGMENT); // Check if map already exists
@@ -757,15 +751,6 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(GuadalajaraCentro, 15.0f));
         }
         else{
-            /*
-            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
-            Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-            double lat = location.getLatitude();
-            double lng = location.getLongitude();
-            LatLng MiUbicacion = new LatLng(lat, lng);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(MiUbicacion,15.0f));
-            */
 
             if(mMiUbicacion != null){
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mMiUbicacion, 15.0f));
@@ -941,12 +926,18 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
         verificarColisionDestino();
 
         String url = "https://maps.googleapis.com/maps/api/directions/json?origin="+mOrigenRuta.latitude+","+mOrigenRuta.longitude+"&destination="+mDestinoRuta.latitude+","+mDestinoRuta.longitude+indicacionPuntosIntermedios+"&mode="+medioTransporte+"&key=AIzaSyA4dRIX9BwyRP2WF_WAG4aYwDIMerFM2xc";
+
+        //Toast.makeText(getActivity(), url, Toast.LENGTH_LONG).show();
+
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject json = new JSONObject(response);
+
+                    //Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
+
                     trazarRuta(json);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1029,10 +1020,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
 
             double distanciaEnKm = 0;
             distanciaEnKm = distanciaEnMetros/1000d;
-            /*
-            String duracion = "Tiempo estimado: "+((JSONObject)((JSONObject)jLegs.get(0)).get("duration")).get("text");
-            String distancia = "Distancia: "+((JSONObject)((JSONObject)jLegs.get(0)).get("distance")).get("text");
-            */
+
             String duracion = "Tiempo estimado: " + Math.round(duracionaEnMinutos) + " minutos";
             String distancia = "Distancia: " + String.format("%.1f", distanciaEnKm) + " km";
 
@@ -1074,14 +1062,9 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
 
     private void verificarDestino(LatLng mMiUbicacion){
         float [] distancia = new float[1];
-        //Se itera a traves de todos los reportes de acontecimiendo:
 
-        //Se obtiene la distancia entre el punto central del reporte de acontecimiento y el destino:
         Location.distanceBetween(mDestinoRuta.latitude, mDestinoRuta.longitude, mMiUbicacion.latitude, mMiUbicacion.longitude, distancia);
 
-            /*
-            Si la distancia obtenida es menor o igual al radio significa que el destino efectivamente colisiona con el reporte.
-             */
         if( (distancia[0] <= 70)){
 
             rutaTrazada = false;
@@ -1197,7 +1180,7 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
     }
 
     //Metodo para establecer en false el valor de mostrado en el mapa de todos los reportes de acontecimiento:
-    void eliminarReportesMostrados(){
+    private void eliminarReportesMostrados(){
         for(int i=0; i<mReportesAcontecimiento.size(); i++){
             mReportesAcontecimiento.get(i).setMostrandoEnMapa(false);
         }
@@ -1326,12 +1309,10 @@ public class RouteFragment extends Fragment implements OnMapReadyCallback {
                 String result = putData.getResult();
                 //INSERT exitoso:
                 if(result.equals("Sancion actualizada")) {
-                    //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                    //SI
+                    Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
                 }
                 else{
-                    //Toast.makeText(getApplicationContext(), result + " Favor de intentarlo nuevamente.", Toast.LENGTH_LONG).show();
-                    //NO
+                    Toast.makeText(getActivity(), result + " Favor de intentarlo nuevamente.", Toast.LENGTH_LONG).show();
                 }
             }
         }

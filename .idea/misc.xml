@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/KalDi/AndroidStudioProjects/ProyectoSeguridadMujer/app/src/main/res/layout/activity_maps.xml" value="0.12360688956433637" />
         <entry key="..\:/Users/pauli/OneDrive/Documentos/GitHub/ProyectoSeguridadMujer/app/src/main/res/layout/activity_add_trusted_friends.xml" value="0.26403985507246375" />
         <entry key="..\:/Users/pauli/OneDrive/Documentos/GitHub/ProyectoSeguridadMujer/app/src/main/res/layout/activity_band_vinculation.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/pauli/OneDrive/Documentos/GitHub/ProyectoSeguridadMujer/app/src/main/res/layout/activity_bluetooth_testing.xml" value="0.1" />
@@ -15,7 +16,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
